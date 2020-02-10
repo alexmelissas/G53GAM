@@ -34,13 +34,13 @@ public class PlayerController : MonoBehaviour
         Rigidbody2D r = GetComponent<Rigidbody2D>();
         isIdle = true;
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             physicsVelocity.x -= speed;
             isIdle = false;
             isLeft = true;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.RightArrow))
         {
             physicsVelocity.x += speed;
             isIdle = false;
