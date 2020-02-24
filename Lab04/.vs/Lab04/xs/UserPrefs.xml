@@ -1,0 +1,24 @@
+﻿<Properties StartupConfiguration="{ADD4B246-900B-3469-7A58-8C006A6824DF}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/PickUp.cs">
+    <Files>
+      <File FileName="Assets/Standard Assets/Utility/AlphaButtonClickMask.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Utility/ForcedReset.cs" Line="7" Column="27" />
+      <File FileName="Assets/Standard Assets/Utility/SimpleActivatorMenu.cs" Line="3" Column="22" />
+      <File FileName="Assets/PickUp.cs" Line="8" Column="35" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Lab04" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="32485750-2594-4a37-a0b1-95d419ff2c82" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
