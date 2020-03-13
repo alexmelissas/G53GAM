@@ -8,12 +8,14 @@ public class EnemyController : MonoBehaviour
     public Waypoint waypoint;
     public Transform destination;
     public GameObject target;
+    public StateMachine stateMachine = new StateMachine();
 
-    Vector3 lastSeenPosition;
+    public Vector3 lastSeenPosition;
+    public bool seenTarget;
     NavMeshAgent agent;
+
     SphereCollider sphereCollider;
     float fov = 110.0f;
-    bool seenTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -21,17 +23,19 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.destination = destination.position;
         sphereCollider = GetComponent<SphereCollider>();
+        stateMachine.ChangeState(new State_Patrol(this));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             Waypoint nextWaypoint = waypoint.nextWaypoint;
             waypoint = nextWaypoint;
             agent.destination = waypoint.transform.position;
         }
+        stateMachine.Update();
     }
 
     private void OnTriggerStay(Collider other)
@@ -51,6 +55,7 @@ public class EnemyController : MonoBehaviour
                 {
                     if (hit.collider.gameObject == target)
                     {
+                        Debug.Log("Saw player");
                         seenTarget = true;
                         lastSeenPosition = target.transform.position;
                     }
@@ -67,13 +72,13 @@ public class EnemyController : MonoBehaviour
         {
             Gizmos.DrawWireSphere(transform.position, sphereCollider.radius);
             if (seenTarget) Gizmos.DrawLine(transform.position, lastSeenPosition);
-            if (lastSeenPosition != Vector3.zero) Debug.Log("draw smol sfir"); // draw small sphere
+            if (lastSeenPosition != Vector3.zero) Gizmos.DrawSphere(lastSeenPosition, 0.5f);
 
             Vector3 rightPeripheral = (Quaternion.AngleAxis(fov * 0.5f, Vector3.up) * transform.forward * sphereCollider.radius);
-            Vector3 leftPeripheral = (Quaternion.AngleAxis(fov * 0.5f, Vector3.down) * transform.forward * sphereCollider.radius);
+            Vector3 leftPeripheral = (Quaternion.AngleAxis(-(fov * 0.5f), Vector3.up) * transform.forward * sphereCollider.radius);
 
-            Gizmos.DrawLine(transform.position, rightPeripheral);
-            Gizmos.DrawLine(transform.position, leftPeripheral);
+            Gizmos.DrawRay(transform.position, rightPeripheral);
+            Gizmos.DrawRay(transform.position, leftPeripheral);
         }
     }
 

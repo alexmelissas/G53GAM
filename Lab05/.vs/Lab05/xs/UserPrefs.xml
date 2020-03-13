@@ -1,16 +1,11 @@
 ﻿<Properties StartupConfiguration="{09EDDB30-ACB4-B902-8902-93F5C8A79622}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Player.cs">
-    <Files>
-      <File FileName="Assets/Player.cs" Line="22" Column="44" />
-      <File FileName="Assets/EnemyController.cs" Line="77" Column="10" />
-      <File FileName="Assets/Waypoint.cs" Line="11" Column="6" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Lab05" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="Player.cs" selected="True" />
+              <Node name="State_Attack.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -19,7 +14,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1ef7727e-6de8-43db-9200-428de9678134" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="992f031c-a81c-413b-8971-e9e5b6add8a2" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

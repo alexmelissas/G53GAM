@@ -19,12 +19,12 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 5.0f * rotation, 0);
 
         float updown = Input.GetAxis("Mouse Y");
-        if(y+updown > 60 || y+updown < -100)
+        if(y+updown > 60 || y+updown < -60)
         {
             updown = 0;
         }
 
-        y += updown;
+        y += -updown;
 
         Camera.main.transform.RotateAround(transform.position,
             transform.right, updown);
