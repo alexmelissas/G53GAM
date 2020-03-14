@@ -1,28 +1,36 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public event EventHandler<InventoryEventArgs> ItemAdded;
+    public event EventHandler<InventoryEventArgs> ItemUsed;
+
     List<IInventoryItem> items = new List<IInventoryItem>();
-
-    // Start is called before the first frame update
-    void Start()
-    {         
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void addItem(IInventoryItem item)
     {
-        items.Add(item); item.onPickup();
-        Debug.Log("Pickup item");
+        items.Add(item);
+        item.onPickup();
+
         // broadcast event to the hud
+        if (ItemAdded != null)
+        {
+            ItemAdded.Invoke(this, new InventoryEventArgs(item));
+        }
+    }
+
+    public void useItem(IInventoryItem item)
+    {
+        Debug.Log("Used item");
+        items.Remove(item);
+
+        if (ItemUsed != null)
+        {
+            ItemUsed.Invoke(this, new InventoryEventArgs(item));
+        }
     }
 
 }
