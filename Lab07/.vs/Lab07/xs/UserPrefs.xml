@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{3B0374F8-5CDC-6B98-159D-71FE625EC37E}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/RaceController.cs">
+    <Files>
+      <File FileName="Assets/RaceController.cs" Line="7" Column="6" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Lab07" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Standard Assets" expanded="True">
+                <Node name="Utility" expanded="True" />
+              </Node>
+              <Node name="RaceController.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6b0910fe-7300-47cc-b1a6-7efc5134a05f" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
