@@ -1,9 +1,10 @@
 ﻿<Properties StartupConfiguration="{3B0374F8-5CDC-6B98-159D-71FE625EC37E}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ScoreManager.cs">
     <Files>
-      <File FileName="Assets/RaceController.cs" Line="62" Column="34" />
-      <File FileName="Assets/LoadTrackOnClick.cs" Line="10" Column="44" />
-      <File FileName="Assets/ScoreManager.cs" Line="5" Column="17" />
+      <File FileName="Assets/RaceController.cs" Line="66" Column="10" />
+      <File FileName="Assets/LoadTrackOnClick.cs" Line="11" Column="6" />
+      <File FileName="Assets/ScoreManager.cs" Line="16" Column="43" />
+      <File FileName="Assets/ScoreUpdater.cs" Line="16" Column="53" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

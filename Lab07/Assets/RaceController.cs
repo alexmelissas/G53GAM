@@ -60,12 +60,11 @@ public class RaceController : MonoBehaviour
 		}
     }
 
-    private void onTriggerEnter3D(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("MEEPMOOPMOP");
         if(other.gameObject.tag == "Player")
         {
-            scoreManager.setTime((Time.time - startTime), SceneManager.GetActiveScene().buildIndex);
+            scoreManager.setTime(SceneManager.GetActiveScene().buildIndex,(Time.time - startTime), SceneManager.GetActiveScene().buildIndex);
             SceneManager.LoadScene(0);
         }
     }
