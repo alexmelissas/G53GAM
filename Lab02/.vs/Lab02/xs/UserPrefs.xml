@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{3F226757-73C9-60C4-C596-5B05AB305F9E}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Hazard.cs">
+    <Files>
+      <File FileName="Assets/Hazard.cs" Line="27" Column="6" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Lab02" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Hazard.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4f72cf4b-6c75-4a21-917a-d805eac1ece6" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
