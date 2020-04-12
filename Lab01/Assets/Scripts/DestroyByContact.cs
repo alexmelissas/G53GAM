@@ -24,8 +24,10 @@ public class DestroyByContact : MonoBehaviour
     {
         if (other.tag == "Player" || gameObject.tag == "Player")
         {
-            //reset score but w/e
+            gameController.ResetScore();
+            gameController.hazardCount = gameController.resetHazardCount;
             Application.LoadLevel(Application.loadedLevel);
+            StartCoroutine(gameController.SpawnWaves());
             return;
         }
         gameController.AddScore(10);

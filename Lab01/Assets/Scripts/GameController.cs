@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     public GameObject hazard;
+    public Text scoreText;
     public Vector3 spawnValues;
     public int hazardCount;
+    public int resetHazardCount;
     public float spawnWait, waveWait;
     int totalScore = 0;
 
@@ -14,9 +17,10 @@ public class GameController : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnWaves());
+        resetHazardCount = hazardCount;
     }
 
-    IEnumerator SpawnWaves()
+    public IEnumerator SpawnWaves()
     {
         while(true)
         {
@@ -42,5 +46,12 @@ public class GameController : MonoBehaviour
     {
         totalScore += score;
         Debug.Log("Current score: " + totalScore);
+        scoreText.text = "" + totalScore;
+    }
+
+    public void ResetScore()
+    {
+        totalScore = 0;
+        scoreText.text = "" + totalScore;
     }
 }
