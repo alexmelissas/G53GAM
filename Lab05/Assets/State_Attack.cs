@@ -29,14 +29,15 @@ public class State_Attack : IState
         if (!agent.pathPending && agent.remainingDistance < 5.0f)
         {
             agent.isStopped = true;
+            
         }
         if (owner.seenTarget != true)
         {
             Debug.Log("lost sight, SEARCHING");
             owner.stateMachine.ChangeState(new State_Search(owner));
         }
-        else owner.FireOnPlayer();
-        
+
+        owner.FireOnPlayer();
     }
 
     public void Exit()

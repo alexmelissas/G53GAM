@@ -52,6 +52,7 @@ public class EnemyController : MonoBehaviour
             float angle = Vector3.Angle(direction, transform.forward);
 
             seenTarget = false;
+            Debug.Log("======== I DONT SEE PLAYER");
 
             RaycastHit hit;
 
