@@ -66,6 +66,8 @@
     <Compile Include="Assets\Door.cs" />
     <Compile Include="Assets\PickUp.cs" />
     <Compile Include="Assets\Switch.cs" />
+    <Compile Include="Assets\disableWin.cs" />
+    <Compile Include="Assets\winPad.cs" />
     <Compile Include="Assets\wind.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/Alex/Documents/G53GAM/Lab04/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

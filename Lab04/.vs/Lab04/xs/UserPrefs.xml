@@ -1,13 +1,15 @@
 ﻿<Properties StartupConfiguration="{ADD4B246-900B-3469-7A58-8C006A6824DF}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/wind.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/winPad.cs">
     <Files>
       <File FileName="Assets/Standard Assets/Utility/AlphaButtonClickMask.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Utility/ForcedReset.cs" Line="7" Column="27" />
       <File FileName="Assets/Standard Assets/Utility/SimpleActivatorMenu.cs" Line="1" Column="1" />
       <File FileName="Assets/PickUp.cs" Line="1" Column="1" />
       <File FileName="Assets/wind.cs" Line="1" Column="1" />
-      <File FileName="Assets/Switch.cs" />
+      <File FileName="Assets/Switch.cs" Line="21" Column="5" />
       <File FileName="Assets/Door.cs" Line="24" Column="6" />
+      <File FileName="Assets/disableWin.cs" Line="8" Column="25" />
+      <File FileName="Assets/winPad.cs" Line="13" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
