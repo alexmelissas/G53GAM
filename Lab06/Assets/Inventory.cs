@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
 
     public void useItem(IInventoryItem item)
     {
-        Debug.Log("Used item");
+        Debug.Log("Used item: "+item.itemName);
         items.Remove(item);
 
         if (ItemUsed != null)

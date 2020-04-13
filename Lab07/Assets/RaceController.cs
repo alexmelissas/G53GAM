@@ -13,6 +13,7 @@ public class RaceController : MonoBehaviour
     public ScoreManager scoreManager;
 
     private float startTime;
+    private double currentTime;
 
     RaceState raceState;
     GameObject[] AICars;
@@ -56,7 +57,8 @@ public class RaceController : MonoBehaviour
     {
 		if (raceState == RaceState.RACING)
 		{
-            timeText.text = "" + Math.Round((Time.time - startTime), 2);
+            currentTime = Math.Round((Time.time - startTime), 2);
+            timeText.text = "" + currentTime;
 		}
     }
 
@@ -64,7 +66,8 @@ public class RaceController : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            scoreManager.setTime(SceneManager.GetActiveScene().buildIndex,(Time.time - startTime), SceneManager.GetActiveScene().buildIndex);
+            Debug.Log("SCORE:" + currentTime);
+            scoreManager.setTime(SceneManager.GetActiveScene().buildIndex,currentTime);
             SceneManager.LoadScene(0);
         }
     }

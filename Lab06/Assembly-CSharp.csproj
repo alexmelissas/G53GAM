@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CheckForKey.cs" />
+    <Compile Include="Assets\CheckForTwo.cs" />
     <Compile Include="Assets\Door.cs" />
     <Compile Include="Assets\HUD.cs" />
     <Compile Include="Assets\IInventoryItem.cs" />

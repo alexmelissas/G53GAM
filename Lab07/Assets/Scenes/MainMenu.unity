@@ -990,6 +990,7 @@ MonoBehaviour:
   scoreManager: {fileID: 11400000, guid: 4d4064f31f5e0437084a18a835bec1ec, type: 2}
   record1: {fileID: 1532299098}
   record2: {fileID: 416872613}
+  button2: {fileID: 331204345}
 --- !u!4 &1441291836
 Transform:
   m_ObjectHideFlags: 0
