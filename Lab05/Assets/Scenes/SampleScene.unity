@@ -1966,7 +1966,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1988671026}
-  - component: {fileID: 1988671027}
   m_Layer: 0
   m_Name: BulletTransform
   m_TagString: Untagged
@@ -1982,25 +1981,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988671025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 998821556}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1988671027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988671025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8389b59625a3e40b79851f163da22116, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
 --- !u!114 &2140361797 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5604670960711079457, guid: 8ac5cfdfe45cb418eb7f8d9549a9ef1f,

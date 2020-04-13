@@ -36,6 +36,7 @@ public class State_Search : IState
 
     public void Exit()
     {
-        owner.stateMachine.ChangeState(new State_Patrol(owner));
+        Debug.Log("exiting patrol state"); // stop moving
+        agent.isStopped = true;
     }
 }
