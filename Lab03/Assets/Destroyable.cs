@@ -5,7 +5,7 @@ using UnityEngine;
 public class Destroyable : MonoBehaviour
 {
     public int timeBonus = 10;
-    public GameObject gameController;
+    public GameController gameController;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class Destroyable : MonoBehaviour
     {
         if(gameController != null)
         {
-            gameController.GetComponent<GameController>().TargetDestroyed();
+            gameController.TargetDestroyed(timeBonus);
         }
     }
 }

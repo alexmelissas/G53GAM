@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{ADD4B246-900B-3469-7A58-8C006A6824DF}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Door.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/wind.cs">
     <Files>
       <File FileName="Assets/Standard Assets/Utility/AlphaButtonClickMask.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Utility/ForcedReset.cs" Line="7" Column="27" />
-      <File FileName="Assets/Standard Assets/Utility/SimpleActivatorMenu.cs" />
-      <File FileName="Assets/PickUp.cs" />
-      <File FileName="Assets/wind.cs" />
-      <File FileName="Assets/Switch.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Utility/SimpleActivatorMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets/PickUp.cs" Line="1" Column="1" />
+      <File FileName="Assets/wind.cs" Line="1" Column="1" />
+      <File FileName="Assets/Switch.cs" />
       <File FileName="Assets/Door.cs" Line="24" Column="6" />
     </Files>
     <Pads>
@@ -19,7 +19,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1d37c11a-c860-4900-aa9c-af482bb11c46" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a06f906e-52de-424a-b735-1843da301b5d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

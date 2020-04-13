@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{A62513BE-F1B0-77D1-6538-A6B57AE147D8}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/BulletMovement.cs">
+    <Files>
+      <File FileName="Assets/GameController.cs" Line="30" Column="47" />
+      <File FileName="Assets/PlayerController.cs" Line="52" Column="42" />
+      <File FileName="Assets/Destroyable.cs" Line="23" Column="6" />
+      <File FileName="Assets/BulletMovement.cs" Line="13" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Lab03" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="BulletMovement.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a06f906e-52de-424a-b735-1843da301b5d" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

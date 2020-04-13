@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         victory.SetActive(false);
         defeat.SetActive(false);
     }
@@ -22,16 +23,13 @@ public class GameController : MonoBehaviour
     void Update()
     {
         timeLeft -= Time.deltaTime;
-        if (timeLeft < 0)
-        {
-            StartCoroutine(WaitForRestart(false));
-        }
-
-        timeText.text = timeLeft.ToString("0");
+        if (timeLeft < 0) StartCoroutine(WaitForRestart(false));
+        else  timeText.text = timeLeft.ToString("0");
     }
 
-    public void TargetDestroyed()
+    public void TargetDestroyed(int timeBonus)
     {
+        timeLeft += timeBonus;
         if(GameObject.FindObjectsOfType<Destroyable>().Length == 0)
         {
             StartCoroutine(WaitForRestart(true));
@@ -50,7 +48,7 @@ public class GameController : MonoBehaviour
             Debug.Log("Defeat");
             defeat.SetActive(true);
         }
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(2.0f);
         Application.LoadLevel(Application.loadedLevel);
     }
 }

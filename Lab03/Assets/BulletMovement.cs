@@ -21,7 +21,6 @@ public class BulletMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Destroy bullet on colission");
         Destroy(gameObject);
     }
 }
