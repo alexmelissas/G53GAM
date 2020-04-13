@@ -82,4 +82,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void FireOnPlayer()
+    {
+        Debug.Log("FIRING ON PLAYER");
+    }
+
 }

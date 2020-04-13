@@ -16,6 +16,7 @@ public class State_Patrol : IState
         Debug.Log("entering patrol state");
         waypoint = owner.waypoint;
         agent = owner.GetComponent<NavMeshAgent>();
+        agent.acceleration = 8;
         agent.destination = waypoint.transform.position; // start moving, in case we were previously stopped
         agent.isStopped = false;
     }

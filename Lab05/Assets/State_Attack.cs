@@ -17,6 +17,7 @@ public class State_Attack : IState
         if (owner.seenTarget)
         {
             agent.destination = owner.lastSeenPosition;
+            agent.acceleration = 16;
             agent.isStopped = false;
         }
     }
@@ -31,10 +32,11 @@ public class State_Attack : IState
         }
         if (owner.seenTarget != true)
         {
-            Debug.Log("lost sight"); // search for the player ...
+            Debug.Log("lost sight, SEARCHING");
+            owner.stateMachine.ChangeState(new State_Search(owner));
         }
-        Debug.Log("FIRIN MA LASOR");
-        // fire on the player ...
+        else owner.FireOnPlayer();
+        
     }
 
     public void Exit()
