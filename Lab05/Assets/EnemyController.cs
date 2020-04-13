@@ -10,6 +10,12 @@ public class EnemyController : MonoBehaviour
     public GameObject target;
     public StateMachine stateMachine = new StateMachine();
 
+    public GameObject bullet;
+    public Transform bulletTransform;
+
+    public float firerate = 0.5f;
+    private float nextFire = 0.0f;
+
     public Vector3 lastSeenPosition;
     public bool seenTarget;
     NavMeshAgent agent;
@@ -84,6 +90,10 @@ public class EnemyController : MonoBehaviour
 
     public void FireOnPlayer()
     {
+        nextFire = Time.time + firerate;
+        Instantiate(bullet,
+            bulletTransform.position,
+            Camera.main.transform.rotation);
         Debug.Log("FIRING ON PLAYER");
     }
 
