@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/PlayerController.cs">
     <Files>
       <File FileName="Assets/GameController.cs" Line="30" Column="47" />
-      <File FileName="Assets/PlayerController.cs" Line="7" Column="5" />
+      <File FileName="Assets/PlayerController.cs" Line="48" Column="60" />
       <File FileName="Assets/Destroyable.cs" />
       <File FileName="Assets/BulletMovement.cs" />
     </Files>

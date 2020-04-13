@@ -90,11 +90,15 @@ public class EnemyController : MonoBehaviour
 
     public void FireOnPlayer()
     {
-        nextFire = Time.time + firerate;
-        Instantiate(bullet,
-            bulletTransform.position,
-            Camera.main.transform.rotation);
-        Debug.Log("FIRING ON PLAYER");
+        if(Time.time > nextFire)
+        {
+            nextFire = Time.time + firerate;
+            Instantiate(bullet,
+                bulletTransform.position,
+                Camera.main.transform.rotation);
+            Debug.Log("FIRING ON PLAYER");
+        }
+        
     }
 
 }

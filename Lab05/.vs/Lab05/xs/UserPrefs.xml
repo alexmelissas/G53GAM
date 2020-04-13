@@ -2,10 +2,10 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EnemyController.cs">
     <Files>
       <File FileName="Assets/Player.cs" Line="7" Column="30" />
-      <File FileName="Assets/EnemyController.cs" Line="19" Column="32" />
-      <File FileName="Assets/State_Attack.cs" Line="35" Column="48" />
+      <File FileName="Assets/EnemyController.cs" Line="93" Column="33" />
+      <File FileName="Assets/State_Attack.cs" />
       <File FileName="Assets/State_Patrol.cs" />
-      <File FileName="Assets/State_Search.cs" />
+      <File FileName="Assets/State_Search.cs" Line="17" Column="52" />
       <File FileName="Assets/Waypoint.cs" />
     </Files>
     <Pads>
