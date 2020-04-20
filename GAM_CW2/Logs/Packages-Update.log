@@ -43,3 +43,16 @@ The following packages were added:
   com.unity.modules.vr@1.0.0
   com.unity.modules.wind@1.0.0
   com.unity.modules.xr@1.0.0
+
+=== Mon Apr 20 15:52:25 2020
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.2d.animation@2.2.1-preview.2
+  com.unity.2d.psdimporter@1.2.0-preview.4
+  com.unity.2d.sprite@1.0.0
+  com.unity.2d.tilemap@1.0.0
+  com.unity.ext.nunit@1.0.0
+  com.unity.package-manager-ui@2.2.0

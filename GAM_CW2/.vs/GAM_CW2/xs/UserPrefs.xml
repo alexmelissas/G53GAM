@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{881A20A4-424D-326C-4F8D-2B5BEC3FEC29}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/UnrankedMatch.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Battle/UnrankedMatch.cs" Line="38" Column="67" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="GAM_CW2" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Battle" expanded="True">
+                  <Node name="UnrankedMatch.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6efe888a-1678-40ed-a37b-6609a9a43c5f" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
