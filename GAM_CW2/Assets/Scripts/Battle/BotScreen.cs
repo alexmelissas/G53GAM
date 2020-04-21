@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using VoxelBusters.NativePlugins;
 
 //! PvE screen and difficulty management
 public class BotScreen : MonoBehaviour {
@@ -59,12 +58,12 @@ public class BotScreen : MonoBehaviour {
     {
         if (PlayerSession.player_session.plays_left_unranked <= 0)
         {
-            NPBinding.UI.ShowToast("No plays left. Check back tomorrow!", eToastMessageLength.SHORT);
+            Debug.Log("No plays left. Check back tomorrow!");
             return;
         }
         loading.SetActive(true);
         PlayerPrefs.SetInt("battle_type", 0);
-        StartCoroutine(Server.GetEnemy(0));
+        //StartCoroutine(Server.GetEnemy(0));
         Invoke("PlayDelayed", 0.5f);
     }
 

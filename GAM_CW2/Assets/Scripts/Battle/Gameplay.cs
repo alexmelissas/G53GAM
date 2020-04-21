@@ -141,7 +141,7 @@ public class Gameplay : MonoBehaviour {
             if (result==0) player_turn = player_turn ? false : true;
         }
         
-        StartCoroutine(Server.PassResult(BattleResult.GetJSON(player, enemy, (result == 1) ? false : true),ranked));
+        //StartCoroutine(Server.PassResult(BattleResult.GetJSON(player, enemy, (result == 1) ? false : true),ranked));
         StartCoroutine(AnimateTurns(turns));
     }
 

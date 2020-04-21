@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using VoxelBusters.NativePlugins;
 
 //! Ranked PvP screen handling
 public class UnrankedMatch : MonoBehaviour
@@ -37,7 +36,7 @@ public class UnrankedMatch : MonoBehaviour
     {
         if (PlayerSession.player_session.plays_left_unranked <= 0)
         {
-            NPBinding.UI.ShowToast("No plays left. Check back tomorrow!", eToastMessageLength.SHORT);
+            Debug.Log("No plays left. Check back tomorrow!");
             return;
         }
         loading_spin_Animation.SetActive(true);
@@ -55,8 +54,8 @@ public class UnrankedMatch : MonoBehaviour
     //! Recursively try to find an enemy 3 times (in case of errors). If not found after 4 tries, stop.
     private IEnumerator CheckEnemy()
     {
-        StartCoroutine(Server.GetEnemy(1));
-        yield return new WaitUntil(() => Server.findEnemy_done == true);
+        //StartCoroutine(Server.GetEnemy(1));
+        //yield return new WaitUntil(() => Server.findEnemy_done == true);
 
         if (PlayerSession.player_session.enemy.id != "")
         {
@@ -68,7 +67,7 @@ public class UnrankedMatch : MonoBehaviour
             StartCoroutine(CheckEnemy());
         }
         else
-            NPBinding.UI.ShowToast("No enemy found. Try again later.", eToastMessageLength.SHORT);
+            //NPBinding.UI.ShowToast("No enemy found. Try again later.", eToastMessageLength.SHORT);
 
         yield break;
     }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using VoxelBusters.NativePlugins;
 
 //! Manage the Inventory screen, including Upgrades
 public class Inventory : MonoBehaviour {
@@ -86,7 +85,7 @@ public class Inventory : MonoBehaviour {
 
         if (currentItemLevel >= 4)
         {
-            NPBinding.UI.ShowToast("Item Fully Upgraded!", eToastMessageLength.SHORT);
+            Debug.Log("Item Fully Upgraded!");
             return;
         }
         else
@@ -149,8 +148,8 @@ public class Inventory : MonoBehaviour {
     //! Perform the server-side updating of the Player based on the purchase
     private IEnumerator Purchase(string poorerPlayerJSON)
     {
-        StartCoroutine(Server.UpdatePlayer(poorerPlayerJSON));
-        yield return new WaitUntil(() => Server.updatePlayer_done == true);
+        //StartCoroutine(Server.UpdatePlayer(poorerPlayerJSON));
+        //yield return new WaitUntil(() => Server.updatePlayer_done == true);
         soundsrc.PlayOneShot(purchase_sound, PlayerPrefs.GetFloat("fx"));
         gameObject.AddComponent<UpdateSessions>().U_Player();
         Displayed(false);
@@ -176,7 +175,7 @@ public class Inventory : MonoBehaviour {
         }
         else
         {
-            NPBinding.UI.ShowToast("Insufficient Funds.", eToastMessageLength.SHORT);
+            Debug.Log("Insufficient Funds.");
             gameObject.AddComponent<UpdateSessions>().U_Player();
             Displayed(false);
         }

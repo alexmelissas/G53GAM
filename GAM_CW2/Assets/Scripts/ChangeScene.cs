@@ -20,8 +20,6 @@ public class ChangeScene : MonoBehaviour {
             int top = SceneHistory.scene_history.scenes.Count - 1;
             if (top >= 0)
             {
-                if (SceneHistory.scene_history.scenes[top] == "Register")
-                    StartCoroutine(Server.DeleteAccount());
                 SceneManager.LoadScene(SceneHistory.scene_history.scenes[top]);
                 SceneHistory.scene_history.scenes.RemoveAt(top);
             }

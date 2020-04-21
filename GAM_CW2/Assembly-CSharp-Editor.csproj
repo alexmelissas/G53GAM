@@ -63,8 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Editor\Unit Tests\Items_Test.cs" />
-    <Compile Include="Assets\Scripts\Editor\Unit Tests\User_Player_Test.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>/Users/Alex/Documents/G53GAM/GAM_CW2/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

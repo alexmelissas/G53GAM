@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using VoxelBusters.NativePlugins;
 
 //! Ranked PvP screen handling
 public class RankedMatchScreen : MonoBehaviour
@@ -39,31 +38,31 @@ public class RankedMatchScreen : MonoBehaviour
     {
         if (newRank != oldRank) // Only update when different rank is clicked.
         {
-            string url = Server.Address("get_ranked_players") + PlayerSession.player_session.player.id;
-            using (UnityWebRequest uwr = UnityWebRequest.Get(Server.Address("view_users"))) // new API eg. /players/rank/{rank}
-            {
-                uwr.timeout = 10;
-                yield return uwr.SendWebRequest();
+            //string url = Server.Address("get_ranked_players") + PlayerSession.player_session.player.id;
+            //using (UnityWebRequest uwr = UnityWebRequest.Get(Server.Address("view_users"))) // new API eg. /players/rank/{rank}
+            //{
+            //    uwr.timeout = 10;
+            //    yield return uwr.SendWebRequest();
             
-                string all = uwr.downloadHandler.text.Trim(new char[] { '[', ']' }); // Split the entire all-player JSON into individual-user JSONs.
-                string[] separators = { "},", "}" };
-                string[] entries = all.Split(separators, System.StringSplitOptions.RemoveEmptyEntries);
+            //    string all = uwr.downloadHandler.text.Trim(new char[] { '[', ']' }); // Split the entire all-player JSON into individual-user JSONs.
+            //    string[] separators = { "},", "}" };
+            //    string[] entries = all.Split(separators, System.StringSplitOptions.RemoveEmptyEntries);
 
-                Debug.Log(all);
-                foreach(string st in entries)
-                {
-                    Debug.Log(st);
-                }
+            //    Debug.Log(all);
+            //    foreach(string st in entries)
+            //    {
+            //        Debug.Log(st);
+            //    }
 
-                for (int i = 0; i < entries.Length; i++)
-                {
-                    if (i == 5) break;
-                    string newUserJson = entries[i] + "}";
-                    User newUser = User.CreateUserFromJSON(newUserJson);
-                    users.Add(newUser);
-                }
-                uwr.Dispose();
-            }
+            //    for (int i = 0; i < entries.Length; i++)
+            //    {
+            //        if (i == 5) break;
+            //        string newUserJson = entries[i] + "}";
+            //        User newUser = User.CreateUserFromJSON(newUserJson);
+            //        users.Add(newUser);
+            //    }
+            //    uwr.Dispose();
+            //}
 
             int s = 0;
             foreach (User current in users)
@@ -90,7 +89,7 @@ public class RankedMatchScreen : MonoBehaviour
     {
         if (PlayerSession.player_session.plays_left_ranked <= 0)
         {
-            NPBinding.UI.ShowToast("No plays left. Check back tomorrow!", eToastMessageLength.SHORT);
+            Debug.Log("No plays left. Check back tomorrow!");
             return;
         }
         loading_spin_Animation.SetActive(true);
@@ -108,8 +107,8 @@ public class RankedMatchScreen : MonoBehaviour
     //! Recursively try to find an enemy 3 times (in case of errors). If not found after 4 tries, stop.
     private IEnumerator CheckEnemy()
     {
-        StartCoroutine(Server.GetEnemy(1));
-        yield return new WaitUntil(() => Server.findEnemy_done == true);
+        //StartCoroutine(Server.GetEnemy(1));
+        //yield return new WaitUntil(() => Server.findEnemy_done == true);
 
         if (PlayerSession.player_session.enemy.id != "")
         {
@@ -121,7 +120,7 @@ public class RankedMatchScreen : MonoBehaviour
             StartCoroutine(CheckEnemy());
         }
         else
-            NPBinding.UI.ShowToast("No enemy found. Try again later.", eToastMessageLength.SHORT);
+            //NPBinding.UI.ShowToast("No enemy found. Try again later.", eToastMessageLength.SHORT);
 
         yield break;
     }

@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using VoxelBusters.NativePlugins;
 
 // Usage: add this line to the other class and choose the function
 // gameObject.AddComponent<UpdateSessions>()
@@ -36,19 +35,19 @@ public class UpdateSessions : MonoBehaviour{
     //! GET JSON for Player
     IEnumerator GetPlayer()
     {
-        UnityWebRequest uwr = UnityWebRequest.Get(Server.Address("players") + ZPlayerPrefs.GetString("id"));
-        uwr.timeout = 10;
-        yield return uwr.SendWebRequest();
-        if (uwr.isNetworkError)
-        {
-            Debug.Log("Error While Sending: " + uwr.error);
-            NPBinding.UI.ShowToast("Communication Error. Please try again later.", eToastMessageLength.SHORT);
-        }
-        else
-        {
-            UpdateSessions.JSON_Session("player", uwr.downloadHandler.text);
-        }
-        uwr.Dispose();
+        //UnityWebRequest uwr = UnityWebRequest.Get(Server.Address("players") + ZPlayerPrefs.GetString("id"));
+        //uwr.timeout = 10;
+        //yield return uwr.SendWebRequest();
+        //if (uwr.isNetworkError)
+        //{
+        //    Debug.Log("Error While Sending: " + uwr.error);
+        //}
+        //else
+        //{
+        //    UpdateSessions.JSON_Session("player", uwr.downloadHandler.text);
+        //}
+        //uwr.Dispose();
+        yield return 0;
 
         Invoke("InvokableGetPlaysLeft", 0.3f);
         Invoke("InvokableGetRankPoints", 0.4f);
@@ -58,29 +57,30 @@ public class UpdateSessions : MonoBehaviour{
 
     //! Get JSON for User
     IEnumerator GetUser(bool all)
-    {        
-        UnityWebRequest uwr = UnityWebRequest.Get(Server.Address("read_user") + ZPlayerPrefs.GetString("id"));
-        uwr.timeout = 10;
-        yield return uwr.SendWebRequest();
-        if (uwr.isNetworkError)
-        {
-            Debug.Log("Error While Sending: " + uwr.error);
-            NPBinding.UI.ShowToast("Communication Error. Please try again later.", eToastMessageLength.SHORT);
-        }
-        else
-        {
-            if (User.CreateUserFromJSON(uwr.downloadHandler.text).GetID() == "") yield break;
-            UpdateSessions.JSON_Session("user", uwr.downloadHandler.text);          
-            if (all) yield return StartCoroutine(GetPlayer());
-        }
-        uwr.Dispose();
+    {
+        //UnityWebRequest uwr = UnityWebRequest.Get(Server.Address("read_user") + ZPlayerPrefs.GetString("id"));
+        //uwr.timeout = 10;
+        //yield return uwr.SendWebRequest();
+        //if (uwr.isNetworkError)
+        //{
+        //    Debug.Log("Error While Sending: " + uwr.error);
+        //    NPBinding.UI.ShowToast("Communication Error. Please try again later.", eToastMessageLength.SHORT);
+        //}
+        //else
+        //{
+        //    if (User.CreateUserFromJSON(uwr.downloadHandler.text).GetID() == "") yield break;
+        //    UpdateSessions.JSON_Session("user", uwr.downloadHandler.text);          
+        //    if (all) yield return StartCoroutine(GetPlayer());
+        //}
+        //uwr.Dispose();
+        yield return 0;
         StopCoroutine(GetUser(all));
     }
 
     //! Get the player's remaining plays for the day
     IEnumerator GetPlaysLeft()
     {
-        string unranked_address = Server.Address("get_plays") + UserSession.user_session.user.id;
+        string unranked_address = "9";//Server.Address("get_plays") + UserSession.user_session.user.id;
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(unranked_address))
         {
@@ -96,7 +96,7 @@ public class UpdateSessions : MonoBehaviour{
             uwr.Dispose();
         }
 
-        string ranked_address = Server.Address("get_plays_ranked") + UserSession.user_session.user.id;
+        string ranked_address = "9"; // Server.Address("get_plays_ranked") + UserSession.user_session.user.id;
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(ranked_address))
         {
@@ -118,7 +118,7 @@ public class UpdateSessions : MonoBehaviour{
     //! Get the player's rank points
     IEnumerator GetRankPoints()
     {
-        string unranked_address = Server.Address("ranked_points") + UserSession.user_session.user.id;
+        string unranked_address = "9"; // Server.Address("ranked_points") + UserSession.user_session.user.id;
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(unranked_address))
         {
