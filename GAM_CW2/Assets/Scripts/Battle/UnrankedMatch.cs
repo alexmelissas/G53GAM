@@ -34,11 +34,6 @@ public class UnrankedMatch : MonoBehaviour
     //! Initiate the PvP match
     public void Play()
     {
-        if (PlayerSession.player_session.plays_left_unranked <= 0)
-        {
-            Debug.Log("No plays left. Check back tomorrow!");
-            return;
-        }
         loading_spin_Animation.SetActive(true);
         PlayerPrefs.SetInt("battle_type", 2);
         attempts = 0;
@@ -57,7 +52,7 @@ public class UnrankedMatch : MonoBehaviour
         //StartCoroutine(Server.GetEnemy(1));
         //yield return new WaitUntil(() => Server.findEnemy_done == true);
 
-        if (PlayerSession.player_session.enemy.id != "")
+        if (PlayerObjects.playerObjects.enemy.username != "")
         {
             gameObject.AddComponent<ChangeScene>().Forward("Battle");
         }

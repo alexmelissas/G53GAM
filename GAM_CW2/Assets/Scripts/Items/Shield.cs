@@ -5,7 +5,7 @@ public class Shield : Item {
 
     public static Texture2D base_icon; //set path to base icon here
 
-    public Shield(int level) : base(base_icon, "", 0, 0, 0, 0, 0, 0)
+    public Shield(int level) : base(base_icon, "", 0, 0, 0, 0, 0, 0, 0)
     {
         string item_icon_location = "";
         int attribute = 0;
@@ -38,7 +38,7 @@ public class Shield : Item {
             default: break;
         }
         icon = Resources.Load(item_icon_location) as Texture2D;
-        defense = attribute;
+        def = attribute;
     }
 
 

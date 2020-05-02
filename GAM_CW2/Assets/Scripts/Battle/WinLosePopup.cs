@@ -10,8 +10,8 @@ public class WinLosePopup : MonoBehaviour {
     public AudioSource soundsrc;
     public AudioClip levelup_Sound;
 
-    private Text moneyGained, currentLevel;
-    private Slider expSlider;
+    private Text coinsGained, currentLevel;
+    private Slider xpSlider;
 
     private Player before, after;
 
@@ -30,43 +30,43 @@ public class WinLosePopup : MonoBehaviour {
 
         if(didSetup==true)
         {
-            if (before.experience < after.experience)
+            if (before.xp < after.xp)
             {
-                if (expSlider.normalizedValue != 1)
+                if (xpSlider.normalizedValue != 1)
                 {
-                    expSlider.normalizedValue += 0.002f;
+                    xpSlider.normalizedValue += 0.002f;
 
-                    if (gainedLevel) addedExp += after.exptolevel * 0.002f;
-                    else addedExp += before.exptolevel * 0.002f;
+                    if (gainedLevel) addedExp += after.levelupxp * 0.002f;
+                    else addedExp += before.levelupxp * 0.002f;
 
                     if (addedExp >= 1)
                     {
-                        before.experience++;
+                        before.xp++;
                         addedExp = 0;
                     }
                 }
             }
             else if (before.level != after.level)
             {
-                if (expSlider.normalizedValue != 1)
+                if (xpSlider.normalizedValue != 1)
                 {
-                    expSlider.normalizedValue += 0.002f;
+                    xpSlider.normalizedValue += 0.002f;
 
-                    if (gainedLevel) addedExp += after.exptolevel * 0.002f;
-                    else addedExp += before.exptolevel * 0.002f;
+                    if (gainedLevel) addedExp += after.levelupxp * 0.002f;
+                    else addedExp += before.levelupxp * 0.002f;
 
                     if (addedExp >= 1)
                     {
-                        before.experience++;
+                        before.xp++;
                         addedExp = 0;
                     }
                 }
                 else
                 {
-                    expSlider.normalizedValue = 0;
+                    xpSlider.normalizedValue = 0;
                     soundsrc.PlayOneShot(levelup_Sound, PlayerPrefs.GetFloat("fx")/2);
                     before.level++;
-                    before.experience = 0;
+                    before.xp = 0;
                     gainedLevel = true;
                     currentLevel.text = "" + before.level;
                 }
@@ -78,28 +78,28 @@ public class WinLosePopup : MonoBehaviour {
     // Calculate the changes to the Player (rewards)
     private void Setup()
     {
-        before = PlayerSession.player_session.player_before_battle;
-        after = PlayerSession.player_session.player;
+        before = PlayerObjects.playerObjects.player_before_battle;
+        after = PlayerObjects.playerObjects.player;
         
         addedExp = 0;
 
         if(Gameplay.updatePlayer==1)
         {
-            moneyGained = loseMoneyText;
+            coinsGained = loseMoneyText;
             currentLevel = loseNextLvlText;
-            expSlider = loseExpSlider;
+            xpSlider = loseExpSlider;
         }
         else
         {
-            moneyGained = winMoneyText;
+            coinsGained = winMoneyText;
             currentLevel = winNextLevelText;
-            expSlider = winExpSlider;
+            xpSlider = winExpSlider;
         }
-        
-        expSlider.normalizedValue = (float)before.experience / (float)before.exptolevel;
-        currentLevel.text = "" + before.level;
-        moneyGained.text = "" + (after.money - before.money);
 
-        PlayerSession.player_session.player_before_battle = new Player();
+        xpSlider.normalizedValue = (float)before.xp / (float)before.levelupxp;
+        currentLevel.text = "" + before.level;
+        coinsGained.text = "" + (after.coins - before.coins);
+
+        PlayerObjects.playerObjects.player_before_battle = new Player();
     }
 }

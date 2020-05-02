@@ -6,7 +6,7 @@ public class Hazard : MonoBehaviour
 {
 
     public bool vertical;
-
+    public GameObject rpgscreen;
     public AnimationCurve curve;
 
     private float x,y,z;
@@ -29,6 +29,7 @@ public class Hazard : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Touched hazard");
+        rpgscreen.SetActive(true);
         Application.LoadLevel(Application.loadedLevel);
     }
 }

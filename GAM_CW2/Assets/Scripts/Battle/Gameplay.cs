@@ -21,7 +21,7 @@ public class Gameplay : MonoBehaviour {
     public AudioClip player_hit_Sound, enemy_hit_Sound, crit_Sound, miss_Sound, drop_sword_Sound;
     public GameObject winPopup, losePopup;
 
-    //! For the popups at the end of the battle to know when to animate EXP gain.
+    //! For the popups at the end of the battle to know when to animate XP gain.
     public static int updatePlayer;
     public static string currentAnimation_player = "player_idle_Animation";
     public static string currentAnimation_enemy = "enemy_idle_Animation";
@@ -36,7 +36,6 @@ public class Gameplay : MonoBehaviour {
     float enemy_newHP = -1;
     private bool skip = false;
     private bool death = false;
-    private bool ranked;
 
     //! Skip button handler
     public void Press_Skip() { skip = true; }
@@ -44,8 +43,8 @@ public class Gameplay : MonoBehaviour {
     //! Hide/Show the end game popups
     private void ShowPopup(bool shown, bool win)
     {
-        Vector3 hide = new Vector3(7630, 2430, 0);
-        Vector3 show = new Vector3(0,0,0);
+        Vector3 hide = new Vector3(10000, 10000, 0);
+        Vector3 show = new Vector3(1250, 500, 0);
         GameObject panel = win ? winPopup : losePopup;
         panel.transform.position = shown ? show : hide;
     }
@@ -55,32 +54,24 @@ public class Gameplay : MonoBehaviour {
     {
         ended = false;
         updatePlayer = -1;
-        player = PlayerSession.player_session.player;
-        PlayerSession.player_session.player_before_battle = Player.Clone(PlayerSession.player_session.player); // keep the player before gains
+        //
+        PlayerObjects.playerObjects.player = new Player();
+        PlayerObjects.playerObjects.enemy = new Player();
+        //
+        player = PlayerObjects.playerObjects.player;
+        PlayerObjects.playerObjects.player_before_battle = Player.Clone(PlayerObjects.playerObjects.player); // keep the player before gains
         Items.AttachItemsToPlayer(new Items(player), player);
 
-        if (!PlayerPrefs.HasKey("battle_type"))
-            gameObject.AddComponent<ChangeScene>().Forward("Overworld");
-        int battle_type = PlayerPrefs.GetInt("battle_type");
-        ranked = (battle_type == 1);
-
-        if(battle_type!=0 && battle_type!=1 && battle_type!=2)
-            gameObject.AddComponent<ChangeScene>().Forward("Overworld"); 
-        enemy = PlayerSession.player_session.enemy;
-        if (battle_type == 0)
-        {
-            enemy.id = "bot";
-            enemy.characterName = BotScreen.difficulty + "Bot";
-        }
+        enemy = PlayerObjects.playerObjects.enemy;
         Items.AttachItemsToPlayer(new Items(enemy), enemy);
 
         turns = new List<Turn>();
         player_maxHP = player.hp;
         enemy_maxHP = enemy.hp;
 
-        playerNameText.text = "" + player.characterName;
+        playerNameText.text = "" + player.username;
         playerLevelText.text = "" + player.level;
-        enemyNameText.text = "" + enemy.characterName;
+        enemyNameText.text = "" + enemy.username;
         enemyLevelText.text = "" + enemy.level;
 
         playerDmgLabelText.enabled = enemyDmgLabelText.enabled = false;
@@ -130,18 +121,21 @@ public class Gameplay : MonoBehaviour {
     public void RunBattle()
     {
         result = 0;
-        bool player_turn = true; // think about who goes first
+
+        // Biggest spd guy hits first
+        bool player_turn;
+        if (player.spd >= enemy.spd) player_turn = true;
+        else player_turn = false;
+
         while (result == 0)
         {
             Turn turn = new Turn(player_turn, player, enemy);
             turns.Add(turn);
-            result = turn.PlayTurn();
+            result = turn.PlayTurn(); // when result=1 => the battle has an outcome, so is over
             player = Player.Clone(turn.player); // get a new Player object with updated HP to pass to the next turn
-            enemy = Player.Clone(turn.enemy);
-            if (result==0) player_turn = player_turn ? false : true;
+            enemy = Player.Clone(turn.enemy); // same for enemy
+            if (result==0) player_turn = player_turn ? false : true; // swap whose turn it is
         }
-        
-        //StartCoroutine(Server.PassResult(BattleResult.GetJSON(player, enemy, (result == 1) ? false : true),ranked));
         StartCoroutine(AnimateTurns(turns));
     }
 
@@ -152,7 +146,6 @@ public class Gameplay : MonoBehaviour {
 
         ended = true;
         StopAllCoroutines();
-        gameObject.AddComponent<UpdateSessions>().U_Player(); //now the Playersession player is updated
         
         if (result == 1) ShowPopup(true, false);
         else ShowPopup(true, true);

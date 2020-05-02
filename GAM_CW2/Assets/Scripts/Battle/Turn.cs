@@ -26,9 +26,9 @@ public class Turn {
         Player attacker = PlaysNow(player_turn);
         Player victim = PlaysNow(!player_turn);
 
-        int real_attack = attacker.attack;
+        int real_attack = attacker.atk;
         int applied_attack = Random.Range((int)(real_attack - (real_attack*0.05)),(int)(real_attack + (real_attack*0.05)));
-        damage = (applied_attack - victim.defense) * (victim.level > attacker.level ? victim.level - attacker.level : 1);
+        damage = (applied_attack - victim.def) * (victim.level > attacker.level ? victim.level - attacker.level : 1);
         if (damage < 1) damage = 1;
         int low_crit = 20;//attacker.critical_strike; // not sure about multiplying it? //FIX THIS TO 10
         int med_crit = low_crit/2;

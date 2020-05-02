@@ -22,8 +22,8 @@ public class SetSettings : MonoBehaviour {
         PlayerPrefs.SetFloat("fx", fxSlider.value);
         PlayerPrefs.SetInt("skip", skipToggle.isOn ? 1 : 0);
 
-        currentloginText.GetComponentInChildren<Text>().text = "Logged in as: ";
-        usernameText.GetComponentInChildren<Text>().text = UserSession.user_session.user.GetUsername();
+        currentloginText.GetComponentInChildren<Text>().text = "Playing as: ";
+        usernameText.GetComponentInChildren<Text>().text = PlayerObjects.playerObjects.player.username;
 
     }      
 }

@@ -5,13 +5,13 @@ public class Armour : Item {
 
     public static Texture2D base_icon; // set path to base icon here
 
-    public Armour(int level) : base(base_icon, "", 0, 0, 0, 0, 0, 0)
+    public Armour(int level) : base(base_icon, "", 0, 0, 0, 0, 0, 0, 0)
     {
         string item_icon_location = "";
         int attribute = 0;
         switch (level)
         {
-            case 1:
+            case 1: // NOT BOOTS FFS
                 name = "Peasant Boots";
                 attribute = 20;
                 price = 99;

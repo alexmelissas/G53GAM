@@ -5,7 +5,7 @@ using UnityEngine.UI;
 //! Manage the Inventory screen, including Upgrades
 public class Inventory : MonoBehaviour {
 
-    public Text hpText, atkText, defText, moneyText;
+    public Text hpText, atkText, defText, coinsText;
     public GameObject upgradePanel;
     public Text itemNameText, statText, priceText, balanceText;
     public GameObject armourIconImage, shieldIconImage, swordIconImage, statIconImage;
@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour {
     private int currentItemLevel;
     
 
-    private void Awake() { gameObject.AddComponent<UpdateSessions>().U_All(); }
+    //private void Awake() { gameObject.AddComponent<UpdateSessions>().U_All(); }
 
     //! General Setup
     private void Start()
@@ -35,15 +35,15 @@ public class Inventory : MonoBehaviour {
     //! Keep the player's stats display updated
     private void Update()
     {
-        if (!(p.ComparePlayer(PlayerSession.player_session.player)))
+        if (!(p.ComparePlayer(PlayerObjects.playerObjects.player)))
         {
-            p = PlayerSession.player_session.player;
+            p = PlayerObjects.playerObjects.player;
             Stats stats = new Stats(p);
 
             hpText.text = stats.StatsToStrings()[0];
             atkText.text = stats.StatsToStrings()[1];
             defText.text = stats.StatsToStrings()[2];
-            moneyText.text = "" + p.money;
+            coinsText.text = "" + p.coins;
 
             currentSwordImage.GetComponent<RawImage>().texture = Item.NewItem("sword", p.sword).icon;
             currentShieldImage.GetComponent<RawImage>().texture = Item.NewItem("shield", p.shield).icon;
@@ -68,17 +68,17 @@ public class Inventory : MonoBehaviour {
         switch(item_type)
         {
             case 0: // Sword
-                currentItemLevel = PlayerSession.player_session.player.sword;
+                currentItemLevel = PlayerObjects.playerObjects.player.sword;
                 displayItemType = "sword";
                 break;
 
             case 1: // Shield
-                currentItemLevel = PlayerSession.player_session.player.shield;
+                currentItemLevel = PlayerObjects.playerObjects.player.shield;
                 displayItemType = "shield";
                 break;
 
             case 2: // Armour
-                currentItemLevel = PlayerSession.player_session.player.armour;
+                currentItemLevel = PlayerObjects.playerObjects.player.armour;
                 displayItemType = "armour";
                 break;
         }
@@ -126,11 +126,11 @@ public class Inventory : MonoBehaviour {
         {
             case 0:
                 statIcon = atk;
-                stat = displayItem.attack;
+                stat = displayItem.atk;
                 break;
             case 1:
                 statIcon = def;
-                stat = displayItem.defense;
+                stat = displayItem.def;
                 break;
             case 2:
                 statIcon = hp;
@@ -141,7 +141,7 @@ public class Inventory : MonoBehaviour {
         statIconImage.GetComponent<Image>().sprite = statIcon;
         itemNameText.text = displayItem.name;
         statText.text = "" + stat;
-        balanceText.text = "" + PlayerSession.player_session.player.money;
+        balanceText.text = "" + PlayerObjects.playerObjects.player.coins;
         priceText.text = "" + displayItem.price;
     }
 
@@ -150,19 +150,19 @@ public class Inventory : MonoBehaviour {
     {
         //StartCoroutine(Server.UpdatePlayer(poorerPlayerJSON));
         //yield return new WaitUntil(() => Server.updatePlayer_done == true);
-        soundsrc.PlayOneShot(purchase_sound, PlayerPrefs.GetFloat("fx"));
-        gameObject.AddComponent<UpdateSessions>().U_Player();
-        Displayed(false);
+        //soundsrc.PlayOneShot(purchase_sound, PlayerPrefs.GetFloat("fx"));
+        //gameObject.AddComponent<UpdateSessions>().U_Player();
+        //Displayed(false);
         yield break;
     }
 
     //! Check if player has enough funds, then make the purchase
     public void ConfirmPurchase()
     {
-        if (PlayerSession.player_session.player.money >= displayItem.price)
+        if (PlayerObjects.playerObjects.player.coins >= displayItem.price)
         {
-            Player poorerPlayer = Player.Clone(PlayerSession.player_session.player);
-            poorerPlayer.money -= displayItem.price;
+            Player poorerPlayer = Player.Clone(PlayerObjects.playerObjects.player);
+            poorerPlayer.coins -= displayItem.price;
             switch(displayItemType)
             {
                 case "sword": poorerPlayer.sword++; break;
@@ -176,7 +176,7 @@ public class Inventory : MonoBehaviour {
         else
         {
             Debug.Log("Insufficient Funds.");
-            gameObject.AddComponent<UpdateSessions>().U_Player();
+            //gameObject.AddComponent<UpdateSessions>().U_Player();
             Displayed(false);
         }
     }

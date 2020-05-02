@@ -1,28 +1,31 @@
 ﻿<Properties StartupConfiguration="{881A20A4-424D-326C-4F8D-2B5BEC3FEC29}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Session Objects/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Session Objects/PlayerObjects.cs">
     <Files>
-      <File FileName="Assets/Scripts/Battle/UnrankedMatch.cs" Line="69" Column="13" />
-      <File FileName="Assets/Scripts/Session Objects/Player.cs" Line="36" Column="21" />
-      <File FileName="Assets/Scripts/Session Objects/PlayerSession.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/ChangeScene.cs" Line="22" Column="14" />
-      <File FileName="Assets/Scripts/BackButtonHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Inventory.cs" Line="178" Column="46" />
-      <File FileName="Assets/Scripts/Profile.cs" Line="1" Column="6" />
-      <File FileName="Assets/Scripts/SetSettings.cs" Line="8" Column="30" />
-      <File FileName="Assets/Scripts/Stats.cs" Line="20" Column="48" />
+      <File FileName="Assets/Scripts/Session Objects/PlayerSession.cs" Line="14" Column="70" IsPinned="True" />
+      <File FileName="Assets/Scripts/Battle/Gameplay.cs" Line="54" Column="6" IsPinned="True" />
+      <File FileName="Assets/Scripts/Session Objects/Player.cs" Line="25" Column="21" IsPinned="True" />
+      <File FileName="Assets/Scripts/Stats.cs" Line="6" Column="45" IsPinned="True" />
+      <File FileName="Assets/Scripts/Inventory.cs" Line="179" Column="68" IsPinned="True" />
+      <File FileName="Assets/Scripts/Profile.cs" Line="36" Column="54" IsPinned="True" />
+      <File FileName="Assets/Scripts/Battle/BattleResult.cs" Line="14" Column="25" IsPinned="True" />
+      <File FileName="Assets/Scripts/Battle/Turn.cs" Line="40" Column="81" IsPinned="True" />
+      <File FileName="Assets/Scripts/Items/Shield.cs" Line="38" Column="28" IsPinned="True" />
+      <File FileName="Assets/Scripts/Items/Item.cs" Line="21" Column="46" />
+      <File FileName="Assets/Scripts/Items/Items.cs" Line="15" Column="54" />
+      <File FileName="Assets/Scripts/SetSettings.cs" Line="30" Column="1" />
+      <File FileName="Assets/FallDetection.cs" Line="9" Column="6" />
+      <File FileName="Assets/PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Hazard.cs" Line="24" Column="6" />
+      <File FileName="Assets/Scripts/ChangeScene.cs" Line="13" Column="6" />
+      <File FileName="Assets/Scripts/BackButtonHandler.cs" Line="22" Column="10" />
+      <File FileName="Assets/Scripts/Session Objects/PlayerHandler.cs" Line="9" Column="9" />
       <File FileName="Assets/Scripts/Session Objects/SceneHistory.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Battle/BotScreen.cs" Line="1" Column="19" />
-      <File FileName="Assets/Scripts/Battle/RankedMatchScreen.cs" Line="111" Column="9" />
-      <File FileName="Assets/Scripts/Session Objects/UpdateSessions.cs" Line="50" Column="24" />
-      <File FileName="Assets/Scripts/Battle/Gameplay.cs" Line="142" Column="10" />
-      <File FileName="Assets/Scripts/Items/Item.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Items/Armour.cs" Line="35" Column="29" />
-      <File FileName="Assets/Scripts/Items/Items.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Items/Shield.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Items/Sword.cs" Line="1" Column="1" />
-      <File FileName="Assets/FallDetection.cs" Line="22" Column="1" />
-      <File FileName="Assets/PlayerController.cs" Line="60" Column="117" />
-      <File FileName="Assets/Hazard.cs" Line="12" Column="25" />
+      <File FileName="Assets/Scripts/Battle/UnrankedMatch.cs" Line="36" Column="6" />
+      <File FileName="Assets/Scripts/Battle/WinLosePopup.cs" Line="82" Column="52" />
+      <File FileName="Assets/Scripts/Items/Armour.cs" Line="8" Column="67" />
+      <File FileName="Assets/Scripts/Items/Sword.cs" Line="10" Column="40" />
+      <File FileName="Assets/Scripts/Items/Boots.cs" Line="9" Column="71" />
+      <File FileName="Assets/Scripts/Battle/AnimationManager.cs" Line="31" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -31,8 +34,9 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Battle" expanded="True" />
+                <Node name="Items" expanded="True" />
                 <Node name="Session Objects" expanded="True">
-                  <Node name="Player.cs" selected="True" />
+                  <Node name="PlayerObjects.cs" selected="True" />
                 </Node>
               </Node>
             </Node>
@@ -43,7 +47,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c385315c-f5d7-4a6a-acf9-dbc15ee5560f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9cd73514-d960-4db6-9692-d5de79c0ed6a" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
