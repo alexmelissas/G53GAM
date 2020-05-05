@@ -67,8 +67,8 @@
     <Compile Include="Assets\CheckForTwo.cs" />
     <Compile Include="Assets\Door.cs" />
     <Compile Include="Assets\HUD.cs" />
+    <Compile Include="Assets\HUDInventory.cs" />
     <Compile Include="Assets\IInventoryItem.cs" />
-    <Compile Include="Assets\Inventory.cs" />
     <Compile Include="Assets\InventoryEventArgs.cs" />
     <Compile Include="Assets\InventoryItemClickable.cs" />
     <Compile Include="Assets\PickupableItem.cs" />

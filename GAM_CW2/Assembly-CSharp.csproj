@@ -63,9 +63,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\FallDetection.cs" />
-    <Compile Include="Assets\Hazard.cs" />
-    <Compile Include="Assets\PlayerController.cs" />
+    <Compile Include="Assets\Extra Assets\Sepiroth\Demo\Scripts\CharacterController2D.cs" />
+    <Compile Include="Assets\Extra Assets\Sepiroth\Demo\Scripts\FlyingPlayerController.cs" />
+    <Compile Include="Assets\Extra Assets\Sepiroth\Demo\Scripts\FollowCamera.cs" />
+    <Compile Include="Assets\Extra Assets\Sepiroth\Demo\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Extra Assets\Sepiroth\Demo\Scripts\SceneSelecter.cs" />
+    <Compile Include="Assets\HUD.cs" />
+    <Compile Include="Assets\HUDInventory.cs" />
+    <Compile Include="Assets\IInventoryItem.cs" />
+    <Compile Include="Assets\InventoryEventArgs.cs" />
+    <Compile Include="Assets\InventoryItemClickable.cs" />
+    <Compile Include="Assets\PickupableItem.cs" />
     <Compile Include="Assets\Scripts\BackButtonHandler.cs" />
     <Compile Include="Assets\Scripts\Battle\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleResult.cs" />
@@ -81,19 +89,17 @@
     <Compile Include="Assets\Scripts\Items\Items.cs" />
     <Compile Include="Assets\Scripts\Items\Shield.cs" />
     <Compile Include="Assets\Scripts\Items\Sword.cs" />
+    <Compile Include="Assets\Scripts\Platformer\FallDetection.cs" />
+    <Compile Include="Assets\Scripts\Platformer\Hazard.cs" />
+    <Compile Include="Assets\Scripts\Platformer\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Profile.cs" />
     <Compile Include="Assets\Scripts\Session Objects\Player.cs" />
     <Compile Include="Assets\Scripts\Session Objects\PlayerObjects.cs" />
     <Compile Include="Assets\Scripts\Session Objects\SceneHistory.cs" />
     <Compile Include="Assets\Scripts\SetSettings.cs" />
     <Compile Include="Assets\Scripts\Stats.cs" />
-    <Compile Include="Assets\Sepiroth\Demo\Scripts\CharacterController2D.cs" />
-    <Compile Include="Assets\Sepiroth\Demo\Scripts\FlyingPlayerController.cs" />
-    <Compile Include="Assets\Sepiroth\Demo\Scripts\FollowCamera.cs" />
-    <Compile Include="Assets\Sepiroth\Demo\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Sepiroth\Demo\Scripts\SceneSelecter.cs" />
-    <None Include="Assets\Sepiroth\LICENSE.txt" />
-    <None Include="Assets\Sepiroth\README.txt" />
+    <None Include="Assets\Extra Assets\Sepiroth\LICENSE.txt" />
+    <None Include="Assets\Extra Assets\Sepiroth\README.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/Alex/Documents/G53GAM/GAM_CW2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

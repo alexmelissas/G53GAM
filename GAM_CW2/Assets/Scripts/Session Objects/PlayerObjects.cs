@@ -7,9 +7,12 @@ public class PlayerObjects : MonoBehaviour
     public static PlayerObjects playerObjects;
 
     public Player player;
-    //! An old copy of the player for comparisons before and after a battle
+    //! An old copy of the player for comparisons before and after a battle - gain xp etc
     public Player player_before_battle;
     public Player enemy;
+
+    //! Player's HP in this level (not max)
+    public int currentHP;
 
     public bool inBattle; // to only load the RPG shit when in battle
 

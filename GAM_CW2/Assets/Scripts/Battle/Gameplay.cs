@@ -44,7 +44,7 @@ public class Gameplay : MonoBehaviour {
     private void ShowPopup(bool shown, bool win)
     {
         Vector3 hide = new Vector3(10000, 10000, 0);
-        Vector3 show = new Vector3(1250, 500, 0);
+        Vector3 show = new Vector3(950, 500, 0);
         GameObject panel = win ? winPopup : losePopup;
         panel.transform.position = shown ? show : hide;
     }
