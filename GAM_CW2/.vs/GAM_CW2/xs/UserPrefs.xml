@@ -1,14 +1,18 @@
 ﻿<Properties StartupConfiguration="{881A20A4-424D-326C-4F8D-2B5BEC3FEC29}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/HUDInventory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/Gameplay.cs">
     <Files>
-      <File FileName="Assets/Scripts/Battle/Gameplay.cs" Line="241" Column="44" IsPinned="True" />
-      <File FileName="Assets/HUDInventory.cs" Line="53" Column="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Session Objects/Player.cs" Line="30" Column="40" />
+      <File FileName="Assets/Scripts/Battle/Gameplay.cs" Line="74" Column="1" IsPinned="True" />
+      <File FileName="Assets/HUDInventory.cs" Line="48" Column="15" IsPinned="True" />
+      <File FileName="Assets/Scripts/Battle/Turn.cs" Line="36" Column="37" IsPinned="True" />
+      <File FileName="Assets/Scripts/Platformer/Hazard.cs" Line="67" Column="68" IsPinned="True" />
+      <File FileName="Assets/Scripts/Session Objects/Player.cs" Line="30" Column="152" />
       <File FileName="Assets/Scripts/Battle/WinLosePopup.cs" Line="31" Column="27" />
-      <File FileName="Assets/Scripts/Session Objects/PlayerObjects.cs" Line="14" Column="44" />
-      <File FileName="Assets/HUD.cs" Line="1" Column="1" />
-      <File FileName="Assets/IInventoryItem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Battle/Turn.cs" Line="12" Column="26" />
+      <File FileName="Assets/Scripts/Session Objects/PlayerObjects.cs" Line="17" Column="25" />
+      <File FileName="Assets/HUD.cs" Line="15" Column="1" />
+      <File FileName="Assets/IInventoryItem.cs" />
+      <File FileName="Assets/Scripts/Battle/UnrankedMatch.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Items/Armour.cs" Line="39" Column="23" />
+      <File FileName="Assets/Scripts/Items/Items.cs" Line="22" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,11 +20,13 @@
           <Node name="GAM_CW2" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Battle" expanded="True" />
+                <Node name="Battle" expanded="True">
+                  <Node name="Gameplay.cs" selected="True" />
+                </Node>
                 <Node name="Items" expanded="True" />
+                <Node name="Platformer" expanded="True" />
                 <Node name="Session Objects" expanded="True" />
               </Node>
-              <Node name="HUDInventory.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -29,7 +35,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ae4e1a1a-745a-420e-9730-98eab695126b" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1f19b391-ffd2-4082-be47-dd41714aa1b9" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

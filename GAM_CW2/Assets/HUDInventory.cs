@@ -46,22 +46,25 @@ public class HUDInventory : MonoBehaviour
         battleScreen.SetActive(false);
 
         //test
-        PlayerObjects.playerObjects.player = new Player(
-            "Alex", 12, 100, 2000, 455, 2000, 12, 35, 10, 10, 20, 1, 1, 1, 1, 10, 2, 3, 1
-        );
-        PlayerObjects.playerObjects.currentHP = 1300;
+        Player test = new Player("Alex", 12, 100, 2000, 455, 100, 120, 35, 10, 10, 20, 1, 1, 1, 1, 10, 2, 3, 1);
+        PlayerObjects.playerObjects.player = test;
+        PlayerObjects.playerObjects.currentHP = 40;
 
-        int currentHP = PlayerObjects.playerObjects.currentHP;
-        Player player = PlayerObjects.playerObjects.player;
+        UpdateHPBar();
+    }
+
+    public void UpdateHPBar()
+    {
+        Player player = Player.Clone(PlayerObjects.playerObjects.player);
+        Items.AttachItemsToPlayer(new Items(player), player);
 
         playerNameText.text = "" + player.username;
         playerLevelText.text = "" + player.level;
         maxPlayerHPText.text = "/" + player.hp;
         actualPlayerHPText.text = "" + PlayerObjects.playerObjects.currentHP;
-        
 
-        float hpBarValue = currentHP / player.hp;
-        Debug.Log("CURRENT:" + currentHP +"/Max:" + player.hp + "HPBAR: "+ hpBarValue);
+
+        float hpBarValue = (float)PlayerObjects.playerObjects.currentHP / (float)player.hp;
         playerHPSlider.value = hpBarValue;
         if (playerHPSlider.value == 0) { /*soundsrc.PlayOneShot(drop_sword_Sound, PlayerPrefs.GetFloat("fx"));*/ playerHPColourImage.enabled = false; } // death = true; }
         else if (hpBarValue < 0.25) playerHPColourImage.color = Color.red;
@@ -69,6 +72,5 @@ public class HUDInventory : MonoBehaviour
         else playerHPColourImage.color = Color.green;
 
         coinsText.text = "" + player.coins;
-
     }
 }

@@ -8,6 +8,7 @@ public class Turn {
     public bool player_turn;
     public float damage;
     public int crit_landed;
+    private int player_currentHP;
 
     //! Basic Constructor
     public Turn(bool _turn, Player _player, Player _enemy)
@@ -43,17 +44,20 @@ public class Turn {
         if (crit_landed > 0) damage = crit_dmg;
 
         int miss;
-        if (victim.agility < 10) miss = 10;
-        else miss = victim.agility; //need to be careful with agility scaling
+        //if (victim.agility < 10) miss = 10;
+        //else miss = victim.agility; //need to be careful with agility scaling
 
-        miss = 30; // FIX THIS
+        miss = 5; // FIX THIS
 
         int misschance = Random.Range(0, 100);
         if (misschance < miss) damage = 0;
         
         victim.hp -= Mathf.RoundToInt(damage);
-        
-        if (player.hp <= 0) return 1; //player lost
+
+        if(player_turn==false)PlayerObjects.playerObjects.currentHP -= Mathf.RoundToInt(damage);
+        Debug.Log("PLAYER HP:" + PlayerObjects.playerObjects.currentHP);
+
+        if (PlayerObjects.playerObjects.currentHP <= 0) return 1; //player died
         else if (enemy.hp <= 0) return 2; //player won
         else return 0; //no death yet
     }

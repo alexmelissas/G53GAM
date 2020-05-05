@@ -89,8 +89,8 @@
     <Compile Include="Assets\Scripts\Items\Items.cs" />
     <Compile Include="Assets\Scripts\Items\Shield.cs" />
     <Compile Include="Assets\Scripts\Items\Sword.cs" />
+    <Compile Include="Assets\Scripts\Platformer\Enemy.cs" />
     <Compile Include="Assets\Scripts\Platformer\FallDetection.cs" />
-    <Compile Include="Assets\Scripts\Platformer\Hazard.cs" />
     <Compile Include="Assets\Scripts\Platformer\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Profile.cs" />
     <Compile Include="Assets\Scripts\Session Objects\Player.cs" />
