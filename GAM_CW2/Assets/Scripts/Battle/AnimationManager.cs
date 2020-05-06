@@ -39,7 +39,7 @@ public class AnimationManager : MonoBehaviour {
     //! Update the animations according to changes from the Gameplay class
     void Update () {
 
-        if (PlayerObjects.playerObjects.inBattle==false)
+        if (PlayerObjects.singleton.inBattle==false)
         {
             animations[current_player_Animation].SetActive(false);
             animations[current_enemy_Animation].SetActive(false);

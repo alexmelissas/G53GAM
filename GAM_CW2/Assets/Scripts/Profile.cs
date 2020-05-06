@@ -20,9 +20,9 @@ public class Profile: MonoBehaviour {
 
     //! Display the player's stats - update only if a change is detected
     void Update () {
-        if (!p.ComparePlayer(PlayerObjects.playerObjects.player))
+        if (!p.ComparePlayer(PlayerObjects.singleton.player))
         {
-            p = PlayerObjects.playerObjects.player;
+            p = PlayerObjects.singleton.player;
             Stats stats = new Stats(p);
 
             hpText.text = stats.StatsToStrings()[0];

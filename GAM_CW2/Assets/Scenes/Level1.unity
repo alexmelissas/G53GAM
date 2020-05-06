@@ -3223,18 +3223,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &622977036175294346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4223196591280397022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094dd886521400a49a014862da358095, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &628742480618745109
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3300,7 +3288,6 @@ GameObject:
   - component: {fileID: 308069915032254122}
   - component: {fileID: 7417539621990000949}
   - component: {fileID: 9091062746568913420}
-  - component: {fileID: 6965505716502403913}
   m_Layer: 8
   m_Name: okButton
   m_TagString: Untagged
@@ -6857,7 +6844,6 @@ GameObject:
   - component: {fileID: 3184419026079445290}
   - component: {fileID: 4321053866334035627}
   - component: {fileID: 2126778908919495742}
-  - component: {fileID: 622977036175294346}
   m_Layer: 8
   m_Name: okButton
   m_TagString: Untagged
@@ -7478,18 +7464,6 @@ RectTransform:
   m_AnchoredPosition: {x: 77.794, y: -64.155}
   m_SizeDelta: {x: 61.221, y: 64.31}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6965505716502403913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170207259151975545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094dd886521400a49a014862da358095, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &7204757009061706847
 RectTransform:
   m_ObjectHideFlags: 0

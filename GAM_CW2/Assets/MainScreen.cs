@@ -32,8 +32,8 @@ public class MainScreen : MonoBehaviour
             2,
             3,
             1);
-        PlayerObjects.playerObjects.player = test;
-        PlayerObjects.playerObjects.currentHP = 40;
+        PlayerObjects.singleton.player = test;
+        PlayerObjects.singleton.currentHP = 40;
     }
 
     // Update is called once per frame
@@ -52,15 +52,15 @@ public class MainScreen : MonoBehaviour
         switch (level)
         {
             case 1:
-                if (PlayerObjects.playerObjects.unlocked1)
+                if (PlayerObjects.singleton.unlocked1)
                 Application.LoadLevel("Level1");
                 break;
             case 2:
-                if (PlayerObjects.playerObjects.unlocked2)
+                if (PlayerObjects.singleton.unlocked2)
                     Application.LoadLevel("Level1");
                 break;
             case 3:
-                if (PlayerObjects.playerObjects.unlocked3)
+                if (PlayerObjects.singleton.unlocked3)
                     Application.LoadLevel("Level1");
                 break;
         }

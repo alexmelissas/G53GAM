@@ -54,17 +54,17 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateHPBar()
     {
-        Player player = Player.Clone(PlayerObjects.playerObjects.player);
+        Player player = Player.Clone(PlayerObjects.singleton.player);
         Items.AttachItemsToPlayer(new Items(player), player);
 
         playerNameText.text = "" + player.username;
         playerLevelText.text = "" + player.level;
         maxPlayerHPText.text = "/" + player.hp;
-        actualPlayerHPText.text = "" + PlayerObjects.playerObjects.currentHP;
+        actualPlayerHPText.text = "" + PlayerObjects.singleton.currentHP;
 
 
         playerHPColourImage.enabled = true;
-        float hpBarValue = (float)PlayerObjects.playerObjects.currentHP / (float)player.hp;
+        float hpBarValue = (float)PlayerObjects.singleton.currentHP / (float)player.hp;
         playerHPSlider.value = hpBarValue;
         if (playerHPSlider.value == 0) playerHPColourImage.enabled = false;
         else if (hpBarValue < 0.25) playerHPColourImage.color = Color.red;

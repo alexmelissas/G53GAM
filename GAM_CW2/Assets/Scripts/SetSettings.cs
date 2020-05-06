@@ -23,7 +23,7 @@ public class SetSettings : MonoBehaviour {
         PlayerPrefs.SetInt("skip", skipToggle.isOn ? 1 : 0);
 
         currentloginText.GetComponentInChildren<Text>().text = "Playing as: ";
-        usernameText.GetComponentInChildren<Text>().text = PlayerObjects.playerObjects.player.username;
+        usernameText.GetComponentInChildren<Text>().text = PlayerObjects.singleton.player.username;
 
     }      
 }

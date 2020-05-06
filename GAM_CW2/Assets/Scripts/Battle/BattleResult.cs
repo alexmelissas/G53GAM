@@ -15,6 +15,9 @@ public class BattleResult {
 
     public Player CalculateGains()
     {
+
+        Debug.Log("BattleResult before HP:" + player.hp);
+
         int missingxptolevel = player.levelupxp - player.xp;
 
 
@@ -55,6 +58,7 @@ public class BattleResult {
         player.coins += coin_gains;
         if (player.coins < 0) player.coins = 0;
 
+        Debug.Log("BattleResult after HP:" + player.hp);
         return Player.Clone(player);
     }
 

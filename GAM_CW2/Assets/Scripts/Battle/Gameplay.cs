@@ -38,23 +38,23 @@ public class Gameplay : MonoBehaviour {
 
     private void OnEnable() { InitiateBattle(); }
 
-    private void OnDisable() { playerCharacter.SetActive(true); PlayerObjects.playerObjects.inBattle = false; }
+    private void OnDisable() { playerCharacter.SetActive(true); PlayerObjects.singleton.inBattle = false; }
 
     //! Setup the battle screen, including HP bars, Models, Damage Labels etc.
     private void InitiateBattle()
     {
-        if (PlayerObjects.playerObjects.player.hp > 0)
+        if (PlayerObjects.singleton.player.hp > 0)
         {
             death = false;
-            PlayerObjects.playerObjects.inBattle = true;
+            PlayerObjects.singleton.inBattle = true;
             updatePlayer = -1;
             playerCharacter.SetActive(false);
 
-            player = Player.Clone(PlayerObjects.playerObjects.player);
-            PlayerObjects.playerObjects.player_before_battle = Player.Clone(PlayerObjects.playerObjects.player); // keep the player before gains
+            player = Player.Clone(PlayerObjects.singleton.player);
+            PlayerObjects.singleton.player_before_battle = Player.Clone(PlayerObjects.singleton.player); // keep the player before gains
 
             Items.AttachItemsToPlayer(new Items(player), player);
-            enemy = PlayerObjects.playerObjects.enemy;
+            enemy = PlayerObjects.singleton.enemy;
             Items.AttachItemsToPlayer(new Items(enemy), enemy);
 
             playerNameText.text = "" + player.username;
@@ -69,7 +69,7 @@ public class Gameplay : MonoBehaviour {
             player_maxHP = player.hp;
             enemy_maxHP = enemy.hp;
 
-            player_currentHP = PlayerObjects.playerObjects.currentHP;
+            player_currentHP = PlayerObjects.singleton.currentHP;
             playerCurrentHPText.text = "" + player_currentHP;
             enemyCurrentHPText.text = "" + enemy_maxHP;
             playerMaxHPText.text = "/" + player_maxHP;
@@ -87,8 +87,8 @@ public class Gameplay : MonoBehaviour {
             enemyHPSlider.normalizedValue = 1f;
             enemyHPColourImage.color = Color.green;
 
-            PlayerPrefs.SetFloat("music", 5);
-            PlayerPrefs.SetFloat("fx", 5);
+            PlayerPrefs.SetFloat("music", 1);
+            PlayerPrefs.SetFloat("fx", 1);
             musicsrc.volume = PlayerPrefs.GetFloat("music") / 6;
             musicsrc.loop = true;
             musicsrc.Play();
@@ -116,7 +116,7 @@ public class Gameplay : MonoBehaviour {
                 playerHPSlider.normalizedValue -= 0.01f;
                 playerCurrentHPText.text = "" + Mathf.RoundToInt(playerHPSlider.value * player_maxHP);
             }
-            else playerCurrentHPText.text = "" + PlayerObjects.playerObjects.currentHP;
+            else playerCurrentHPText.text = "" + PlayerObjects.singleton.currentHP;
         }
         if (playerHPSlider.value == 0 && !death)
         {
@@ -207,7 +207,6 @@ public class Gameplay : MonoBehaviour {
         turn_counter++;
         last_block_turn = turn_counter;
         StartCoroutine(AnimateBlock());
-        
     }
 
     private void Execute_Run()
@@ -220,7 +219,7 @@ public class Gameplay : MonoBehaviour {
         StopAllCoroutines();
         death = true;
         UpdatePlayer(); // Update the player based on outcome
-        gameObject.GetComponent<WinLosePopup>().didSetup = false; // Setup the popup
+        gameObject.GetComponent<BattleResultPopup>().didSetup = false; // Setup the popup
         if (result == 1) ShowPopup(true, false); // Player LOSE popup
         else if (result == 2) ShowPopup(true, true); // Player WIN popup
         updatePlayer = result; //enables the popups for the exp and money gain to animate
@@ -228,7 +227,7 @@ public class Gameplay : MonoBehaviour {
 
     public void CloseBattleScreen()
     {
-        PlayerObjects.playerObjects.inBattle = false;
+        PlayerObjects.singleton.inBattle = false;
         ShowPopup(false, true);
         ShowPopup(false, false);
         hudManager.GetComponent<HUDManager>().UpdateHPBar();
@@ -236,21 +235,21 @@ public class Gameplay : MonoBehaviour {
         musicsrc.Stop();
         if (result == 1)
         {
-            PlayerObjects.playerObjects.currentHP = PlayerObjects.playerObjects.player.hp;
+            Player p = Player.Clone(PlayerObjects.singleton.player);
+            Items.AttachItemsToPlayer(new Items(p), p);
+            PlayerObjects.singleton.currentHP = p.hp;
             Application.LoadLevel("Level1");
-            battleScreen.SetActive(false);
         }
-        else
-            battleScreen.SetActive(false);
+        battleScreen.SetActive(false);
         result = 0;
     }
 
     private void UpdatePlayer()
     {
-        Player updatedPlayer = Player.Clone(PlayerObjects.playerObjects.player);
-        BattleResult battleResult = new BattleResult(player, enemy, (result == 2) ? true : false);
-        updatedPlayer = Player.Clone(battleResult.CalculateGains());
-        PlayerObjects.playerObjects.player = Player.Clone(updatedPlayer);
+        Player oldPlayer = Player.Clone(PlayerObjects.singleton.player_before_battle);
+        BattleResult battleResult = new BattleResult(oldPlayer, enemy, (result == 2) ? true : false);
+        Player updatedPlayer = Player.Clone(battleResult.CalculateGains());
+        PlayerObjects.singleton.player = Player.Clone(updatedPlayer);
     }
 
     private void DisableActions()
@@ -348,7 +347,7 @@ public class Gameplay : MonoBehaviour {
             // (3) Update HP of victim
             if (turn.damage!=0)
             {
-                float currenthp = (attacker == "player") ? turn.enemy.hp : PlayerObjects.playerObjects.currentHP;
+                float currenthp = (attacker == "player") ? turn.enemy.hp : PlayerObjects.singleton.currentHP;
                 float maxhp = (attacker == "player") ? enemy_maxHP : player_maxHP;
                 float hp_bar_value = currenthp / maxhp;
                 if (attacker == "enemy") player_newHP = hp_bar_value;

@@ -130,8 +130,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 12874115}
-  - component: {fileID: 12874114}
-  - component: {fileID: 12874113}
   - component: {fileID: 12874112}
   - component: {fileID: 12874111}
   m_Layer: 0
@@ -231,31 +229,6 @@ MonoBehaviour:
   unlocked3: 0
   currentHP: 0
   inBattle: 0
---- !u!114 &12874113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12874110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85d32b35cb6857d4f80b0496793af8c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &12874114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12874110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f660738835d4e4f46b9b014be15cf14e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scenes: []
 --- !u!4 &12874115
 Transform:
   m_ObjectHideFlags: 0

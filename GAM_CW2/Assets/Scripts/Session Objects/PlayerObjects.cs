@@ -4,7 +4,7 @@
 public class PlayerObjects : MonoBehaviour
 {
     // The Singleton object
-    public static PlayerObjects playerObjects;
+    public static PlayerObjects singleton;
 
     public Player player;
     //! An old copy of the player for comparisons before and after a battle - gain xp etc
@@ -23,12 +23,12 @@ public class PlayerObjects : MonoBehaviour
     //! Handle the Singleton object
     void Awake()
     {
-        if (playerObjects == null)
+        if (singleton == null)
         {
             DontDestroyOnLoad(gameObject);
-            playerObjects = this;
+            singleton = this;
         }
-        else if (playerObjects != this)
+        else if (singleton != this)
         {
             Destroy(gameObject);
         }

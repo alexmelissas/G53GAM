@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //! Manage the Inventory screen, including Upgrades
-public class Inventory : MonoBehaviour {
+public class Inventory : MonoBehaviour
+{
 
     public Text hpText, atkText, defText, coinsText;
     public GameObject upgradePanel;
@@ -18,7 +19,7 @@ public class Inventory : MonoBehaviour {
     private Item displayItem;
     private string displayItemType;
     private int currentItemLevel;
-    
+
 
     //private void Awake() { gameObject.AddComponent<UpdateSessions>().U_All(); }
 
@@ -35,9 +36,9 @@ public class Inventory : MonoBehaviour {
     //! Keep the player's stats display updated
     private void Update()
     {
-        if (!(p.ComparePlayer(PlayerObjects.playerObjects.player)))
+        if (!(p.ComparePlayer(PlayerObjects.singleton.player)))
         {
-            p = PlayerObjects.playerObjects.player;
+            p = PlayerObjects.singleton.player;
             Stats stats = new Stats(p);
 
             hpText.text = stats.StatsToStrings()[0];
@@ -50,7 +51,7 @@ public class Inventory : MonoBehaviour {
             currentArmourImage.GetComponent<RawImage>().texture = Item.NewItem("armour", p.armour).icon;
         }
     }
-    
+
     //! Show/Hide the item upgrade panels
     private void Displayed(bool shown)
     {
@@ -65,20 +66,20 @@ public class Inventory : MonoBehaviour {
         if (item_type < 0 || item_type > 2) return;
         currentItemLevel = 0;
 
-        switch(item_type)
+        switch (item_type)
         {
             case 0: // Sword
-                currentItemLevel = PlayerObjects.playerObjects.player.sword;
+                currentItemLevel = PlayerObjects.singleton.player.sword;
                 displayItemType = "sword";
                 break;
 
             case 1: // Shield
-                currentItemLevel = PlayerObjects.playerObjects.player.shield;
+                currentItemLevel = PlayerObjects.singleton.player.shield;
                 displayItemType = "shield";
                 break;
 
             case 2: // Armour
-                currentItemLevel = PlayerObjects.playerObjects.player.armour;
+                currentItemLevel = PlayerObjects.singleton.player.armour;
                 displayItemType = "armour";
                 break;
         }
@@ -141,7 +142,7 @@ public class Inventory : MonoBehaviour {
         statIconImage.GetComponent<Image>().sprite = statIcon;
         itemNameText.text = displayItem.name;
         statText.text = "" + stat;
-        balanceText.text = "" + PlayerObjects.playerObjects.player.coins;
+        balanceText.text = "" + PlayerObjects.singleton.player.coins;
         priceText.text = "" + displayItem.price;
     }
 
@@ -159,11 +160,11 @@ public class Inventory : MonoBehaviour {
     //! Check if player has enough funds, then make the purchase
     public void ConfirmPurchase()
     {
-        if (PlayerObjects.playerObjects.player.coins >= displayItem.price)
+        if (PlayerObjects.singleton.player.coins >= displayItem.price)
         {
-            Player poorerPlayer = Player.Clone(PlayerObjects.playerObjects.player);
+            Player poorerPlayer = Player.Clone(PlayerObjects.singleton.player);
             poorerPlayer.coins -= displayItem.price;
-            switch(displayItemType)
+            switch (displayItemType)
             {
                 case "sword": poorerPlayer.sword++; break;
                 case "shield": poorerPlayer.shield++; break;
@@ -180,5 +181,5 @@ public class Inventory : MonoBehaviour {
             Displayed(false);
         }
     }
-    
+
 }

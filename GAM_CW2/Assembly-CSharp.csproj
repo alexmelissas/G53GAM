@@ -77,10 +77,10 @@
     <Compile Include="Assets\PickupableItem.cs" />
     <Compile Include="Assets\Scripts\Battle\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleResult.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleResultPopup.cs" />
     <Compile Include="Assets\Scripts\Battle\Gameplay.cs" />
     <Compile Include="Assets\Scripts\Battle\Turn.cs" />
     <Compile Include="Assets\Scripts\Battle\UnrankedMatch.cs" />
-    <Compile Include="Assets\Scripts\Battle\WinLosePopup.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Items\Armour.cs" />
     <Compile Include="Assets\Scripts\Items\Boots.cs" />

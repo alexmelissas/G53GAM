@@ -52,7 +52,7 @@ public class UnrankedMatch : MonoBehaviour
         //StartCoroutine(Server.GetEnemy(1));
         //yield return new WaitUntil(() => Server.findEnemy_done == true);
 
-        if (PlayerObjects.playerObjects.enemy.username != "")
+        if (PlayerObjects.singleton.enemy.username != "")
         {
 //            gameObject.AddComponent<ChangeScene>().Forward("Battle");
         }
