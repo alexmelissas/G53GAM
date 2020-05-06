@@ -11,6 +11,10 @@ public class PlayerObjects : MonoBehaviour
     public Player player_before_battle;
     public Player enemy;
 
+    public bool unlocked1 = true;
+    public bool unlocked2 = false;
+    public bool unlocked3 = false;
+
     //! Player's HP in this level (not max)
     public int currentHP;
 

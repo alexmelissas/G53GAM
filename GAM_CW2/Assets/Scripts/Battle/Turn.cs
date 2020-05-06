@@ -54,8 +54,12 @@ public class Turn {
         
         victim.hp -= Mathf.RoundToInt(damage);
 
-        if(player_turn==false)PlayerObjects.playerObjects.currentHP -= Mathf.RoundToInt(damage);
-        Debug.Log("PLAYER HP:" + PlayerObjects.playerObjects.currentHP);
+        if (player_turn == false)
+        {
+            if (PlayerObjects.playerObjects.currentHP - Mathf.RoundToInt(damage) < 0)
+                PlayerObjects.playerObjects.currentHP = 0;
+            else PlayerObjects.playerObjects.currentHP -= Mathf.RoundToInt(damage);
+        }
 
         if (PlayerObjects.playerObjects.currentHP <= 0) return 1; //player died
         else if (enemy.hp <= 0) return 2; //player won

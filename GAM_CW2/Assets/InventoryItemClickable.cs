@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventoryItemClickable : MonoBehaviour
 {
     public IInventoryItem item;
-    public HUDInventory inventory;
+    public HUDManager inventory;
 
     public void OnItemClicked()
     {

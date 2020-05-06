@@ -4,8 +4,8 @@ using UnityEngine.UI;
 //! Visualize the rewards gained from winning/losing a match
 public class WinLosePopup : MonoBehaviour {
 
-    public Text winMoneyText, winNextLevelText;
-    public Text loseMoneyText, loseNextLvlText;
+    public Text winCoinsText, winNextLevelText;
+    public Text loseCoinsText, loseNextLvlText;
     public Slider winExpSlider, loseExpSlider;
     public AudioSource soundsrc;
     public AudioClip levelup_Sound;
@@ -15,7 +15,7 @@ public class WinLosePopup : MonoBehaviour {
 
     private Player before, after;
 
-    private bool didSetup = false;
+    public bool didSetup = false;
     private bool gainedLevel = false;
     private float addedExp = 0;
 
@@ -63,7 +63,7 @@ public class WinLosePopup : MonoBehaviour {
                 }
                 else
                 {
-                    xpSlider.normalizedValue = 0;
+                    xpSlider.normalizedValue = 0f;
                     soundsrc.PlayOneShot(levelup_Sound, PlayerPrefs.GetFloat("fx")/2);
                     before.level++;
                     before.xp = 0;
@@ -85,21 +85,20 @@ public class WinLosePopup : MonoBehaviour {
 
         if(Gameplay.updatePlayer==1)
         {
-            coinsGained = loseMoneyText;
+            coinsGained = loseCoinsText;
             currentLevel = loseNextLvlText;
             xpSlider = loseExpSlider;
         }
         else
         {
-            coinsGained = winMoneyText;
+            coinsGained = winCoinsText;
             currentLevel = winNextLevelText;
             xpSlider = winExpSlider;
         }
 
-        xpSlider.normalizedValue = (float)before.xp / (float)before.levelupxp;
+        xpSlider.value = (float)before.xp / (float)before.levelupxp;
         currentLevel.text = "" + before.level;
         coinsGained.text = "" + (after.coins - before.coins);
-
-        PlayerObjects.playerObjects.player_before_battle = new Player();
+        gainedLevel = false;
     }
 }

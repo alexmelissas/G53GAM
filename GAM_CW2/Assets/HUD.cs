@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public HUDInventory inventory;
+    public HUDManager inventory;
     // Start is called before the first frame update
     void Start()
     {

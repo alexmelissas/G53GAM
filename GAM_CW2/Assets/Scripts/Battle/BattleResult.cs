@@ -1,42 +1,77 @@
 ﻿using UnityEngine;
 using System;
 
-[Serializable]
 public class BattleResult {
 
-    public string username;
-    public bool result;
-    //! Adjust XP earned based on level diff
-    public int additionalXP;
-    //! Adjust coins earned based on level diff
-    public int additionalCoins;
+    private Player player, enemy;
+    private bool win;
 
-    private BattleResult(Player player, Player enemy, bool _win)
+    public BattleResult(Player _player, Player _enemy, bool _win)
     {
-        username = player.username; result = _win;
-        additionalXP = CalculateBonusXP(player,enemy);
-        additionalCoins = CalculateBonusCoins(player,enemy);
+        player = Player.Clone(_player);
+        enemy = Player.Clone(_enemy);
+        win = _win;
+    }
+
+    public Player CalculateGains()
+    {
+        int missingxptolevel = player.levelupxp - player.xp;
+
+
+
+        int xp_gains = 110;
+        xp_gains += CalculateBonusXP();
+        if (!win) xp_gains = Mathf.RoundToInt(xp_gains/2);
+        // scaling and stuff
+        // according to enemy type
+
+
+
+        int coin_gains = 100; // scale
+        coin_gains += CalculateBonusCoins();
+        if (!win) coin_gains = -Mathf.RoundToInt(coin_gains / 2);
+
+
+
+
+
+
+
+
+        player.xp += xp_gains;
+        if(player.xp > player.levelupxp)
+        {
+            player.level += 1;
+            player.levelupxp += 100; // SCALE
+
+
+
+
+
+
+            player.xp = xp_gains - missingxptolevel;
+        }
+
+        player.coins += coin_gains;
+        if (player.coins < 0) player.coins = 0;
+
+        return Player.Clone(player);
     }
 
     //! Calculates bonus/less XP based on level comparison
-    private int CalculateBonusXP(Player player, Player enemy)
+    private int CalculateBonusXP()
     {
-        if (player.level > enemy.level) return -10;
-        else return 10;
+        int level_diff = player.level - enemy.level;
+        if (level_diff >= 0) return 0;
+        else return 4 * level_diff;
     }
 
     //! Calculate bonus/less coins based on level comparison
-    private int CalculateBonusCoins(Player player, Player enemy)
+    private int CalculateBonusCoins()
     {
-        if (player.level > enemy.level) return -10;
-        else return 10;
+        int level_diff = player.level - enemy.level;
+        if (level_diff>=0) return 0;
+        else return 5*level_diff;
     }
-
-    //! Get a JSON equivalent of this object
-    public static string GetJSON(Player player, Player enemy, bool win)
-    {
-       return JsonUtility.ToJson(new BattleResult(player, enemy, win));
-    }
-
 
 }

@@ -6,19 +6,14 @@ using UnityEngine.UI;
 //! Entire Gameplay and Battle Screen management
 public class Gameplay : MonoBehaviour {
 
-    /* ==== Class Responsibilities =====
-    *  1. Calculate and store Turns until one dies
-    *  2. Calculate result // ??????
-    *  3. Display full battle animations until end of match/until skipped
-    * =================================*/
-
-    public GameObject battleScreen, gameController;
+    public GameObject battleScreen, hudManager;
     public GameObject attackButton, blockButton, runButton;
+    public GameObject playerCharacter;
 
     public Slider playerHPSlider, enemyHPSlider;
     public Image playerHPColourImage, enemyHPColourImage;
     public Text playerNameText, enemyNameText, playerLevelText, enemyLevelText;
-    public Text actualPlayerHPText, maxPlayerHPText, actualEnemyHPText, maxEnemyHPText, playerDmgLabelText, enemyDmgLabelText; 
+    public Text playerCurrentHPText, playerMaxHPText, enemyCurrentHPText, enemyMaxHPText, playerDmgLabelText, enemyDmgLabelText; 
     public AudioSource soundsrc, musicsrc;
     public AudioClip player_hit_Sound, enemy_hit_Sound, crit_Sound, miss_Sound, drop_sword_Sound;
     public GameObject winPopup, losePopup;
@@ -27,7 +22,6 @@ public class Gameplay : MonoBehaviour {
     public static int updatePlayer;
     public static string currentAnimation_player = "player_idle_Animation";
     public static string currentAnimation_enemy = "enemy_idle_Animation";
-    public static bool ended = false;
 
     //! Store all the Turns of the battle until a player lost.
     private List<Turn> turns;
@@ -40,84 +34,126 @@ public class Gameplay : MonoBehaviour {
     private bool death = false;
     private int turn_counter, last_block_turn;
 
-
-    private void Start() { PlayerObjects.playerObjects.inBattle = false; }
-
     private void Update() { UpdateHP(); }
 
     private void OnEnable() { InitiateBattle(); }
 
+    private void OnDisable() { playerCharacter.SetActive(true); PlayerObjects.playerObjects.inBattle = false; }
+
     //! Setup the battle screen, including HP bars, Models, Damage Labels etc.
     private void InitiateBattle()
     {
-        ended = false;
-        PlayerObjects.playerObjects.inBattle = true;
-        updatePlayer = -1;
+        if (PlayerObjects.playerObjects.player.hp > 0)
+        {
+            death = false;
+            PlayerObjects.playerObjects.inBattle = true;
+            updatePlayer = -1;
+            playerCharacter.SetActive(false);
 
-        player = Player.Clone(PlayerObjects.playerObjects.player);
-        Items.AttachItemsToPlayer(new Items(player), player);
-        PlayerObjects.playerObjects.player_before_battle = Player.Clone(PlayerObjects.playerObjects.player); // keep the player before gains
+            player = Player.Clone(PlayerObjects.playerObjects.player);
+            PlayerObjects.playerObjects.player_before_battle = Player.Clone(PlayerObjects.playerObjects.player); // keep the player before gains
 
-        enemy = PlayerObjects.playerObjects.enemy;
-        Items.AttachItemsToPlayer(new Items(enemy), enemy);
+            Items.AttachItemsToPlayer(new Items(player), player);
+            enemy = PlayerObjects.playerObjects.enemy;
+            Items.AttachItemsToPlayer(new Items(enemy), enemy);
 
-        player_maxHP = player.hp;
-        enemy_maxHP = enemy.hp;
+            playerNameText.text = "" + player.username;
+            playerLevelText.text = "" + player.level;
+            enemyNameText.text = "" + enemy.username;
+            enemyLevelText.text = "" + enemy.level;
+            playerDmgLabelText.enabled = enemyDmgLabelText.enabled = false;
+            playerDmgLabelText.GetComponentInParent<Image>().enabled = enemyDmgLabelText.GetComponentInParent<Image>().enabled = false;
 
-        playerNameText.text = "" + player.username;
-        playerLevelText.text = "" + player.level;
-        enemyNameText.text = "" + enemy.username;
-        enemyLevelText.text = "" + enemy.level;
+            player_newHP = -1;
+            enemy_newHP = -1;
+            player_maxHP = player.hp;
+            enemy_maxHP = enemy.hp;
 
-        playerDmgLabelText.enabled = enemyDmgLabelText.enabled = false;
-        playerDmgLabelText.GetComponentInParent<Image>().enabled = enemyDmgLabelText.GetComponentInParent<Image>().enabled = false;
+            player_currentHP = PlayerObjects.playerObjects.currentHP;
+            playerCurrentHPText.text = "" + player_currentHP;
+            enemyCurrentHPText.text = "" + enemy_maxHP;
+            playerMaxHPText.text = "/" + player_maxHP;
+            enemyMaxHPText.text = "/" + enemy_maxHP;
 
-        player_currentHP = PlayerObjects.playerObjects.currentHP;
+            playerHPColourImage.enabled = true;
+            float hpBarValue = (float)player_currentHP / (float)player_maxHP;
+            playerHPSlider.value = hpBarValue;
+            if (playerHPSlider.value == 0) { playerHPColourImage.enabled = false; }
+            else if (hpBarValue < 0.25) playerHPColourImage.color = Color.red;
+            else if (hpBarValue < 0.5) playerHPColourImage.color = Color.yellow;
+            else playerHPColourImage.color = Color.green;
+            
+            enemyHPColourImage.enabled = true;
+            enemyHPSlider.normalizedValue = 1f;
+            enemyHPColourImage.color = Color.green;
 
-        actualPlayerHPText.text = "" + player_currentHP;
-        playerHPSlider.normalizedValue = (float)player_currentHP  / (float)player_maxHP;
+            PlayerPrefs.SetFloat("music", 5);
+            PlayerPrefs.SetFloat("fx", 5);
+            musicsrc.volume = PlayerPrefs.GetFloat("music") / 6;
+            musicsrc.loop = true;
+            musicsrc.Play();
 
-        enemyHPSlider.normalizedValue = 1f;
-        actualEnemyHPText.text = "" + enemy_maxHP;
+            ShowPopup(false, true);
+            ShowPopup(false, false);
 
-        musicsrc.volume = PlayerPrefs.GetFloat("music") / 6;
-        musicsrc.loop = true;
-        musicsrc.playOnAwake = true;
+            currentAnimation_player = "player_idle_Animation";
+            currentAnimation_enemy = "enemy_idle_Animation";
 
-        ShowPopup(false, true);
-        ShowPopup(false, false);
+            turn_counter = 0;
+            last_block_turn = -4;
+            EnableActions();
+        }
 
-        currentAnimation_player = "player_idle_Animation";
-        currentAnimation_enemy = "enemy_idle_Animation";
-
-        turn_counter = 0;
-        last_block_turn = -4;
-        EnableActions();
     }
 
-    //! Check if animation should be displayed: If not skipped, and if nobody won yet
+
     private void UpdateHP()
     {
-        //Update HP bars
-        float nhpp = player_newHP * player_maxHP;
-        float nhpe = enemy_newHP * enemy_maxHP;
-        Mathf.RoundToInt(nhpp);
-        Mathf.RoundToInt(nhpe);
-        actualPlayerHPText.text = "" + ((nhpp >= 0) ? nhpp : PlayerObjects.playerObjects.currentHP);
-        actualEnemyHPText.text = "" + ((nhpe >= 0) ? nhpe : enemy_maxHP);
-        maxPlayerHPText.text = "/" + player_maxHP;
-        maxEnemyHPText.text = "/" + enemy_maxHP;
+        if (player_newHP > -1)
+        {
+            if (playerHPSlider.value > player_newHP)
+            {
+                playerHPSlider.normalizedValue -= 0.01f;
+                playerCurrentHPText.text = "" + Mathf.RoundToInt(playerHPSlider.value * player_maxHP);
+            }
+            else playerCurrentHPText.text = "" + PlayerObjects.playerObjects.currentHP;
+        }
+        if (playerHPSlider.value == 0 && !death)
+        {
+            soundsrc.PlayOneShot(drop_sword_Sound, PlayerPrefs.GetFloat("fx"));
+            playerHPColourImage.enabled = false;
+            death = true;
+        }
+        else if (playerHPSlider.value < 0.25)
+            playerHPColourImage.color = Color.red;
+        else if (playerHPSlider.value < 0.5)
+            playerHPColourImage.color = Color.yellow;
 
-        if (player_newHP > -1) if (playerHPSlider.value > player_newHP) playerHPSlider.normalizedValue -= 0.005f;
-        if (playerHPSlider.value == 0 && !death) { soundsrc.PlayOneShot(drop_sword_Sound, PlayerPrefs.GetFloat("fx")); playerHPColourImage.enabled = false; death = true; }
-        else if (playerHPSlider.value < 0.25) playerHPColourImage.color = Color.red; else if (playerHPSlider.value < 0.5) playerHPColourImage.color = Color.yellow;
 
-        if (enemy_newHP > -1) if (enemyHPSlider.value > enemy_newHP) enemyHPSlider.normalizedValue -= 0.005f;
-        if (enemyHPSlider.value == 0 && !death) { soundsrc.PlayOneShot(drop_sword_Sound, PlayerPrefs.GetFloat("fx")); enemyHPColourImage.enabled = false; death = true; }
-        else if (enemyHPSlider.value < 0.25) enemyHPColourImage.color = Color.red; else if (enemyHPSlider.value < 0.5) enemyHPColourImage.color = Color.yellow;
+
+        if (enemy_newHP > -1)
+        {
+            if (enemyHPSlider.value > enemy_newHP)
+            {
+                enemyHPSlider.normalizedValue -= 0.01f;
+                enemyCurrentHPText.text = "" + Mathf.RoundToInt(enemyHPSlider.value * enemy_maxHP);
+            }
+            else enemyCurrentHPText.text = "" + Mathf.RoundToInt(enemy_newHP * enemy_maxHP);
+
+        }
+        if (enemyHPSlider.value == 0 && !death)
+        {
+            soundsrc.PlayOneShot(drop_sword_Sound, PlayerPrefs.GetFloat("fx"));
+            enemyHPColourImage.enabled = false;
+            death = true;
+        }
+        else if (enemyHPSlider.value < 0.25)
+            enemyHPColourImage.color = Color.red;
+        else if
+            (enemyHPSlider.value < 0.5) enemyHPColourImage.color = Color.yellow;
     }
 
-    //! Run the battle, calculate all Turns and result
+
 
     public void Execute_Action(string action)
     {
@@ -160,16 +196,9 @@ public class Gameplay : MonoBehaviour {
             player = Player.Clone(turn.player); // get a new Player object with updated HP to pass to the next turn
             enemy = Player.Clone(turn.enemy); // same for enemy
             if (result == 0) player_turn = player_turn ? false : true; // swap whose turn it is
-            else
-            {
-                battleOver = true;
-                break;
-            }
-           
+            else { battleOver = true; i++; }
         }
-        StartCoroutine(AnimateTurns(turns));
-        if(battleOver) Invoke("EndBattle", 0.5f);
-
+        StartCoroutine(AnimateTurns(turns,battleOver));
     }
 
     private void Execute_Block()
@@ -183,29 +212,45 @@ public class Gameplay : MonoBehaviour {
 
     private void Execute_Run()
     {
-        Invoke("BattleOver", 0.5f);
+        Invoke("ResetCharacter", 0.5f);
     }
-
 
     private void EndBattle()
     {
-        if (ended) return;
-        ended = true;
         StopAllCoroutines();
-        if (result == 1) ShowPopup(true, false);
-        else ShowPopup(true, true);
+        death = true;
+        UpdatePlayer(); // Update the player based on outcome
+        gameObject.GetComponent<WinLosePopup>().didSetup = false; // Setup the popup
+        if (result == 1) ShowPopup(true, false); // Player LOSE popup
+        else if (result == 2) ShowPopup(true, true); // Player WIN popup
         updatePlayer = result; //enables the popups for the exp and money gain to animate
-        result = 0;
     }
 
-    public void BattleOver()
+    public void CloseBattleScreen()
     {
         PlayerObjects.playerObjects.inBattle = false;
         ShowPopup(false, true);
         ShowPopup(false, false);
-        gameController.GetComponent<HUDInventory>().UpdateHPBar();
-        battleScreen.SetActive(false);
+        hudManager.GetComponent<HUDManager>().UpdateHPBar();
+        playerCharacter.SetActive(true);
+        musicsrc.Stop();
+        if (result == 1)
+        {
+            PlayerObjects.playerObjects.currentHP = PlayerObjects.playerObjects.player.hp;
+            Application.LoadLevel("Level1");
+            battleScreen.SetActive(false);
+        }
+        else
+            battleScreen.SetActive(false);
+        result = 0;
+    }
 
+    private void UpdatePlayer()
+    {
+        Player updatedPlayer = Player.Clone(PlayerObjects.playerObjects.player);
+        BattleResult battleResult = new BattleResult(player, enemy, (result == 2) ? true : false);
+        updatedPlayer = Player.Clone(battleResult.CalculateGains());
+        PlayerObjects.playerObjects.player = Player.Clone(updatedPlayer);
     }
 
     private void DisableActions()
@@ -232,7 +277,7 @@ public class Gameplay : MonoBehaviour {
     }
 
     //! Animate the battle, including Player animations, HP bars, Damage Labels etc.
-    IEnumerator AnimateTurns(List<Turn> turns)
+    IEnumerator AnimateTurns(List<Turn> turns, bool battleOver)
     {
         foreach (Turn turn in turns)
         {
@@ -253,11 +298,6 @@ public class Gameplay : MonoBehaviour {
                     yield return new WaitForSeconds(0.2f);
                     currentAnimation_enemy = "enemy_idle_Animation";
                 }
-
-                if (turns.Count == 1) // if last turn, then enemy died
-                {
-                    currentAnimation_enemy = "enemy_die_Animation";
-                }
             }
 
             else if(attacker == "enemy")
@@ -273,11 +313,6 @@ public class Gameplay : MonoBehaviour {
                     currentAnimation_enemy = "enemy_idle_Animation";
                     yield return new WaitForSeconds(0.2f);
                     currentAnimation_player = "player_idle_Animation";
-                }
-
-                if (turns.Count == 1) // if last turn, then player died
-                {
-                    currentAnimation_player = "player_die_Animation";
                 }
             }
 
@@ -319,14 +354,16 @@ public class Gameplay : MonoBehaviour {
                 if (attacker == "enemy") player_newHP = hp_bar_value;
                 else enemy_newHP = hp_bar_value;
             }
-            yield return new WaitForSeconds(0.75f);
             dmgLabel.enabled = false;
             bam.enabled = false;
-            
+
             // (4) Wait a bit and go to next turn
             yield return new WaitForSeconds(0.5f);
         }
-        EnableActions();
+
+        // END BATTLE IF DEATH
+        if (battleOver) Invoke("EndBattle", 0.5f);
+        else EnableActions();
     }
 
     //! Animate the block

@@ -37,18 +37,16 @@ public class Enemy : MonoBehaviour
         Player enemy;
         string username = type;
         int hp, atk, def, spd, crit, agility, sword, shield, armour, boots;
-
         hp = atk = def = spd = crit = agility = sword = shield = armour = boots = 0;
+
         switch (type)
         {
             case "snowman":
                 switch (level)
                 {
                     case 1: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
-                    case 2: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
+                    case 2: hp = 250; atk = 40; def = 20; spd = 45; crit = 1; agility = 2; sword = 2; shield = 1; armour = 3; boots = 4; break;
                     case 3: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
-                    case 4: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
-                    case 5: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
 
                 }break;
             case "something":
@@ -57,8 +55,6 @@ public class Enemy : MonoBehaviour
                     case 1: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
                     case 2: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
                     case 3: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
-                    case 4: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
-                    case 5: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
 
                 }
                 break;
@@ -68,5 +64,6 @@ public class Enemy : MonoBehaviour
         PlayerObjects.playerObjects.enemy = Player.Clone(enemy);
 
         rpgscreen.SetActive(true);
+        Destroy(gameObject);
     }
 }

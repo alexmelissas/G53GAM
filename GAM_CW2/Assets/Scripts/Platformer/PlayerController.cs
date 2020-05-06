@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     bool isLeft;
     int isIdleKey = Animator.StringToHash("isIdle");
 
+    public bool alive = true;
     bool canJump = true;
     int groundMask = 1<<8;
     int speed = 4;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         Vector2 physicsVelocity = Vector2.zero;
         Rigidbody2D r = GetComponent<Rigidbody2D>();
         isIdle = true;

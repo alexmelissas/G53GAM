@@ -54,7 +54,7 @@ public class UnrankedMatch : MonoBehaviour
 
         if (PlayerObjects.playerObjects.enemy.username != "")
         {
-            gameObject.AddComponent<ChangeScene>().Forward("Battle");
+//            gameObject.AddComponent<ChangeScene>().Forward("Battle");
         }
         else if (attempts < 3) //recursively try to find enemy 3 times
         {
