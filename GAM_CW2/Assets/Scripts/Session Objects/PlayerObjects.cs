@@ -9,6 +9,7 @@ public class PlayerObjects : MonoBehaviour
     public Player player;
     //! An old copy of the player for comparisons before and after a battle - gain xp etc
     public Player player_before_battle;
+    public Player player_beginning_of_level;
     public Player enemy;
 
     public bool unlocked1 = true;

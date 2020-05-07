@@ -46,9 +46,9 @@ public class Enemy : MonoBehaviour
                 case "snowman":
                     switch (level)
                     {
-                        case 1: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
-                        case 2: hp = 250; atk = 40; def = 20; spd = 45; crit = 1; agility = 2; sword = 2; shield = 1; armour = 3; boots = 4; break;
-                        case 3: hp = 100; atk = 10; def = 20; spd = 10; crit = 3; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
+                        case 1: hp = 100; atk = 10; def = 20; spd = 10; crit = 1; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
+                        case 2: hp = 250; atk = 40; def = 20; spd = 45; crit = 2; agility = 2; sword = 2; shield = 1; armour = 3; boots = 4; break;
+                        case 3: hp = 440; atk = 80; def = 20; spd = 90; crit = 3; agility = 2; sword = 3; shield = 1; armour = 1; boots = 1; break;
 
                     }
                     break;

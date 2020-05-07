@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //! Entire Gameplay and Battle Screen management
@@ -53,9 +54,9 @@ public class Gameplay : MonoBehaviour {
             player = Player.Clone(PlayerObjects.singleton.player);
             PlayerObjects.singleton.player_before_battle = Player.Clone(PlayerObjects.singleton.player); // keep the player before gains
 
-            Items.AttachItemsToPlayer(new Items(player), player);
+            player.AttachItems();
             enemy = PlayerObjects.singleton.enemy;
-            Items.AttachItemsToPlayer(new Items(enemy), enemy);
+            enemy.AttachItems();
 
             playerNameText.text = "" + player.username;
             playerLevelText.text = "" + player.level;
@@ -82,7 +83,7 @@ public class Gameplay : MonoBehaviour {
             else if (hpBarValue < 0.25) playerHPColourImage.color = Color.red;
             else if (hpBarValue < 0.5) playerHPColourImage.color = Color.yellow;
             else playerHPColourImage.color = Color.green;
-            
+
             enemyHPColourImage.enabled = true;
             enemyHPSlider.normalizedValue = 1f;
             enemyHPColourImage.color = Color.green;
@@ -103,9 +104,7 @@ public class Gameplay : MonoBehaviour {
             last_block_turn = -4;
             EnableActions();
         }
-
     }
-
 
     private void UpdateHP()
     {
@@ -152,8 +151,6 @@ public class Gameplay : MonoBehaviour {
         else if
             (enemyHPSlider.value < 0.5) enemyHPColourImage.color = Color.yellow;
     }
-
-
 
     public void Execute_Action(string action)
     {
@@ -211,7 +208,7 @@ public class Gameplay : MonoBehaviour {
 
     private void Execute_Run()
     {
-        Invoke("ResetCharacter", 0.5f);
+        Invoke("CloseBattleScreen", 0.5f);
     }
 
     private void EndBattle()
@@ -219,6 +216,7 @@ public class Gameplay : MonoBehaviour {
         StopAllCoroutines();
         death = true;
         UpdatePlayer(); // Update the player based on outcome
+
         gameObject.GetComponent<BattleResultPopup>().didSetup = false; // Setup the popup
         if (result == 1) ShowPopup(true, false); // Player LOSE popup
         else if (result == 2) ShowPopup(true, true); // Player WIN popup
@@ -235,10 +233,11 @@ public class Gameplay : MonoBehaviour {
         musicsrc.Stop();
         if (result == 1)
         {
+            PlayerObjects.singleton.player = Player.Clone(PlayerObjects.singleton.player_beginning_of_level);
             Player p = Player.Clone(PlayerObjects.singleton.player);
-            Items.AttachItemsToPlayer(new Items(p), p);
+            p.AttachItems();
             PlayerObjects.singleton.currentHP = p.hp;
-            Application.LoadLevel("Level1");
+            SceneManager.LoadScene("Level1");
         }
         battleScreen.SetActive(false);
         result = 0;
@@ -250,6 +249,10 @@ public class Gameplay : MonoBehaviour {
         BattleResult battleResult = new BattleResult(oldPlayer, enemy, (result == 2) ? true : false);
         Player updatedPlayer = Player.Clone(battleResult.CalculateGains());
         PlayerObjects.singleton.player = Player.Clone(updatedPlayer);
+
+        PlayerObjects.singleton.player_beginning_of_level.xp = updatedPlayer.xp;
+        PlayerObjects.singleton.player_beginning_of_level.level = updatedPlayer.level;
+        PlayerObjects.singleton.player_beginning_of_level.coins = updatedPlayer.coins;
     }
 
     private void DisableActions()
@@ -377,7 +380,7 @@ public class Gameplay : MonoBehaviour {
         Image bam = attacker == "player" ? enemyDmgLabelText.GetComponentInParent<Image>() : playerDmgLabelText.GetComponentInParent<Image>();
         AudioClip sound;
         if (attacker == "player") dmgLabel.text = "X";
-        else dmgLabel.text = "BLOCKED!";
+        else dmgLabel.text = "BLOCK";
         dmgLabel.color = Color.grey;
         sound = miss_Sound;
         soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));

@@ -43,6 +43,8 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
+        // Save initial player stats - to reset if die
+        PlayerObjects.singleton.player_beginning_of_level = Player.Clone(PlayerObjects.singleton.player);
         battleScreen.SetActive(false);
         UpdateHPBar();
     }
@@ -55,7 +57,24 @@ public class HUDManager : MonoBehaviour
     public void UpdateHPBar()
     {
         Player player = Player.Clone(PlayerObjects.singleton.player);
-        Items.AttachItemsToPlayer(new Items(player), player);
+
+
+
+
+
+
+
+
+        player.AttachItems(); // DOES IT TWICE FIX
+
+
+
+
+
+
+
+
+
 
         playerNameText.text = "" + player.username;
         playerLevelText.text = "" + player.level;

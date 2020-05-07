@@ -69,5 +69,7 @@ public class Player
             return (Player)formatter.Deserialize(ms);
         }
     }
+
+    public void AttachItems() { Items.AttachItemsToPlayer(this); }
 }
 

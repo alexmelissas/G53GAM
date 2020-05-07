@@ -19,8 +19,8 @@ public class MainScreen : MonoBehaviour
             200, //xptolevel
             10, //coins
             120, //hp
-            10, //atk
-            5, //def
+            150, //atk
+            50, //def
             10,
             10,
             20,

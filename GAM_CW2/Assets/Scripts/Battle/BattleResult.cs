@@ -15,9 +15,6 @@ public class BattleResult {
 
     public Player CalculateGains()
     {
-
-        Debug.Log("BattleResult before HP:" + player.hp);
-
         int missingxptolevel = player.levelupxp - player.xp;
 
 
@@ -58,7 +55,10 @@ public class BattleResult {
         player.coins += coin_gains;
         if (player.coins < 0) player.coins = 0;
 
-        Debug.Log("BattleResult after HP:" + player.hp);
+
+
+
+
         return Player.Clone(player);
     }
 
@@ -76,6 +76,14 @@ public class BattleResult {
         int level_diff = player.level - enemy.level;
         if (level_diff>=0) return 0;
         else return 5*level_diff;
+    }
+
+    private void UpdatePlayerBeginLevel()
+    {
+        PlayerObjects.singleton.player_beginning_of_level.xp = player.xp;
+        PlayerObjects.singleton.player_beginning_of_level.level = player.level;
+        PlayerObjects.singleton.player_beginning_of_level.level = player.coins;
+
     }
 
 }

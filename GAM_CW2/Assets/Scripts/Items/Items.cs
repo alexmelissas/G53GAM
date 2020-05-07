@@ -16,8 +16,9 @@ public class Items {
     }
 
     //! Add item stats to Player
-    public static void AttachItemsToPlayer(Items i, Player p)
+    public static void AttachItemsToPlayer(Player p)
     {
+        Items i = new Items(p);
         p.hp += i.armour.hp;
         p.atk += i.sword.atk;
         p.def += (i.shield.def + i.armour.def);

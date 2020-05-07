@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
 
-    public Text hpText, atkText, defText, coinsText;
+    public Text hpText, atkText, defText, spdText, coinsText;
     public GameObject upgradePanel;
     public Text itemNameText, statText, priceText, balanceText;
-    public GameObject armourIconImage, shieldIconImage, swordIconImage, statIconImage;
-    public GameObject currentSwordImage, currentShieldImage, currentArmourImage;
-    public Sprite atk, def, hp;
+    public GameObject armourIconImage, shieldIconImage, swordIconImage, bootsIconImage, statIconImage;
+    public GameObject currentSwordImage, currentShieldImage, currentArmourImage, currentBootsImage;
+    public Sprite atk, def, hp, spd;
     public AudioSource soundsrc;
     public AudioClip purchase_sound;
 
@@ -20,39 +20,93 @@ public class Inventory : MonoBehaviour
     private string displayItemType;
     private int currentItemLevel;
 
-
-    //private void Awake() { gameObject.AddComponent<UpdateSessions>().U_All(); }
-
-    //! General Setup
     private void Start()
     {
         p = new Player();
         hpText.supportRichText = true;
         atkText.supportRichText = true;
         defText.supportRichText = true;
+        spdText.supportRichText = true;
         Displayed(false);
     }
 
-    //! Keep the player's stats display updated
     private void Update()
     {
         if (!(p.ComparePlayer(PlayerObjects.singleton.player)))
         {
             p = PlayerObjects.singleton.player;
-            Stats stats = new Stats(p);
+            string[] split_stats = SplitStats();
 
-            hpText.text = stats.StatsToStrings()[0];
-            atkText.text = stats.StatsToStrings()[1];
-            defText.text = stats.StatsToStrings()[2];
+            hpText.text = split_stats[0];
+            atkText.text = split_stats[1];
+            defText.text = split_stats[2];
+            spdText.text = split_stats[3];
             coinsText.text = "" + p.coins;
 
             currentSwordImage.GetComponent<RawImage>().texture = Item.NewItem("sword", p.sword).icon;
             currentShieldImage.GetComponent<RawImage>().texture = Item.NewItem("shield", p.shield).icon;
             currentArmourImage.GetComponent<RawImage>().texture = Item.NewItem("armour", p.armour).icon;
+            currentBootsImage.GetComponent<RawImage>().texture = Item.NewItem("boots", p.boots).icon;
         }
     }
 
-    //! Show/Hide the item upgrade panels
+    private string[] SplitStats()
+    {
+        int hpTotal, hpBase, hpItem;
+        int atkTotal, atkBase, atkItem;
+        int defTotal, defBase, defItem;
+        int spdTotal, spdBase, spdItem;
+
+        hpBase = p.hp;
+        atkBase = p.atk;
+        defBase = p.def;
+        spdBase = p.spd;
+
+        p.AttachItems();
+
+        hpTotal = p.hp;
+        atkTotal = p.atk;
+        defTotal = p.def;
+        spdTotal = p.spd;
+
+        hpItem = hpTotal - hpBase;
+        atkItem = atkTotal - atkBase;
+        defItem = defTotal - defBase;
+        spdItem = spdTotal - spdBase;
+
+        string[] output = { "", "", "", "" };
+
+        output[0] = "<b>" + hpTotal + "</b>"
+            + "<color=black> (</color>"
+            + "<color=yellow>" + hpBase + "</color>"
+            + "<color=black>+</color>"
+            + "<color=red>" + hpItem + "</color>"
+            + "<color=black>)</color>";
+
+        output[1] = "<b>" + atkTotal + "</b>"
+            + "<color=black> (</color>"
+            + "<color=yellow>" + atkBase + "</color>"
+            + "<color=black>+</color>"
+            + "<color=red>" + atkItem + "</color>"
+            + "<color=black>)</color>";
+
+        output[2] = "<b>" + defTotal + "</b>"
+            + "<color=black> (</color>"
+            + "<color=yellow>" + defBase + "</color>"
+            + "<color=black>+</color>"
+            + "<color=red>" + defItem + "</color>"
+            + "<color=black>)</color>";
+
+        output[3] = "<b>" + spdTotal + "</b>"
+            + "<color=black> (</color>"
+            + "<color=yellow>" + spdBase + "</color>"
+            + "<color=black>+</color>"
+            + "<color=red>" + spdItem + "</color>"
+            + "<color=black>)</color>";
+
+        return output;
+    }
+
     private void Displayed(bool shown)
     {
         Vector3 hide = new Vector3(-791.5f, -1231.1f, 0);
@@ -82,6 +136,11 @@ public class Inventory : MonoBehaviour
                 currentItemLevel = PlayerObjects.singleton.player.armour;
                 displayItemType = "armour";
                 break;
+
+            case 3: // Boots
+                currentItemLevel = PlayerObjects.singleton.player.armour;
+                displayItemType = "boots";
+                break;
         }
 
         if (currentItemLevel >= 4)
@@ -106,7 +165,14 @@ public class Inventory : MonoBehaviour
             swordIconImage.SetActive(false);
             shieldIconImage.GetComponent<RawImage>().texture = displayItem.icon;
         }
-        else
+        else if (displayItemType == "armour")
+        {
+            armourIconImage.SetActive(true);
+            shieldIconImage.SetActive(false);
+            swordIconImage.SetActive(false);
+            armourIconImage.GetComponent<RawImage>().texture = displayItem.icon;
+        }
+        else if (displayItemType == "boots")
         {
             armourIconImage.SetActive(true);
             shieldIconImage.SetActive(false);

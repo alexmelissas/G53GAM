@@ -91,11 +91,9 @@
     <Compile Include="Assets\Scripts\Platformer\Enemy.cs" />
     <Compile Include="Assets\Scripts\Platformer\FallDetection.cs" />
     <Compile Include="Assets\Scripts\Platformer\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Profile.cs" />
     <Compile Include="Assets\Scripts\Session Objects\Player.cs" />
     <Compile Include="Assets\Scripts\Session Objects\PlayerObjects.cs" />
-    <Compile Include="Assets\Scripts\SetSettings.cs" />
-    <Compile Include="Assets\Scripts\Stats.cs" />
+    <Compile Include="Assets\Scripts\StatsScreen.cs" />
     <None Include="Assets\Extra Assets\Sepiroth\LICENSE.txt" />
     <None Include="Assets\Extra Assets\Sepiroth\README.txt" />
     <Reference Include="Unity.Timeline.Editor">
