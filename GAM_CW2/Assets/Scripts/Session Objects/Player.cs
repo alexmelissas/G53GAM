@@ -45,7 +45,6 @@ public class Player
         return temp;
     }
 
-    //! Check if two Player objects have identical attributes
     public bool ComparePlayer(Player other)
     {
         if (username != other.username
@@ -57,8 +56,7 @@ public class Player
         return true;
     }
 
-    //! Fully clone the Player object to a new one
-        // Code  inspiration from https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically
+    //Based on: https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically
     public static Player Clone(Player original)
     {
         using (var ms = new MemoryStream())

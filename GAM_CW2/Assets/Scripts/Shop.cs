@@ -6,184 +6,118 @@ using UnityEngine.UI;
 public class Shop : MonoBehaviour
 {
 
-    public GameObject upgradePanel;
+    public GameObject shopPopup;
     public Text itemNameText, statText, priceText, balanceText;
     public Text coinsText;
     public GameObject armourIconImage, shieldIconImage, swordIconImage, bootsIconImage, statIconImage;
-    public GameObject currentSwordImage, currentShieldImage, currentArmourImage, currentBootsImage;
-    public Sprite atk, def, hp, spd;
+    public Sprite atkIcon, defIcon, hpIcon, spdIcon;
     public AudioSource soundsrc;
     public AudioClip purchase_sound;
 
     private Player p;
     private Item displayItem;
     private string displayItemType;
-    private int currentItemLevel;
+    private int itemLevel;
 
     private void Start()
     {
-        p = new Player();
+        p = PlayerObjects.singleton.player;
+        coinsText.text = "" + p.coins;
         ShowShopPopup(false);
     }
 
-    private void Update()
+    private void ShowShopPopup(bool shown) { shopPopup.SetActive(shown); }
+
+    public void BuildShopPopup(int itemType)
     {
-        if (!(p.ComparePlayer(PlayerObjects.singleton.player)))
+        switch (itemType)
         {
-            p = PlayerObjects.singleton.player;
-            coinsText.text = "" + p.coins;
-
-            currentSwordImage.GetComponent<RawImage>().texture = Item.NewItem("sword", p.sword).icon;
-            currentShieldImage.GetComponent<RawImage>().texture = Item.NewItem("shield", p.shield).icon;
-            currentArmourImage.GetComponent<RawImage>().texture = Item.NewItem("armour", p.armour).icon;
-            currentBootsImage.GetComponent<RawImage>().texture = Item.NewItem("boots", p.boots).icon;
-        }
-    }
-
-    private void ShowShopPopup(bool shown)
-    {
-        Vector3 hide = new Vector3(-791.5f, -1231.1f, 0);
-        Vector3 show = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-        upgradePanel.transform.position = shown ? show : hide;
-    }
-
-    //! Setup the item upgrade panel with the next level item of selected type
-    public void SetupUpgradePanel(int item_type)
-    {
-        if (item_type < 0 || item_type > 2) return;
-        currentItemLevel = 0;
-
-        switch (item_type)
-        {
-            case 0: // Sword
-                currentItemLevel = PlayerObjects.singleton.player.sword;
-                displayItemType = "sword";
-                break;
-
-            case 1: // Shield
-                currentItemLevel = PlayerObjects.singleton.player.shield;
-                displayItemType = "shield";
-                break;
-
-            case 2: // Armour
-                currentItemLevel = PlayerObjects.singleton.player.armour;
-                displayItemType = "armour";
-                break;
-
-            case 3: // Boots
-                currentItemLevel = PlayerObjects.singleton.player.armour;
-                displayItemType = "boots";
-                break;
+            case 0: itemLevel = p.sword; displayItemType = "sword"; break;
+            case 1:  itemLevel = p.shield; displayItemType = "shield"; break;
+            case 2: itemLevel = p.armour; displayItemType = "armour"; break;
+            case 3: itemLevel = p.boots; displayItemType = "boots"; break;
+            default: return;
         }
 
-        if (currentItemLevel >= 4)
-        {
-            Debug.Log("Item Fully Upgraded!");
-            return;
-        }
-        else
-            displayItem = Item.NewItem(displayItemType, currentItemLevel + 1);
+        if (itemLevel >= 4) { Debug.Log("You can't upgrade this further, Karen."); return; }
+        else displayItem = Item.NewItem(displayItemType, itemLevel + 1);
 
-        if (displayItemType == "sword") // Update the icon
+        GameObject iconImage;
+        switch (displayItemType)
         {
-            armourIconImage.SetActive(false);
-            shieldIconImage.SetActive(false);
-            swordIconImage.SetActive(true);
-            swordIconImage.GetComponent<RawImage>().texture = displayItem.icon;
+            case "sword": iconImage = swordIconImage; break;
+            case "shield": iconImage = shieldIconImage; break;
+            case "armour": iconImage = armourIconImage; break;
+            case "boots": iconImage = bootsIconImage; break;
+            default: iconImage = swordIconImage; break;
         }
-        else if (displayItemType == "shield")
-        {
-            armourIconImage.SetActive(false);
-            shieldIconImage.SetActive(true);
-            swordIconImage.SetActive(false);
-            shieldIconImage.GetComponent<RawImage>().texture = displayItem.icon;
-        }
-        else if (displayItemType == "armour")
-        {
-            armourIconImage.SetActive(true);
-            shieldIconImage.SetActive(false);
-            swordIconImage.SetActive(false);
-            armourIconImage.GetComponent<RawImage>().texture = displayItem.icon;
-        }
-        else if (displayItemType == "boots")
-        {
-            armourIconImage.SetActive(true);
-            shieldIconImage.SetActive(false);
-            swordIconImage.SetActive(false);
-            armourIconImage.GetComponent<RawImage>().texture = displayItem.icon;
-        }
-        UpdateLabels(item_type);
+        armourIconImage.SetActive(false);
+        shieldIconImage.SetActive(false);
+        swordIconImage.SetActive(false);
+        bootsIconImage.SetActive(false);
+        iconImage.SetActive(true);
+
+        iconImage.GetComponent<RawImage>().texture = displayItem.icon;
+
+        UpdateLabels(itemType);
         ShowShopPopup(true);
     }
 
-    //! Helper for SetupUpgradePanels
-    private void UpdateLabels(int item_type)
+    private void UpdateLabels(int itemType)
     {
         int stat = 0;
-        Sprite statIcon = atk;
+        Sprite statIcon = null;
 
-        switch (item_type)
+        switch (itemType)
         {
             case 0:
-                statIcon = atk;
+                statIcon = atkIcon;
                 stat = displayItem.atk;
                 break;
             case 1:
-                statIcon = def;
+                statIcon = defIcon;
                 stat = displayItem.def;
                 break;
             case 2:
-                statIcon = hp;
+                statIcon = hpIcon;
                 stat = displayItem.hp;
                 break;
+            case 3:
+                statIcon = spdIcon;
+                stat = displayItem.spd;
+                break;
+            default: return;
         }
 
         statIconImage.GetComponent<Image>().sprite = statIcon;
         itemNameText.text = displayItem.name;
-        statText.text = "" + stat;
-        balanceText.text = "" + PlayerObjects.singleton.player.coins;
         priceText.text = "" + displayItem.price;
+        statText.text = "" + stat;
+
+        balanceText.text = "" + p.coins;
     }
 
-    //! Perform the server-side updating of the Player based on the purchase
-    private IEnumerator Purchase(string poorerPlayerJSON)
+    public void Execute_Purchase()
     {
-        //StartCoroutine(Server.UpdatePlayer(poorerPlayerJSON));
-        //yield return new WaitUntil(() => Server.updatePlayer_done == true);
-        //soundsrc.PlayOneShot(purchase_sound, PlayerPrefs.GetFloat("fx"));
-        //gameObject.AddComponent<UpdateSessions>().U_Player();
-        //Displayed(false);
-        yield break;
-    }
-
-    //! Check if player has enough funds, then make the purchase
-    public void ConfirmPurchase()
-    {
-        if (PlayerObjects.singleton.player.coins >= displayItem.price)
+        if (p.coins >= displayItem.price)
         {
-            Player poorerPlayer = Player.Clone(PlayerObjects.singleton.player);
-            poorerPlayer.coins -= displayItem.price;
+            p.coins -= displayItem.price;
             switch (displayItemType)
             {
-                case "sword": poorerPlayer.sword++; break;
-                case "shield": poorerPlayer.shield++; break;
-                case "armour": poorerPlayer.armour++; break;
+                case "sword": p.sword++; break;
+                case "shield": p.shield++; break;
+                case "armour": p.armour++; break;
+                case "boots": p.boots++; break;
+                default: break;
             }
-
-            string poorerPlayerJSON = JsonUtility.ToJson(poorerPlayer);
-            StartCoroutine(Purchase(poorerPlayerJSON));
+            soundsrc.PlayOneShot(purchase_sound, PlayerPrefs.GetFloat("fx"));
         }
-        else
-        {
-            Debug.Log("Insufficient Funds.");
-            //gameObject.AddComponent<UpdateSessions>().U_Player();
-            ShowShopPopup(false);
-        }
+        else Debug.Log("YOU'RE TOO POOR FOR THAT, KAREN.");
+        SceneManager.LoadScene("Shop");
     }
 
-    public void Back()
-    {
-        SceneManager.LoadScene("Main");
-    }
+    public void Cancel_Purchase() { ShowShopPopup(false); }
+
+    public void Back() { SceneManager.LoadScene("Main"); }
+
 }
-

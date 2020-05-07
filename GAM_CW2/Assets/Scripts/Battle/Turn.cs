@@ -5,56 +5,54 @@ public class Turn {
 
     public Player player;
     public Player enemy;
-    public bool player_turn;
+    public bool playersTurn;
     public float damage;
-    public int crit_landed;
-    private int player_currentHP;
+    public bool critLanded;
 
     //! Basic Constructor
     public Turn(bool _turn, Player _player, Player _enemy)
     {
-        player_turn = _turn;
+        playersTurn = _turn;
         player = _player;
         enemy = _enemy;
     }
 
-    //! Choose whose Turn this is, alternating every Turn
-    private Player PlaysNow(bool playerPlays) { return playerPlays ? player : enemy; }
+    private Player PlayingNow(bool playerPlays) { return playerPlays ? player : enemy; }
 
-    //! Calculate the result of this Turn, including damage dealth, each Player's remaining HP etc
     public int PlayTurn()
     {
-        Player attacker = PlaysNow(player_turn);
-        Player victim = PlaysNow(!player_turn);
+        Player attacker = PlayingNow(playersTurn);
+        Player victim = PlayingNow(!playersTurn);
 
-        int real_attack = attacker.atk;
-        int applied_attack = Random.Range((int)(real_attack - (real_attack*0.05)),(int)(real_attack + (real_attack*0.05)));
-        damage = (applied_attack - victim.def) * (victim.level > attacker.level ? victim.level - attacker.level : 1);
+        // REAL DMG CALCULATION
+        int atk = attacker.atk;
+        int minFluctuate = (int)(atk - (atk * 0.05));
+        int maxFluctuate = (int)(atk + (atk * 0.05));
+        int rawDamage = Random.Range(minFluctuate,maxFluctuate);
+
+        bool giveBoost = victim.level > attacker.level;
+        int levelDiff = victim.level - attacker.level;
+        float boostAmount = giveBoost ? levelDiff * 3 : 0;
+        damage = (rawDamage - victim.def) + boostAmount;
         if (damage < 1) damage = 1;
-        int low_crit = 20;//attacker.critical_strike; // not sure about multiplying it? //FIX THIS TO 10
-        int med_crit = low_crit/2;
-        int high_crit = low_crit/10;
 
+        // CRIT
+        int critChance = attacker.crit;
         int crit = Random.Range(0, 100);
-        float crit_dmg = damage;
-        if (crit <= low_crit) { crit_dmg = damage *3f; crit_landed = 3; }
-        else if (crit < med_crit) { crit_dmg = damage * 2f; ; crit_landed = 2; }
-        else if (crit < high_crit) { crit_dmg = damage * 1.5f; crit_landed = 1; }
-        else crit_landed = 0;
-        if (crit_landed > 0) damage = crit_dmg;
+        if (crit <= critChance) { damage *= 2; critLanded = true; }
+        else critLanded = false;
 
+        // MISS
         int miss;
-        //if (victim.agility < 10) miss = 10;
-        //else miss = victim.agility; //need to be careful with agility scaling
-
-        miss = 5; // FIX THIS
-
+        if (victim.agility < 5) miss = 5;
+        else miss = victim.agility;
         int misschance = Random.Range(0, 100);
         if (misschance < miss) damage = 0;
-        
+
+        // DEAL DMG
         victim.hp -= Mathf.RoundToInt(damage);
 
-        if (player_turn == false)
+        if (playersTurn == false)
         {
             if (PlayerObjects.singleton.currentHP - Mathf.RoundToInt(damage) < 0)
                 PlayerObjects.singleton.currentHP = 0;

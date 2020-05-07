@@ -639,7 +639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 251.2, y: -469}
+  m_AnchoredPosition: {x: 519, y: 542}
   m_SizeDelta: {x: 181.1, y: 566.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &169478620
@@ -1000,9 +1000,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Displayed
-        m_Mode: 6
+      - m_Target: {fileID: 1886358778}
+        m_MethodName: Cancel_Purchase
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1326,8 +1326,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetupUpgradePanel
+      - m_Target: {fileID: 1886358778}
+        m_MethodName: BuildShopPopup
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1600,8 +1600,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetupUpgradePanel
+      - m_Target: {fileID: 1886358778}
+        m_MethodName: BuildShopPopup
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1966,7 +1966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 251.19998, y: 542}
+  m_AnchoredPosition: {x: 251.20012, y: -468.99994}
   m_SizeDelta: {x: 224.7, y: 681.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &908047995
@@ -2017,7 +2017,7 @@ GameObject:
   - component: {fileID: 1023027414}
   - component: {fileID: 1023027413}
   m_Layer: 8
-  m_Name: upgradePanel
+  m_Name: shopPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2410,7 +2410,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 519, y: 542}
+  m_AnchoredPosition: {x: 251.20001, y: 542}
   m_SizeDelta: {x: 1589, y: 2953.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1098761204
@@ -2461,7 +2461,7 @@ GameObject:
   - component: {fileID: 1103299210}
   - component: {fileID: 1103299209}
   m_Layer: 0
-  m_Name: upgradesText
+  m_Name: shopTitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3073,8 +3073,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetupUpgradePanel
+      - m_Target: {fileID: 1886358778}
+        m_MethodName: BuildShopPopup
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3243,13 +3243,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetupUpgradePanel
+      - m_Target: {fileID: 1886358778}
+        m_MethodName: BuildShopPopup
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3630,8 +3630,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetupUpgradePanel
+      - m_Target: {fileID: 1886358778}
+        m_MethodName: BuildShopPopup
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4179,8 +4179,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetupUpgradePanel
+      - m_Target: {fileID: 1886358778}
+        m_MethodName: BuildShopPopup
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4331,8 +4331,8 @@ GameObject:
   - component: {fileID: 1886358774}
   - component: {fileID: 1886358773}
   - component: {fileID: 1886358777}
-  - component: {fileID: 1886358776}
   - component: {fileID: 1886358778}
+  - component: {fileID: 1886358776}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -4435,7 +4435,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1886358771}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f344769079593b2438bcd1e9449637b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 2641c01518cb9468c876508d1699c2ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   atkText: {fileID: 1722214892}
@@ -4447,6 +4447,10 @@ MonoBehaviour:
   lvlText: {fileID: 1989220031}
   nextLevelText: {fileID: 408202802}
   xpText: {fileID: 200651804}
+  currentSwordImage: {fileID: 1616357693}
+  currentShieldImage: {fileID: 565053656}
+  currentArmourImage: {fileID: 1340115719}
+  currentBootsImage: {fileID: 1410714899}
   xpSlider: {fileID: 159208547}
 --- !u!82 &1886358777
 AudioSource:
@@ -4556,7 +4560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2ec4cb29a088e48b4b2c69683897e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradePanel: {fileID: 1023027411}
+  shopPopup: {fileID: 1023027411}
   itemNameText: {fileID: 1723852231}
   statText: {fileID: 1447628912}
   priceText: {fileID: 1379933187}
@@ -4567,14 +4571,10 @@ MonoBehaviour:
   swordIconImage: {fileID: 1662156627}
   bootsIconImage: {fileID: 1087140404}
   statIconImage: {fileID: 1920044740}
-  currentSwordImage: {fileID: 1616357693}
-  currentShieldImage: {fileID: 565053656}
-  currentArmourImage: {fileID: 1340115719}
-  currentBootsImage: {fileID: 1410714899}
-  atk: {fileID: 21300000, guid: 13e01e32a721c1d43b6efe16e238a701, type: 3}
-  def: {fileID: 21300000, guid: 52bd0dd1f7c3ace4da7c30089cac09ed, type: 3}
-  hp: {fileID: 21300000, guid: ae887cf0549349e40bf66e82e2daf8bf, type: 3}
-  spd: {fileID: 21300000, guid: 52bd0dd1f7c3ace4da7c30089cac09ed, type: 3}
+  atkIcon: {fileID: 21300000, guid: 13e01e32a721c1d43b6efe16e238a701, type: 3}
+  defIcon: {fileID: 21300000, guid: 52bd0dd1f7c3ace4da7c30089cac09ed, type: 3}
+  hpIcon: {fileID: 21300000, guid: ae887cf0549349e40bf66e82e2daf8bf, type: 3}
+  spdIcon: {fileID: 21300000, guid: 3fc2bbd409bf34ab6af1637bab569da1, type: 3}
   soundsrc: {fileID: 1886358777}
   purchase_sound: {fileID: 8300000, guid: 87266f7fd883e7d4db42e175bd753f77, type: 3}
 --- !u!1 &1920044740
@@ -4873,7 +4873,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 999(999+999+999)
+  m_Text: 999(9999+999)
 --- !u!222 &2031179056
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4963,8 +4963,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ConfirmPurchase
+      - m_Target: {fileID: 1886358778}
+        m_MethodName: Execute_Purchase
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
