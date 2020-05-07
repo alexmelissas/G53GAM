@@ -3688,6 +3688,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 17038164258918636, guid: ed56fa3e811ea4fe3afa511cc5e5d506,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 17038165044809331, guid: ed56fa3e811ea4fe3afa511cc5e5d506,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -9521,7 +9526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f344769079593b2438bcd1e9449637b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpText: {fileID: 0}
   atkText: {fileID: 4114082426230917745}
   defText: {fileID: 4114082425355302879}
   spdText: {fileID: 1857558627}

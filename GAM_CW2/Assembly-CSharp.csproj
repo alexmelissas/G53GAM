@@ -81,7 +81,6 @@
     <Compile Include="Assets\Scripts\Battle\Gameplay.cs" />
     <Compile Include="Assets\Scripts\Battle\Turn.cs" />
     <Compile Include="Assets\Scripts\Battle\UnrankedMatch.cs" />
-    <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Items\Armour.cs" />
     <Compile Include="Assets\Scripts\Items\Boots.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
@@ -93,7 +92,9 @@
     <Compile Include="Assets\Scripts\Platformer\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Session Objects\Player.cs" />
     <Compile Include="Assets\Scripts\Session Objects\PlayerObjects.cs" />
+    <Compile Include="Assets\Scripts\Shop.cs" />
     <Compile Include="Assets\Scripts\StatsScreen.cs" />
+    <Compile Include="Assets\SpashScreen.cs" />
     <None Include="Assets\Extra Assets\Sepiroth\LICENSE.txt" />
     <None Include="Assets\Extra Assets\Sepiroth\README.txt" />
     <Reference Include="Unity.Timeline.Editor">

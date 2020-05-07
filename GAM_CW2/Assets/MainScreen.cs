@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainScreen : MonoBehaviour
 {
@@ -9,31 +10,7 @@ public class MainScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelMenu.SetActive(false);
-
-        //test
-        Player test = new Player(
-            "Alex",
-            12, //level
-            100, //xp
-            200, //xptolevel
-            10, //coins
-            120, //hp
-            150, //atk
-            50, //def
-            10,
-            10,
-            20,
-            1,
-            1,
-            1,
-            1,
-            10,
-            2,
-            3,
-            1);
-        PlayerObjects.singleton.player = test;
-        PlayerObjects.singleton.currentHP = 40;
+        levelMenu.SetActive(false);        
     }
 
     // Update is called once per frame
@@ -44,6 +21,7 @@ public class MainScreen : MonoBehaviour
 
     public void OpenLevelMenu()
     {
+        Debug.Log("TI MANA1 SOU");
         levelMenu.SetActive(true);
     }
 
@@ -53,16 +31,22 @@ public class MainScreen : MonoBehaviour
         {
             case 1:
                 if (PlayerObjects.singleton.unlocked1)
-                Application.LoadLevel("Level1");
+                    SceneManager.LoadScene("Level1");
                 break;
             case 2:
                 if (PlayerObjects.singleton.unlocked2)
-                    Application.LoadLevel("Level1");
+                    SceneManager.LoadScene("Level2");
                 break;
             case 3:
                 if (PlayerObjects.singleton.unlocked3)
-                    Application.LoadLevel("Level1");
+                    SceneManager.LoadScene("Level2");
                 break;
         }
+    }
+
+    public void OpenShop()
+    {
+        Debug.Log("TI MANA SOU");
+        SceneManager.LoadScene("Shop");
     }
 }

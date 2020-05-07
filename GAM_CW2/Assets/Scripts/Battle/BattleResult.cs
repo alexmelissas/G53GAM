@@ -77,13 +77,4 @@ public class BattleResult {
         if (level_diff>=0) return 0;
         else return 5*level_diff;
     }
-
-    private void UpdatePlayerBeginLevel()
-    {
-        PlayerObjects.singleton.player_beginning_of_level.xp = player.xp;
-        PlayerObjects.singleton.player_beginning_of_level.level = player.level;
-        PlayerObjects.singleton.player_beginning_of_level.level = player.coins;
-
-    }
-
 }

@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 677, y: 492}
   m_MaxSize: {x: 18001, y: 14042}
   vertical: 0
-  controlID: 43217
+  controlID: 70458
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 492}
   m_MaxSize: {x: 14001, y: 14042}
   vertical: 1
-  controlID: 43218
+  controlID: 70459
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 221}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 43219
+  controlID: 70460
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -221,7 +221,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: ac21ffff9423ffff102bffff8054ffff6e55ffff0856fffffa57fffff259ffff825bffff005effff4664fffff264ffff06baffff14baffff3cbaffffcabfffffd8bfffff12c5ffff1cc8fffff8d5ffffb6d6ffff3ed8fffffadaffff02f5ffff74f5ffff6efbffff22bf000024de000046f10000fafc000016fd000032ff00009cff0000c8ff00001a0001009c230100
+      m_ExpandedIDs: 7a9dfeff429efefff4a3feffd2a5feffe4a5feffeea9feff7aaafeff80acfeffb0acfeff28adfeffa8adfeff8ab0feff24b2feff56b3feff6ab3feffd2bbfeff5cbefeff5ac2feffe0c3feffc0cffeff20d0feff0ad1feffd6dbfeff72dffeff0ae1feff80e3feffd8fefeff3a1bffff3c1bffff5c1bffff5e1bffffa81bffffc41bffffd01cffff7a1dffffac21ffff9423ffff102bffff8054ffff6e55ffff0856fffffa57fffff259ffff825bffff005effff4664fffff264ffff06baffff14baffff3cbaffffcabfffffd8bfffff12c5ffff1cc8fffff8d5ffffb6d6ffff3ed8fffffadaffff02f5ffff74f5ffff6efbffff22bf000024de000046f10000fafc000016fd000032ff00009cff0000c8ff00001a0001009c230100b433010070340100f2360100da3701000a3901001a3901005039010072390100763901007e3901009e390100123a01002e3a010042450100fc49010054540100825d01002e60010078fc0100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -310,9 +310,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 960, y: 540, z: 0}
+    m_Target: {x: 616.7984, y: 826.2119, z: -1058.5}
     speed: 2
-    m_Value: {x: 960, y: 540, z: 0}
+    m_Value: {x: 616.7984, y: 826.2119, z: -1058.5}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -362,9 +362,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3634.797
+    m_Target: 844.44965
     speed: 2
-    m_Value: 3634.797
+    m_Value: 844.44965
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_MinSize: {x: 331, y: 271}
   m_MaxSize: {x: 14001, y: 10021}
   vertical: 0
-  controlID: 43175
+  controlID: 70396
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -590,16 +590,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/Alex/Documents/G53GAM/GAM_CW2
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 33}
-    m_SelectedIDs: 05ca9a3b
-    m_LastClickedID: 1000000005
-    m_ExpandedIDs: 000000001a3700001c3700001e370000f837000000ca9a3b
+    scrollPos: {x: 0, y: 1}
+    m_SelectedIDs: f6370000
+    m_LastClickedID: 14326
+    m_ExpandedIDs: 000000001a3700001c3700001e370000cc370000f0370000f837000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -627,7 +627,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000001a3700001c3700001e370000f837000000ca9a3b
+    m_ExpandedIDs: 000000001a3700001c3700001e370000cc370000f0370000f837000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -652,10 +652,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 98360000
-    m_LastClickedInstanceID: 13976
+    m_SelectedInstanceIDs: e8170200
+    m_LastClickedInstanceID: 137192
     m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c62300001c3f00000c340000463600004c3d00003e5b00006e39000000000000
+    m_ExpandedInstanceIDs: c62300001c3f00000c340000463600004c3d00003e5b00006e39000000000000d2c00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -797,5 +797,5 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
-  m_LastInspectedObjectInstanceID: 13976
+  m_LastInspectedObjectInstanceID: 137192
   m_LastVerticalScrollValue: 0

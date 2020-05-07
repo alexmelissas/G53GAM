@@ -1,15 +1,14 @@
 ﻿<Properties StartupConfiguration="{881A20A4-424D-326C-4F8D-2B5BEC3FEC29}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/StatsScreen.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MainScreen.cs">
     <Files>
-      <File FileName="Assets/MainScreen.cs" Line="24" Column="16" IsPinned="True" />
+      <File FileName="Assets/Scripts/StatsScreen.cs" Line="56" Column="26" IsPinned="True" />
+      <File FileName="Assets/MainScreen.cs" Line="12" Column="6" IsPinned="True" />
       <File FileName="Assets/Scripts/Battle/Gameplay.cs" Line="230" Column="33" IsPinned="True" />
       <File FileName="Assets/Scripts/Battle/BattleResult.cs" Line="79" Column="6" IsPinned="True" />
       <File FileName="Assets/Scripts/Platformer/Enemy.cs" Line="50" Column="65" IsPinned="True" />
       <File FileName="Assets/Scripts/Battle/Turn.cs" Line="65" Column="23" IsPinned="True" />
-      <File FileName="Assets/Scripts/StatsScreen.cs" Line="26" Column="21" />
-      <File FileName="Assets/Scripts/Inventory.cs" Line="1" Column="1" />
-      <File FileName="Assets/HUDManager.cs" Line="48" Column="39" />
-      <File FileName="Assets/Scripts/Battle/AnimationManager.cs" />
+      <File FileName="Assets/HUDManager.cs" Line="63" Column="1" />
+      <File FileName="Assets/Scripts/Battle/AnimationManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Session Objects/Player.cs" Line="73" Column="67" />
       <File FileName="Assets/HUD.cs" Line="1" Column="1" />
       <File FileName="Assets/IInventoryItem.cs" />
@@ -17,6 +16,10 @@
       <File FileName="Assets/Scripts/Items/Armour.cs" />
       <File FileName="Assets/Scripts/Items/Items.cs" Line="21" Column="32" />
       <File FileName="Assets/Scripts/Battle/BattleResultPopup.cs" />
+      <File FileName="Assets/Scripts/Platformer/FallDetection.cs" Line="23" Column="68" />
+      <File FileName="Assets/Scripts/Shop.cs" Line="11" Column="27" />
+      <File FileName="Assets/Scripts/Platformer/PlayerController.cs" Line="33" Column="42" />
+      <File FileName="Assets/SpashScreen.cs" Line="11" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -28,8 +31,8 @@
                 <Node name="Items" expanded="True" />
                 <Node name="Platformer" expanded="True" />
                 <Node name="Session Objects" expanded="True" />
-                <Node name="StatsScreen.cs" selected="True" />
               </Node>
+              <Node name="MainScreen.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -40,9 +43,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7e890d21-2154-4e5a-9480-a838a862b598" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/Alex/Documents/G53GAM/GAM_CW2/Assets/HUDManager.cs" relfile="Assets/HUDManager.cs" line="60" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

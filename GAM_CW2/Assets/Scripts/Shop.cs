@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-//! Manage the Inventory screen, including Upgrades
-public class Inventory : MonoBehaviour
+public class Shop : MonoBehaviour
 {
 
-    public Text hpText, atkText, defText, spdText, coinsText;
     public GameObject upgradePanel;
     public Text itemNameText, statText, priceText, balanceText;
+    public Text coinsText;
     public GameObject armourIconImage, shieldIconImage, swordIconImage, bootsIconImage, statIconImage;
     public GameObject currentSwordImage, currentShieldImage, currentArmourImage, currentBootsImage;
     public Sprite atk, def, hp, spd;
@@ -23,11 +23,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         p = new Player();
-        hpText.supportRichText = true;
-        atkText.supportRichText = true;
-        defText.supportRichText = true;
-        spdText.supportRichText = true;
-        Displayed(false);
+        ShowShopPopup(false);
     }
 
     private void Update()
@@ -35,12 +31,6 @@ public class Inventory : MonoBehaviour
         if (!(p.ComparePlayer(PlayerObjects.singleton.player)))
         {
             p = PlayerObjects.singleton.player;
-            string[] split_stats = SplitStats();
-
-            hpText.text = split_stats[0];
-            atkText.text = split_stats[1];
-            defText.text = split_stats[2];
-            spdText.text = split_stats[3];
             coinsText.text = "" + p.coins;
 
             currentSwordImage.GetComponent<RawImage>().texture = Item.NewItem("sword", p.sword).icon;
@@ -50,64 +40,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private string[] SplitStats()
-    {
-        int hpTotal, hpBase, hpItem;
-        int atkTotal, atkBase, atkItem;
-        int defTotal, defBase, defItem;
-        int spdTotal, spdBase, spdItem;
-
-        hpBase = p.hp;
-        atkBase = p.atk;
-        defBase = p.def;
-        spdBase = p.spd;
-
-        p.AttachItems();
-
-        hpTotal = p.hp;
-        atkTotal = p.atk;
-        defTotal = p.def;
-        spdTotal = p.spd;
-
-        hpItem = hpTotal - hpBase;
-        atkItem = atkTotal - atkBase;
-        defItem = defTotal - defBase;
-        spdItem = spdTotal - spdBase;
-
-        string[] output = { "", "", "", "" };
-
-        output[0] = "<b>" + hpTotal + "</b>"
-            + "<color=black> (</color>"
-            + "<color=yellow>" + hpBase + "</color>"
-            + "<color=black>+</color>"
-            + "<color=red>" + hpItem + "</color>"
-            + "<color=black>)</color>";
-
-        output[1] = "<b>" + atkTotal + "</b>"
-            + "<color=black> (</color>"
-            + "<color=yellow>" + atkBase + "</color>"
-            + "<color=black>+</color>"
-            + "<color=red>" + atkItem + "</color>"
-            + "<color=black>)</color>";
-
-        output[2] = "<b>" + defTotal + "</b>"
-            + "<color=black> (</color>"
-            + "<color=yellow>" + defBase + "</color>"
-            + "<color=black>+</color>"
-            + "<color=red>" + defItem + "</color>"
-            + "<color=black>)</color>";
-
-        output[3] = "<b>" + spdTotal + "</b>"
-            + "<color=black> (</color>"
-            + "<color=yellow>" + spdBase + "</color>"
-            + "<color=black>+</color>"
-            + "<color=red>" + spdItem + "</color>"
-            + "<color=black>)</color>";
-
-        return output;
-    }
-
-    private void Displayed(bool shown)
+    private void ShowShopPopup(bool shown)
     {
         Vector3 hide = new Vector3(-791.5f, -1231.1f, 0);
         Vector3 show = new Vector3(Screen.width / 2, Screen.height / 2, 0);
@@ -180,7 +113,7 @@ public class Inventory : MonoBehaviour
             armourIconImage.GetComponent<RawImage>().texture = displayItem.icon;
         }
         UpdateLabels(item_type);
-        Displayed(true);
+        ShowShopPopup(true);
     }
 
     //! Helper for SetupUpgradePanels
@@ -244,8 +177,13 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("Insufficient Funds.");
             //gameObject.AddComponent<UpdateSessions>().U_Player();
-            Displayed(false);
+            ShowShopPopup(false);
         }
     }
 
+    public void Back()
+    {
+        SceneManager.LoadScene("Main");
+    }
 }
+

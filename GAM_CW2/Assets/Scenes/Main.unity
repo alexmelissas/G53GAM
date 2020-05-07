@@ -130,7 +130,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 12874115}
-  - component: {fileID: 12874112}
   - component: {fileID: 12874111}
   m_Layer: 0
   m_Name: GameController
@@ -152,83 +151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelMenu: {fileID: 571501312}
---- !u!114 &12874112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12874110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4de3dfc08d63d44bbb58bc484d2b34a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player:
-    username: '-'
-    level: 0
-    xp: 0
-    levelupxp: 0
-    coins: 0
-    hp: 0
-    atk: 0
-    def: 0
-    spd: 0
-    crit: 0
-    agility: 0
-    sword: 0
-    shield: 0
-    armour: 0
-    boots: 0
-    movespeed: 0
-    jumpheight: 0
-    jumps: 0
-    powerup: 0
-  player_before_battle:
-    username: '-'
-    level: 0
-    xp: 0
-    levelupxp: 0
-    coins: 0
-    hp: 0
-    atk: 0
-    def: 0
-    spd: 0
-    crit: 0
-    agility: 0
-    sword: 0
-    shield: 0
-    armour: 0
-    boots: 0
-    movespeed: 0
-    jumpheight: 0
-    jumps: 0
-    powerup: 0
-  enemy:
-    username: '-'
-    level: 0
-    xp: 0
-    levelupxp: 0
-    coins: 0
-    hp: 0
-    atk: 0
-    def: 0
-    spd: 0
-    crit: 0
-    agility: 0
-    sword: 0
-    shield: 0
-    armour: 0
-    boots: 0
-    movespeed: 0
-    jumpheight: 0
-    jumps: 0
-    powerup: 0
-  unlocked1: 1
-  unlocked2: 0
-  unlocked3: 0
-  currentHP: 0
-  inBattle: 0
 --- !u!4 &12874115
 Transform:
   m_ObjectHideFlags: 0
@@ -605,7 +527,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 12874111}
-        m_MethodName: OpenLevelMenu
+        m_MethodName: OpenShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1711,7 +1633,7 @@ MonoBehaviour:
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_ForceModuleActive: 1
 --- !u!114 &1868949290
 MonoBehaviour:
   m_ObjectHideFlags: 0

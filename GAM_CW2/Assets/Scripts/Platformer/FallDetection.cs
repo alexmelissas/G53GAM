@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FallDetection : MonoBehaviour
 {
@@ -19,6 +20,6 @@ public class FallDetection : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("FALL");
-        Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
