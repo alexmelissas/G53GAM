@@ -11,18 +11,18 @@ public class Gameplay : MonoBehaviour {
     public GameObject attackButton, blockButton, runButton;
     public GameObject playerCharacter;
 
+    public GameObject playerModel, enemyModel;
     public Slider playerHPSlider, enemyHPSlider;
     public Image playerHPColourImage, enemyHPColourImage;
     public Text playerNameText, enemyNameText, playerLevelText, enemyLevelText;
-    public Text playerCurrentHPText, playerMaxHPText, enemyCurrentHPText, enemyMaxHPText, playerDmgLabelText, enemyDmgLabelText; 
+    public Text playerCurrentHPText, playerMaxHPText, enemyCurrentHPText, enemyMaxHPText;
+    public Text playerDmgLabelText, enemyDmgLabelText; 
+    public AudioClip playerHitSFX, enemyHitSFX, critSFX, missSFX, deathSFX;
     public AudioSource soundsrc, musicsrc;
-    public AudioClip player_hit_Sound, enemy_hit_Sound, crit_Sound, miss_Sound, drop_sword_Sound;
     public GameObject winPopup, losePopup;
 
     //! For the popups at the end of the battle to know when to animate XP gain.
     public static int updatePlayer;
-    public static string currentAnimation_player = "player_idle_Animation";
-    public static string currentAnimation_enemy = "enemy_idle_Animation";
 
     //! Store all the Turns of the battle until a player lost.
     private List<Turn> turns;
@@ -96,8 +96,9 @@ public class Gameplay : MonoBehaviour {
             ShowPopup(false, true);
             ShowPopup(false, false);
 
-            currentAnimation_player = "player_idle_Animation";
-            currentAnimation_enemy = "enemy_idle_Animation";
+            playerModel.SetActive(true);
+            //enemyModel.GetComponent<Image>()  // set to type of enemy
+            enemyModel.SetActive(true);
 
             turn_counter = 0;
             last_block_turn = -4;
@@ -117,7 +118,7 @@ public class Gameplay : MonoBehaviour {
         }
         if (playerHPSlider.value == 0 && !death)
         {
-            soundsrc.PlayOneShot(drop_sword_Sound, PlayerPrefs.GetFloat("fx"));
+            soundsrc.PlayOneShot(deathSFX, PlayerPrefs.GetFloat("fx"));
             playerHPColourImage.enabled = false;
             death = true;
         }
@@ -136,7 +137,7 @@ public class Gameplay : MonoBehaviour {
         }
         if (enemyHPSlider.value == 0 && !death)
         {
-            soundsrc.PlayOneShot(drop_sword_Sound, PlayerPrefs.GetFloat("fx"));
+            soundsrc.PlayOneShot(deathSFX, PlayerPrefs.GetFloat("fx"));
             enemyHPColourImage.enabled = false;
             death = true;
         }
@@ -177,7 +178,7 @@ public class Gameplay : MonoBehaviour {
             if (result == 0) player_turn = player_turn ? false : true; // swap whose turn it is
             else { battleOver = true; i++; } //If there's a final outcome, battle over
         }
-        StartCoroutine(AnimateTurns(turns,battleOver));
+        StartCoroutine(PlayTurns(turns,battleOver));
     }
 
     private void Execute_Block()
@@ -185,7 +186,7 @@ public class Gameplay : MonoBehaviour {
         result = 0;
         turn_counter++;
         last_block_turn = turn_counter;
-        StartCoroutine(AnimateBlock());
+        StartCoroutine(PlayBlock());
     }
 
     private void Execute_Run() { Invoke("CloseBattleScreen", 0.5f); }
@@ -194,12 +195,14 @@ public class Gameplay : MonoBehaviour {
     {
         StopAllCoroutines();
         death = true;
+        if (result == 1) playerModel.SetActive(false);
+        else if (result == 2) enemyModel.SetActive(false);
         UpdatePlayer(); // Update the player based on outcome
 
         gameObject.GetComponent<BattleResultPopup>().didSetup = false; // Setup the popup
         if (result == 1) ShowPopup(true, false); // Player LOSE popup
         else if (result == 2) ShowPopup(true, true); // Player WIN popup
-        updatePlayer = result; //enables the popups for the exp and money gain to animate
+        updatePlayer = result; //Enable BattleResultPopup animation
     }
 
     public void CloseBattleScreen()
@@ -250,62 +253,27 @@ public class Gameplay : MonoBehaviour {
 
     private void ShowPopup(bool shown, bool win) { (win ? winPopup : losePopup).SetActive(shown); }
 
-    //! Animate the battle, including Player animations, HP bars, Damage Labels etc.
-    IEnumerator AnimateTurns(List<Turn> turns, bool battleOver)
+
+    IEnumerator PlayTurns(List<Turn> turns, bool battleOver)
     {
         foreach (Turn turn in turns)
         {
             string attacker = turn.playersTurn ? "player" : "enemy";
-            
-            // (1) Play animations
-            if (attacker == "player")
-            {
-                if (turn.damage != 0)
-                {
-                    currentAnimation_player = "player_attack_Animation";
-                    yield return new WaitForSeconds(0.2f);
-                    currentAnimation_enemy = "enemy_hurt_Animation";
-                }
-                else
-                {
-                    currentAnimation_player = "player_idle_Animation";
-                    yield return new WaitForSeconds(0.2f);
-                    currentAnimation_enemy = "enemy_idle_Animation";
-                }
-            }
-
-            else if(attacker == "enemy")
-            {
-                if (turn.damage != 0)
-                {
-                    currentAnimation_enemy = "enemy_attack_Animation";
-                    yield return new WaitForSeconds(0.2f);
-                    currentAnimation_player = "player_hurt_Animation";
-                }
-                else
-                {
-                    currentAnimation_enemy = "enemy_idle_Animation";
-                    yield return new WaitForSeconds(0.2f);
-                    currentAnimation_player = "player_idle_Animation";
-                }
-            }
-
-            // (2) Display damage
             Text dmgLabel = attacker == "player" ? enemyDmgLabelText : playerDmgLabelText;
             Image pow = attacker == "player" ? enemyDmgLabelText.GetComponentInParent<Image>() : playerDmgLabelText.GetComponentInParent<Image>();
             AudioClip sound;
             if (turn.damage != 0)
             {
-                sound = miss_Sound;
+                sound = missSFX;
                 if (turn.critLanded)
                 {
                     dmgLabel.color = Color.red;
-                    sound = crit_Sound;
+                    sound = critSFX;
                 }
                 else
                 {
                     dmgLabel.color = Color.black;
-                    sound = (attacker == "player") ? player_hit_Sound : enemy_hit_Sound;
+                    sound = (attacker == "player") ? playerHitSFX : enemyHitSFX;
                 }
                 dmgLabel.text = "" + turn.damage;
             }
@@ -313,14 +281,13 @@ public class Gameplay : MonoBehaviour {
             {
                 dmgLabel.text = "MISS";
                 dmgLabel.color = Color.grey;
-                sound = miss_Sound;
+                sound = missSFX;
             }
             soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));
             dmgLabel.enabled = true;
             pow.enabled = true;
             yield return new WaitForSeconds(0.3f);
 
-            // (3) Update HP of victim
             if (turn.damage!=0)
             {
                 float currenthp = (attacker == "player") ? turn.enemy.hp : PlayerObjects.singleton.currentHP;
@@ -332,7 +299,6 @@ public class Gameplay : MonoBehaviour {
             dmgLabel.enabled = false;
             pow.enabled = false;
 
-            // (4) Wait a bit and go to next turn
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -341,53 +307,34 @@ public class Gameplay : MonoBehaviour {
         else EnableActions();
     }
 
-    //! Animate the block
-    IEnumerator AnimateBlock()
+    IEnumerator PlayBlock()
     {
-        string attacker = "enemy";
-        currentAnimation_enemy = "enemy_hurt_Animation";
-        yield return new WaitForSeconds(0.2f);
-        currentAnimation_player = "player_idle_Animation"; // ideally block animation
-
-        Text dmgLabel = attacker == "player" ? enemyDmgLabelText : playerDmgLabelText;
-        Image pow = attacker == "player" ? enemyDmgLabelText.GetComponentInParent<Image>() : playerDmgLabelText.GetComponentInParent<Image>();
+        Text dmgLabel = playerDmgLabelText;
+        Image pow = playerDmgLabelText.GetComponentInParent<Image>();
         AudioClip sound;
-        if (attacker == "player") dmgLabel.text = "X";
-        else dmgLabel.text = "BLOCK";
+        dmgLabel.text = "BLOCK";
         dmgLabel.color = Color.grey;
-        sound = miss_Sound;
+        sound = missSFX;
         soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));
         dmgLabel.enabled = true;
         pow.enabled = true;
-        yield return new WaitForSeconds(0.3f);
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1.05f);
         dmgLabel.enabled = false;
         pow.enabled = false;
         yield return new WaitForSeconds(0.5f);
 
-        attacker = "player";
-        currentAnimation_player = "player_idle_Animation";
-        yield return new WaitForSeconds(0.2f);
-        currentAnimation_enemy = "enemy_idle_Animation";
-
-        dmgLabel = attacker == "player" ? enemyDmgLabelText : playerDmgLabelText;
-        pow = attacker == "player" ? enemyDmgLabelText.GetComponentInParent<Image>() : playerDmgLabelText.GetComponentInParent<Image>();
-        if(attacker == "player") dmgLabel.text = "X";
-        else dmgLabel.text = "BLOCKED!";
+        dmgLabel = enemyDmgLabelText;
+        pow = enemyDmgLabelText.GetComponentInParent<Image>();
+        dmgLabel.text = "-";
         dmgLabel.color = Color.grey;
-        sound = miss_Sound;
         soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));
         dmgLabel.enabled = true;
         pow.enabled = true;
-        yield return new WaitForSeconds(0.3f);
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1.05f);
         dmgLabel.enabled = false;
         pow.enabled = false;
         yield return new WaitForSeconds(0.5f);
 
         EnableActions();
-
     }
-
-
 }
