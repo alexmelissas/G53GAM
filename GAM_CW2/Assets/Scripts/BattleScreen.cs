@@ -22,7 +22,7 @@ public class BattleScreen : MonoBehaviour
     public GameObject winPopup, losePopup;
     public Text winCoinsText, loseCoinsText;
 
-    private Player player, enemy;
+    private RPGCharacter player, enemy;
     private GameObject enemyModel;
     private int result, turnCounter, lastBlockTurn;
     private int playerMaxHP, enemyMaxHP;
@@ -54,8 +54,8 @@ public class BattleScreen : MonoBehaviour
             PersistentObjects.singleton.inBattle = true;
             playerCharacter.SetActive(false);
 
-            player = Player.HardCopy(PersistentObjects.singleton.player);
-            PersistentObjects.singleton.playerBeforeBattle = Player.HardCopy(PersistentObjects.singleton.player); // keep the player before gains
+            player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
+            PersistentObjects.singleton.playerBeforeBattle = RPGCharacter.HardCopy(PersistentObjects.singleton.player); // keep the player before gains
             player.AttachItems();
             enemy = PersistentObjects.singleton.enemy;
             enemy.AttachItems();
@@ -193,8 +193,8 @@ public class BattleScreen : MonoBehaviour
             Turn turn = new Turn(playerTurn, player, enemy);
             turns.Add(turn);
             result = turn.PlayTurn();
-            player = Player.HardCopy(turn.player); //Pass updated Player and Enemy to the next Turn
-            enemy = Player.HardCopy(turn.enemy);
+            player = RPGCharacter.HardCopy(turn.player); //Pass updated Player and Enemy to the next Turn
+            enemy = RPGCharacter.HardCopy(turn.enemy);
             if (result == 0) playerTurn = playerTurn ? false : true; // swap whose turn it is
             else { battleOver = true; i++; } //If there's a final outcome, battle over
         }
@@ -225,10 +225,10 @@ public class BattleScreen : MonoBehaviour
 
     private void UpdatePlayer()
     {
-        Player currentPlayer = Player.HardCopy(PersistentObjects.singleton.playerBeforeBattle);
+        RPGCharacter currentPlayer = RPGCharacter.HardCopy(PersistentObjects.singleton.playerBeforeBattle);
         BattleResult battleResult = new BattleResult(currentPlayer, enemy, (result == 2) ? true : false);
-        Player updatedPlayer = Player.HardCopy(battleResult.CalculateGains());
-        PersistentObjects.singleton.player = Player.HardCopy(updatedPlayer);
+        RPGCharacter updatedPlayer = RPGCharacter.HardCopy(battleResult.CalculateGains());
+        PersistentObjects.singleton.player = RPGCharacter.HardCopy(updatedPlayer);
 
         PersistentObjects.singleton.playerLevelStart.xp = updatedPlayer.xp;
         PersistentObjects.singleton.playerLevelStart.level = updatedPlayer.level;
@@ -245,8 +245,8 @@ public class BattleScreen : MonoBehaviour
         musicsrc.Stop();
         if (result == 1)
         {
-            PersistentObjects.singleton.player = Player.HardCopy(PersistentObjects.singleton.playerLevelStart);
-            Player p = Player.HardCopy(PersistentObjects.singleton.player);
+            PersistentObjects.singleton.player = RPGCharacter.HardCopy(PersistentObjects.singleton.playerLevelStart);
+            RPGCharacter p = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
             p.AttachItems();
             PersistentObjects.singleton.currentHP = p.hp;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Stats : MonoBehaviour
 {
-    private Player p;
+    private RPGCharacter p;
     public Text atkText, defText, spdText, agilityText, critText;
     public Slider hpSlider;
     public Image playerHPColourImage;
@@ -12,11 +12,11 @@ public class Stats : MonoBehaviour
     public Text usernameText, lvlText, nextLevelText, xpText;
     public GameObject currentSwordImage, currentShieldImage, currentBootsImage;
 
-    void Start() { p = new Player("",0); }
+    void Start() { p = new RPGCharacter("",0); }
 
     void Update()
     {
-        p = Player.HardCopy(PersistentObjects.singleton.player);
+        p = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
         string[] split_stats = SplitStats();
 
         atkText.text = split_stats[1];
@@ -35,7 +35,7 @@ public class Stats : MonoBehaviour
         }
         else if (hpSlider != null)
         {
-            Player player = Player.HardCopy(PersistentObjects.singleton.player);
+            RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
             player.AttachItems();
 
             playerNameText.text = "" + player.username;

@@ -4,13 +4,13 @@ public class PersistentObjects : MonoBehaviour
 {
     public static PersistentObjects singleton;
 
-    public Player player;
+    public RPGCharacter player;
     public int currentHP;
     public bool inBattle;
-    public Player playerBeforeBattle;
-    public Player playerLevelStart;
+    public RPGCharacter playerBeforeBattle;
+    public RPGCharacter playerLevelStart;
 
-    public Player enemy;
+    public RPGCharacter enemy;
 
     public bool unlocked1 = true;
     public bool unlocked2 = false;

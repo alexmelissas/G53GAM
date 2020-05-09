@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         if ((e.item as MonoBehaviour).gameObject.GetComponent<PickupableItem>().itemName == "carrot") // HEALTHPACK
         {
-            Player player = Player.HardCopy(PersistentObjects.singleton.player);
+            RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
             player.AttachItems();
             int currentHP = PersistentObjects.singleton.currentHP;
             if (currentHP + 20 <= player.hp) PersistentObjects.singleton.currentHP += 20;

@@ -11,7 +11,7 @@ public class RPGItems {
 
     public static ItemCreator CreateItem(string type, int level) { return new ItemCreator(type, level); }
 
-    public static void AttachItemsToPlayer(Player p)
+    public static void AttachItemsToPlayer(RPGCharacter p)
     {
         RPGItems[] itemList = { null, null, null };
         itemList[0] = CreateItem("sword", p.sword);

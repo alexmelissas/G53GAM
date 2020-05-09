@@ -13,7 +13,7 @@ public class Shop : MonoBehaviour
     public AudioSource soundsrc;
     public AudioClip purchase_sound;
 
-    private Player p;
+    private RPGCharacter p;
     private RPGItems selectedItem;
     private string displayItemType;
     private int itemLevel;

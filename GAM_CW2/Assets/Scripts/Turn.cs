@@ -3,14 +3,14 @@
 //! Calculate damage, who plays and outcome of one Turn
 public class Turn {
 
-    public Player player;
-    public Player enemy;
+    public RPGCharacter player;
+    public RPGCharacter enemy;
     public bool playersTurn;
     public float damage;
     public bool critLanded;
 
     //! Basic Constructor
-    public Turn(bool _turn, Player _player, Player _enemy)
+    public Turn(bool _turn, RPGCharacter _player, RPGCharacter _enemy)
     {
         playersTurn = _turn;
         player = _player;
@@ -19,8 +19,8 @@ public class Turn {
 
     public int PlayTurn()
     {
-        Player attacker = PlayingNow(playersTurn);
-        Player victim = PlayingNow(!playersTurn);
+        RPGCharacter attacker = PlayingNow(playersTurn);
+        RPGCharacter victim = PlayingNow(!playersTurn);
 
         // REAL DMG CALCULATION
         int atk = attacker.atk;
@@ -62,6 +62,6 @@ public class Turn {
         else return 0; //no death yet
     }
 
-    private Player PlayingNow(bool playerPlays) { return playerPlays ? player : enemy; }
+    private RPGCharacter PlayingNow(bool playerPlays) { return playerPlays ? player : enemy; }
 
 }

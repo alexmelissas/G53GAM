@@ -35,16 +35,16 @@ public class Enemy : MonoBehaviour
     {
         if (PersistentObjects.singleton.currentHP > 0)
         {
-            Player enemy = new Player(type, level);
+            RPGCharacter enemy = new RPGCharacter(type, level);
             Nerf(enemy);
-            PersistentObjects.singleton.enemy = Player.HardCopy(enemy);
+            PersistentObjects.singleton.enemy = RPGCharacter.HardCopy(enemy);
 
             rpgscreen.SetActive(true);
             Destroy(gameObject);
         }
     }
 
-    private void Nerf(Player enemy)
+    private void Nerf(RPGCharacter enemy)
     {
         float nerfFactor = 0f;
         switch (type)

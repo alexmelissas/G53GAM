@@ -4,14 +4,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 [Serializable]
-public class Player
+public class RPGCharacter
 {
     public string username;
     public int level, xp, levelupxp, coins;
     public int hp, atk, def, spd, crit, agility;
     public int sword, shield, boots;
 
-    public Player(string _username, int _level)
+    public RPGCharacter(string _username, int _level)
     {
         username = _username;
         level = _level;
@@ -25,19 +25,19 @@ public class Player
     }
 
     //Code based on: <https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically>
-    public static Player HardCopy(Player original)
+    public static RPGCharacter HardCopy(RPGCharacter original)
     {
         using (var ms = new MemoryStream())
         {
             var formatter = new BinaryFormatter();
             formatter.Serialize(ms, original);
             ms.Position = 0;
-            return (Player)formatter.Deserialize(ms);
+            return (RPGCharacter)formatter.Deserialize(ms);
         }
     }
 
     // Algorithm based on <https://bulbapedia.bulbagarden.net/wiki/Experience>
-    public static void SetLevelUpXP(Player p)
+    public static void SetLevelUpXP(RPGCharacter p)
     {
         int nextLevel = p.level + 1;
         int pow = Mathf.RoundToInt(Mathf.Pow(nextLevel, 2));
@@ -47,7 +47,7 @@ public class Player
     }
 
     // Algorithm helped by <http://howtomakeanrpg.com/a/how-to-make-an-rpg-levels.html>
-    public static void CalculateBaseStats(Player p)
+    public static void CalculateBaseStats(RPGCharacter p)
     {
         int lvlFactor = p.level + 16;
 

@@ -3,17 +3,17 @@ using System;
 
 public class BattleResult {
 
-    private Player player, enemy;
+    private RPGCharacter player, enemy;
     private bool win;
 
-    public BattleResult(Player _player, Player _enemy, bool _win)
+    public BattleResult(RPGCharacter _player, RPGCharacter _enemy, bool _win)
     {
-        player = Player.HardCopy(_player);
-        enemy = Player.HardCopy(_enemy);
+        player = RPGCharacter.HardCopy(_player);
+        enemy = RPGCharacter.HardCopy(_enemy);
         win = _win;
     }
 
-    public Player CalculateGains()
+    public RPGCharacter CalculateGains()
     {
         int missingxptolevel = player.levelupxp - player.xp;
 
@@ -31,8 +31,8 @@ public class BattleResult {
         if (player.xp >= player.levelupxp)
         {
             player.level += 1;
-            Player.SetLevelUpXP(player);
-            Player.CalculateBaseStats(player);
+            RPGCharacter.SetLevelUpXP(player);
+            RPGCharacter.CalculateBaseStats(player);
             player.xp = baseXP - missingxptolevel;
         }
 
@@ -51,7 +51,7 @@ public class BattleResult {
         if (player.coins < 0) player.coins = 0;
 
 
-        return Player.HardCopy(player);
+        return RPGCharacter.HardCopy(player);
     }
 
     //! Calculates bonus/less XP based on level comparison

@@ -7,7 +7,7 @@ public class SpashScreen : MonoBehaviour
 {
     void Start()
     {
-        Player player = new Player("Alex", 1);
+        RPGCharacter player = new RPGCharacter("Alex", 1);
         PersistentObjects.singleton.player = player;
         PersistentObjects.singleton.currentHP = player.hp;
 
