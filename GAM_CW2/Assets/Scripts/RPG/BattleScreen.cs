@@ -198,7 +198,7 @@ public class BattleScreen : MonoBehaviour
             if (result == 0) playerTurn = playerTurn ? false : true; // swap whose turn it is
             else { battleOver = true; i++; } //If there's a final outcome, battle over
         }
-        StartCoroutine(PlayTurns(turns, battleOver));
+        StartCoroutine(PlayAttack(turns, battleOver));
     }
 
     private void Execute_Block()
@@ -223,6 +223,18 @@ public class BattleScreen : MonoBehaviour
         else if (result == 2) ToggleResultPopup(true, true); // Player WIN popup
     }
 
+    private void UpdatePlayer()
+    {
+        Player currentPlayer = Player.HardCopy(PersistentObjects.singleton.playerBeforeBattle);
+        BattleResult battleResult = new BattleResult(currentPlayer, enemy, (result == 2) ? true : false);
+        Player updatedPlayer = Player.HardCopy(battleResult.CalculateGains());
+        PersistentObjects.singleton.player = Player.HardCopy(updatedPlayer);
+
+        PersistentObjects.singleton.playerLevelStart.xp = updatedPlayer.xp;
+        PersistentObjects.singleton.playerLevelStart.level = updatedPlayer.level;
+        PersistentObjects.singleton.playerLevelStart.coins = updatedPlayer.coins;
+    }
+
     public void CloseBattleScreen()
     {
         PersistentObjects.singleton.inBattle = false;
@@ -243,19 +255,7 @@ public class BattleScreen : MonoBehaviour
         result = 0;
     }
 
-    private void UpdatePlayer()
-    {
-        Player currentPlayer = Player.HardCopy(PersistentObjects.singleton.playerBeforeBattle);
-        BattleResult battleResult = new BattleResult(currentPlayer, enemy, (result == 2) ? true : false);
-        Player updatedPlayer = Player.HardCopy(battleResult.CalculateGains());
-        PersistentObjects.singleton.player = Player.HardCopy(updatedPlayer);
-
-        PersistentObjects.singleton.playerLevelStart.xp = updatedPlayer.xp;
-        PersistentObjects.singleton.playerLevelStart.level = updatedPlayer.level;
-        PersistentObjects.singleton.playerLevelStart.coins = updatedPlayer.coins;
-    }
-
-    IEnumerator PlayTurns(List<Turn> turns, bool battleOver)
+    IEnumerator PlayAttack(List<Turn> turns, bool battleOver)
     {
         foreach (Turn turn in turns)
         {

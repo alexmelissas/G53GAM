@@ -16,6 +16,7 @@ public class MainScreen : MonoBehaviour
         else { level2lock.color = Color.red; coins2.SetActive(true); }
         if (PersistentObjects.singleton.unlocked3) { level3lock.color = Color.green; coins3.SetActive(false); }
         else { level3lock.color = Color.red; coins3.SetActive(true); }
+        levelMenu.SetActive(false);
     }
 
     public void OpenShop() { SceneManager.LoadScene("Shop"); }
