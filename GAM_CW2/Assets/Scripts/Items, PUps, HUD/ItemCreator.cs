@@ -2,9 +2,16 @@
 
 public class ItemCreator : RPGItems {
 
-	public ItemCreator(string type, int level) : base(null, "", 0, 0, 0, 0, 0, 0, 0)
+	public ItemCreator(string type, int level) : base()
     {
         string iconPath = "";
+        hp = 0;
+        atk = 0;
+        def = 0;
+        spd = 0;
+        agility = 0;
+        crit = 0;
+
         switch (type)
         {
             case "sword":
@@ -19,19 +26,9 @@ public class ItemCreator : RPGItems {
             case "shield":
                 switch (level)
                 {
-                    case 1: name = "Basic Shield"; def = 2;  spd -= 3; price = 109; iconPath = "sh1"; break;
-                    case 2: name = "Poseidon's Wavebreaker"; def = 11; spd = -10; price = 219; iconPath = "sh2"; break;
-                    case 3: name = "Persephone's Defender"; def = 22; spd = -19; price = 549; iconPath = "sh3"; break;
-                    default: break;
-                }break;
-
-            case "armour":
-                switch (level)
-                {
-                    // NOT BOOTS FFS
-                    case 1: name = "Peasant Boots"; hp = 20; price = 99; iconPath = "a1"; break;
-                    case 2: name = "Zeus' Thundercap"; hp = 48; price = 259; iconPath = "a2"; break;
-                    case 3: name = "Hephaestus' Flame"; hp = 79; price = 489; iconPath = "a3"; break;
+                    case 1: name = "Basic Shield"; def = 2;  hp = 20; price = 109; iconPath = "sh1"; break;
+                    case 2: name = "Poseidon's Wavebreaker"; def = 11; hp = 60; price = 219; iconPath = "sh2"; break;
+                    case 3: name = "Persephone's Defender"; def = 22; hp = 95; price = 549; iconPath = "sh3"; break;
                     default: break;
                 }break;
 
@@ -44,6 +41,7 @@ public class ItemCreator : RPGItems {
                     default: break;
                 }break;
         }
+
         icon = Resources.Load(iconPath) as Texture2D;
     }
 }

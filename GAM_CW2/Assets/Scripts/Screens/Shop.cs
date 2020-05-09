@@ -7,15 +7,14 @@ public class Shop : MonoBehaviour
 {
 
     public GameObject shopPopup;
-    public Text itemNameText, statText, priceText, balanceText;
-    public Text coinsText;
-    public GameObject armourIconImage, shieldIconImage, swordIconImage, bootsIconImage, statIconImage;
-    public Sprite atkIcon, defIcon, hpIcon, spdIcon;
+    public Text itemNameText, stat1Text, stat2Text, priceText, balanceText, coinsText;
+    public GameObject shieldIconImage, swordIconImage, bootsIconImage, stat1IconImage, stat2IconImage;
+    public Sprite atkIcon, defIcon, hpIcon, spdIcon, agilityIcon, critIcon;
     public AudioSource soundsrc;
     public AudioClip purchase_sound;
 
     private Player p;
-    private RPGItems displayItem;
+    private RPGItems selectedItem;
     private string displayItemType;
     private int itemLevel;
 
@@ -34,30 +33,27 @@ public class Shop : MonoBehaviour
         {
             case 0: itemLevel = p.sword; displayItemType = "sword"; break;
             case 1:  itemLevel = p.shield; displayItemType = "shield"; break;
-            case 2: itemLevel = p.armour; displayItemType = "armour"; break;
-            case 3: itemLevel = p.boots; displayItemType = "boots"; break;
+            case 2: itemLevel = p.boots; displayItemType = "boots"; break;
             default: return;
         }
 
         if (itemLevel >= 3) { Debug.Log("You can't upgrade this further, Karen."); return; }
-        else displayItem = RPGItems.CreateItem(displayItemType, itemLevel + 1);
+        else selectedItem = RPGItems.CreateItem(displayItemType, itemLevel + 1);
 
         GameObject iconImage;
         switch (displayItemType)
         {
             case "sword": iconImage = swordIconImage; break;
             case "shield": iconImage = shieldIconImage; break;
-            case "armour": iconImage = armourIconImage; break;
             case "boots": iconImage = bootsIconImage; break;
             default: iconImage = swordIconImage; break;
         }
-        armourIconImage.SetActive(false);
         shieldIconImage.SetActive(false);
         swordIconImage.SetActive(false);
         bootsIconImage.SetActive(false);
         iconImage.SetActive(true);
 
-        iconImage.GetComponent<RawImage>().texture = displayItem.icon;
+        iconImage.GetComponent<RawImage>().texture = selectedItem.icon;
 
         UpdateLabels(itemType);
         ShowShopPopup(true);
@@ -65,48 +61,58 @@ public class Shop : MonoBehaviour
 
     private void UpdateLabels(int itemType)
     {
-        int stat = 0;
-        Sprite statIcon = null;
+        int stat1 = 0;
+        int stat2 = 0;
+        Sprite stat1Icon = null;
+        Sprite stat2Icon = null;
 
         switch (itemType)
         {
             case 0:
-                statIcon = atkIcon;
-                stat = displayItem.atk;
+                stat1Icon = atkIcon;
+                stat2Icon = critIcon;
+                stat1 = selectedItem.atk;
+                stat2 = selectedItem.crit;
                 break;
             case 1:
-                statIcon = defIcon;
-                stat = displayItem.def;
+                stat1Icon = defIcon;
+                stat2Icon = hpIcon;
+                stat1 = selectedItem.def;
+                stat2 = selectedItem.hp;
                 break;
             case 2:
-                statIcon = hpIcon;
-                stat = displayItem.hp;
-                break;
-            case 3:
-                statIcon = spdIcon;
-                stat = displayItem.spd;
+                stat1Icon = spdIcon;
+                stat2Icon = agilityIcon;
+                stat1 = selectedItem.spd;
+                stat2 = selectedItem.agility;
                 break;
             default: return;
         }
 
-        statIconImage.GetComponent<Image>().sprite = statIcon;
-        itemNameText.text = displayItem.name;
-        priceText.text = "" + displayItem.price;
-        statText.text = "" + stat;
+        itemNameText.text = selectedItem.name;
+        stat1IconImage.GetComponent<Image>().sprite = stat1Icon;
+        stat1Text.text = "" + stat1;
+        stat2IconImage.GetComponent<Image>().sprite = stat2Icon;
+        stat2Text.text = "" + stat2;
+        priceText.text = "" + selectedItem.price;
 
         balanceText.text = "" + p.coins;
     }
 
     public void Execute_Purchase()
     {
-        if (p.coins >= displayItem.price)
+        if (p.coins >= selectedItem.price)
         {
-            p.coins -= displayItem.price;
+            p.coins -= selectedItem.price;
             switch (displayItemType)
             {
                 case "sword": p.sword++; break;
-                case "shield": p.shield++; break;
-                case "armour": p.armour++; break;
+                case "shield":
+                    p.shield++;
+                    int addedHP = RPGItems.CreateItem("shield", p.shield).hp
+                        - RPGItems.CreateItem("shield", p.shield - 1).hp;
+                    PersistentObjects.singleton.currentHP += addedHP;
+                    break;
                 case "boots": p.boots++; break;
                 default: break;
             }

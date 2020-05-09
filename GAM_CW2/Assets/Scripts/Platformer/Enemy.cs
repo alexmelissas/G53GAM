@@ -35,27 +35,29 @@ public class Enemy : MonoBehaviour
     {
         if (PersistentObjects.singleton.currentHP > 0)
         {
-            Player enemy;
-            string username = type;
-            int hp, atk, def, spd, crit, agility, sword, shield, armour, boots;
-            hp = atk = def = spd = crit = agility = sword = shield = armour = boots = 0;
-
-            switch (level)
-            {
-                case 1: hp = 100; atk = 10; def = 20; spd = 10; crit = 1; agility = 2; sword = 1; shield = 1; armour = 1; boots = 1; break;
-                case 2: hp = 250; atk = 40; def = 20; spd = 45; crit = 2; agility = 2; sword = 2; shield = 1; armour = 3; boots = 4; break;
-                case 3: hp = 440; atk = 80; def = 20; spd = 90; crit = 3; agility = 2; sword = 3; shield = 1; armour = 1; boots = 1; break;
-                case 4: hp = 440; atk = 80; def = 20; spd = 90; crit = 3; agility = 2; sword = 3; shield = 1; armour = 1; boots = 1; break;
-                case 5: hp = 440; atk = 80; def = 20; spd = 90; crit = 3; agility = 2; sword = 3; shield = 1; armour = 1; boots = 1; break;
-
-            }
-
-            enemy = new Player(username, level, 0, 0, 0, hp, atk, def, spd, crit, agility, sword, shield, armour, boots, 0, 0, 0, 0);
-            PersistentObjects.singleton.enemy = Player.Clone(enemy);
+            Player enemy = new Player(type, level);
+            Nerf(enemy);
+            PersistentObjects.singleton.enemy = Player.HardCopy(enemy);
 
             rpgscreen.SetActive(true);
             Destroy(gameObject);
         }
+    }
 
+    private void Nerf(Player enemy)
+    {
+        float nerfFactor = 0f;
+        switch (type)
+        {
+            case "squirrel": nerfFactor = 0.3f; break;
+            case "fox": nerfFactor = 0.2f; break;
+            case "snowman": nerfFactor = 0.1f; break;
+        }
+        enemy.hp -= Mathf.RoundToInt(enemy.hp * nerfFactor);
+        enemy.atk -= Mathf.RoundToInt(enemy.atk * nerfFactor);
+        enemy.def -= Mathf.RoundToInt(enemy.def * nerfFactor);
+        enemy.spd -= Mathf.RoundToInt(enemy.spd * nerfFactor);
+        enemy.agility -= Mathf.RoundToInt(enemy.agility * nerfFactor);
+        enemy.crit -= Mathf.RoundToInt(enemy.crit * nerfFactor);
     }
 }

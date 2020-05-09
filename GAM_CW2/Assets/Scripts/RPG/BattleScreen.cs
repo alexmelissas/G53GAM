@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class BattleScreen : MonoBehaviour {
+public class BattleScreen : MonoBehaviour
+{
 
     public GameObject battleScreen, hudManager;
-    public GameObject attackButton, blockButton, runButton;
+    public GameObject actionButtons;
     public GameObject playerCharacter;
 
     public GameObject playerModel, enemyModelSnowman, enemyModelFox, enemyModelSquirrel;
@@ -15,21 +16,21 @@ public class BattleScreen : MonoBehaviour {
     public Image playerHPColourImage, enemyHPColourImage;
     public Text playerNameText, enemyNameText, playerLevelText, enemyLevelText;
     public Text playerCurrentHPText, playerMaxHPText, enemyCurrentHPText, enemyMaxHPText;
-    public Text playerDmgLabelText, enemyDmgLabelText; 
+    public Text playerDmgLabelText, enemyDmgLabelText;
     public AudioClip playerHitSFX, enemyHitSFX, critSFX, missSFX, deathSFX;
     public AudioSource soundsrc, musicsrc;
     public GameObject winPopup, losePopup;
+    public Text winCoinsText, loseCoinsText;
 
     private Player player, enemy;
     private GameObject enemyModel;
-    private int result, turn_counter, last_block_turn;
+    private int result, turnCounter, lastBlockTurn;
     private int playerMaxHP, enemyMaxHP;
+    private int coinsGained;
     private int playerCurrentHP;
     private bool death = false;
     float playerNewHP = -1;
     float enemyNewHP = -1;
-
-    public static int updatePlayer;
 
     private void Update() { UpdateHP(); }
 
@@ -37,17 +38,24 @@ public class BattleScreen : MonoBehaviour {
 
     private void OnDisable() { playerCharacter.SetActive(true); PersistentObjects.singleton.inBattle = false; }
 
+    private void ToggleActionButtons(bool on) { actionButtons.SetActive(on); }
+
+    private void ToggleResultPopup(bool on, bool win)
+    {
+        (win ? winPopup : losePopup).SetActive(on);
+        if (on) (win ? winCoinsText : loseCoinsText).text = "" + coinsGained;
+    }
+
     private void InitiateBattle()
     {
         if (PersistentObjects.singleton.player.hp > 0)
         {
             death = false;
             PersistentObjects.singleton.inBattle = true;
-            updatePlayer = -1;
             playerCharacter.SetActive(false);
 
-            player = Player.Clone(PersistentObjects.singleton.player);
-            PersistentObjects.singleton.player_before_battle = Player.Clone(PersistentObjects.singleton.player); // keep the player before gains
+            player = Player.HardCopy(PersistentObjects.singleton.player);
+            PersistentObjects.singleton.playerBeforeBattle = Player.HardCopy(PersistentObjects.singleton.player); // keep the player before gains
 
             player.AttachItems();
             enemy = PersistentObjects.singleton.enemy;
@@ -89,8 +97,8 @@ public class BattleScreen : MonoBehaviour {
             musicsrc.loop = true;
             musicsrc.Play();
 
-            ShowPopup(false, true);
-            ShowPopup(false, false);
+            ToggleResultPopup(false, true);
+            ToggleResultPopup(false, false);
 
             playerModel.SetActive(true);
             enemyModelFox.SetActive(false);
@@ -99,9 +107,9 @@ public class BattleScreen : MonoBehaviour {
             PickEnemyModel();
             enemyModel.SetActive(true);
 
-            turn_counter = 0;
-            last_block_turn = -4;
-            EnableActions();
+            turnCounter = 0;
+            lastBlockTurn = -4;
+            ToggleActionButtons(true);
         }
     }
 
@@ -124,7 +132,8 @@ public class BattleScreen : MonoBehaviour {
             {
                 playerHPSlider.normalizedValue -= 0.01f;
                 playerCurrentHPText.text = "" + Mathf.RoundToInt(playerHPSlider.value * playerMaxHP);
-            } else playerCurrentHPText.text = "" + PersistentObjects.singleton.currentHP;
+            }
+            else playerCurrentHPText.text = "" + PersistentObjects.singleton.currentHP;
         }
         if (playerHPSlider.value == 0 && !death)
         {
@@ -143,7 +152,8 @@ public class BattleScreen : MonoBehaviour {
             {
                 enemyHPSlider.normalizedValue -= 0.01f;
                 enemyCurrentHPText.text = "" + Mathf.RoundToInt(enemyHPSlider.value * enemyMaxHP);
-            } else enemyCurrentHPText.text = "" + Mathf.RoundToInt(enemyNewHP * enemyMaxHP);
+            }
+            else enemyCurrentHPText.text = "" + Mathf.RoundToInt(enemyNewHP * enemyMaxHP);
         }
         if (enemyHPSlider.value == 0 && !death)
         {
@@ -159,10 +169,12 @@ public class BattleScreen : MonoBehaviour {
     {
         switch (action)
         {
-            case "attack": DisableActions(); Execute_Attack(); break;
-            case "block": if (turn_counter - last_block_turn >= 2)
-                { DisableActions(); Execute_Block(); } break;
-            case "run": DisableActions(); Execute_Run(); break;
+            case "attack": ToggleActionButtons(false); Execute_Attack(); break;
+            case "block":
+                if (turnCounter - lastBlockTurn >= 2)
+                { ToggleActionButtons(false); Execute_Block(); }
+                break;
+            case "run": ToggleActionButtons(false); Execute_Run(); break;
             default: break;
         }
     }
@@ -170,31 +182,31 @@ public class BattleScreen : MonoBehaviour {
     private void Execute_Attack()
     {
         List<Turn> turns = new List<Turn>();
-        turn_counter++;
+        turnCounter++;
         bool playerTurn;
         if (player.spd >= enemy.spd) playerTurn = true;
         else playerTurn = false;
         bool battleOver = false;
         result = 0;
 
-        for (int i = 0; i<2; i++)
+        for (int i = 0; i < 2; i++)
         {
             Turn turn = new Turn(playerTurn, player, enemy);
             turns.Add(turn);
             result = turn.PlayTurn();
-            player = Player.Clone(turn.player); //Pass updated Player and Enemy to the next Turn
-            enemy = Player.Clone(turn.enemy);
+            player = Player.HardCopy(turn.player); //Pass updated Player and Enemy to the next Turn
+            enemy = Player.HardCopy(turn.enemy);
             if (result == 0) playerTurn = playerTurn ? false : true; // swap whose turn it is
             else { battleOver = true; i++; } //If there's a final outcome, battle over
         }
-        StartCoroutine(PlayTurns(turns,battleOver));
+        StartCoroutine(PlayTurns(turns, battleOver));
     }
 
     private void Execute_Block()
     {
         result = 0;
-        turn_counter++;
-        last_block_turn = turn_counter;
+        turnCounter++;
+        lastBlockTurn = turnCounter;
         StartCoroutine(PlayBlock());
     }
 
@@ -207,28 +219,26 @@ public class BattleScreen : MonoBehaviour {
         if (result == 1) playerModel.SetActive(false);
         else if (result == 2) enemyModel.SetActive(false);
         UpdatePlayer(); // Update the player based on outcome
-
-        gameObject.GetComponent<BattleResultPopup>().didSetup = false; // Setup the popup
-        if (result == 1) ShowPopup(true, false); // Player LOSE popup
-        else if (result == 2) ShowPopup(true, true); // Player WIN popup
-        updatePlayer = result; //Enable BattleResultPopup animation
+        coinsGained = PersistentObjects.singleton.player.coins - PersistentObjects.singleton.playerBeforeBattle.coins;
+        if (result == 1) ToggleResultPopup(true, false); // Player LOSE popup
+        else if (result == 2) ToggleResultPopup(true, true); // Player WIN popup
     }
 
     public void CloseBattleScreen()
     {
         PersistentObjects.singleton.inBattle = false;
-        ShowPopup(false, true);
-        ShowPopup(false, false);
+        ToggleResultPopup(false, true);
+        ToggleResultPopup(false, false);
         hudManager.GetComponent<HUDManager>().UpdateHPBar();
         playerCharacter.SetActive(true);
         musicsrc.Stop();
         if (result == 1)
         {
-            PersistentObjects.singleton.player = Player.Clone(PersistentObjects.singleton.player_beginning_of_level);
-            Player p = Player.Clone(PersistentObjects.singleton.player);
+            PersistentObjects.singleton.player = Player.HardCopy(PersistentObjects.singleton.playerLevelStart);
+            Player p = Player.HardCopy(PersistentObjects.singleton.player);
             p.AttachItems();
             PersistentObjects.singleton.currentHP = p.hp;
-            SceneManager.LoadScene("Level1");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         battleScreen.SetActive(false);
         result = 0;
@@ -236,32 +246,15 @@ public class BattleScreen : MonoBehaviour {
 
     private void UpdatePlayer()
     {
-        Player oldPlayer = Player.Clone(PersistentObjects.singleton.player_before_battle);
-        BattleResult battleResult = new BattleResult(oldPlayer, enemy, (result == 2) ? true : false);
-        Player updatedPlayer = Player.Clone(battleResult.CalculateGains());
-        PersistentObjects.singleton.player = Player.Clone(updatedPlayer);
+        Player currentPlayer = Player.HardCopy(PersistentObjects.singleton.playerBeforeBattle);
+        BattleResult battleResult = new BattleResult(currentPlayer, enemy, (result == 2) ? true : false);
+        Player updatedPlayer = Player.HardCopy(battleResult.CalculateGains());
+        PersistentObjects.singleton.player = Player.HardCopy(updatedPlayer);
 
-        PersistentObjects.singleton.player_beginning_of_level.xp = updatedPlayer.xp;
-        PersistentObjects.singleton.player_beginning_of_level.level = updatedPlayer.level;
-        PersistentObjects.singleton.player_beginning_of_level.coins = updatedPlayer.coins;
+        PersistentObjects.singleton.playerLevelStart.xp = updatedPlayer.xp;
+        PersistentObjects.singleton.playerLevelStart.level = updatedPlayer.level;
+        PersistentObjects.singleton.playerLevelStart.coins = updatedPlayer.coins;
     }
-
-    private void DisableActions()
-    {
-        attackButton.SetActive(false);
-        blockButton.SetActive(false);
-        runButton.SetActive(false);
-    }
-
-    private void EnableActions()
-    {
-        attackButton.SetActive(true);
-        blockButton.SetActive(true);
-        runButton.SetActive(true);
-    }
-
-    private void ShowPopup(bool shown, bool win) { (win ? winPopup : losePopup).SetActive(shown); }
-
 
     IEnumerator PlayTurns(List<Turn> turns, bool battleOver)
     {
@@ -296,7 +289,7 @@ public class BattleScreen : MonoBehaviour {
             pow.enabled = true;
             yield return new WaitForSeconds(0.3f);
 
-            if (turn.damage!=0)
+            if (turn.damage != 0)
             {
                 float currenthp = (attacker == "player") ? turn.enemy.hp : PersistentObjects.singleton.currentHP;
                 float maxhp = (attacker == "player") ? enemyMaxHP : playerMaxHP;
@@ -312,7 +305,7 @@ public class BattleScreen : MonoBehaviour {
 
         // END BATTLE IF DEATH
         if (battleOver) Invoke("EndBattle", 0.5f);
-        else EnableActions();
+        else ToggleActionButtons(true);
     }
 
     IEnumerator PlayBlock()
@@ -331,6 +324,6 @@ public class BattleScreen : MonoBehaviour {
         pow.enabled = false;
         yield return new WaitForSeconds(0.5f);
 
-        EnableActions();
+        ToggleActionButtons(true);
     }
 }

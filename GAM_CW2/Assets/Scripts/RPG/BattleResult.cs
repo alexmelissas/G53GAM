@@ -8,8 +8,8 @@ public class BattleResult {
 
     public BattleResult(Player _player, Player _enemy, bool _win)
     {
-        player = Player.Clone(_player);
-        enemy = Player.Clone(_enemy);
+        player = Player.HardCopy(_player);
+        enemy = Player.HardCopy(_enemy);
         win = _win;
     }
 
@@ -17,49 +17,41 @@ public class BattleResult {
     {
         int missingxptolevel = player.levelupxp - player.xp;
 
+        int baseXP = 1;
+        switch (enemy.username)
+        {
+            case "squirrel": break;
+            case "fox": baseXP += 1; break;
+            case "snowman": baseXP += 2; break;
+        }
+        baseXP += CalculateBonusXP();
+        if (!win) baseXP = Mathf.RoundToInt(baseXP/3);
 
-
-        int xp_gains = 110;
-        xp_gains += CalculateBonusXP();
-        if (!win) xp_gains = Mathf.RoundToInt(xp_gains/2);
-        // scaling and stuff
-        // according to enemy type
-
-
-
-        int coin_gains = 100; // scale
-        coin_gains += CalculateBonusCoins();
-        if (!win) coin_gains = -Mathf.RoundToInt(coin_gains / 2);
-
-
-
-
-
-
-
-
-        player.xp += xp_gains;
-        if(player.xp > player.levelupxp)
+        player.xp += baseXP;
+        if (player.xp >= player.levelupxp)
         {
             player.level += 1;
-            player.levelupxp += 100; // SCALE
-
-
-
-
-
-
-            player.xp = xp_gains - missingxptolevel;
+            Player.SetLevelUpXP(player);
+            Player.CalculateBaseStats(player);
+            player.xp = baseXP - missingxptolevel;
         }
 
-        player.coins += coin_gains;
+
+        int baseCoins = 100;
+        switch (enemy.username)
+        {
+            case "squirrel": break;
+            case "fox": baseCoins += 10; break;
+            case "snowman": baseCoins += 20; break;
+        }
+        baseCoins += CalculateBonusCoins();
+        if (!win) baseCoins = -Mathf.RoundToInt(baseCoins / 3);
+        
+        player.coins += baseCoins;
         if (player.coins < 0) player.coins = 0;
 
 
-
-
-
-        return Player.Clone(player);
+        return Player.HardCopy(player);
     }
 
     //! Calculates bonus/less XP based on level comparison
@@ -67,7 +59,7 @@ public class BattleResult {
     {
         int level_diff = player.level - enemy.level;
         if (level_diff >= 0) return 0;
-        else return 4 * level_diff;
+        else return level_diff;
     }
 
     //! Calculate bonus/less coins based on level comparison

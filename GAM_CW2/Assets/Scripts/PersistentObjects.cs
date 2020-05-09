@@ -6,9 +6,9 @@ public class PersistentObjects : MonoBehaviour
 
     public Player player;
     public int currentHP;
-    public Player player_before_battle;
-    public Player player_beginning_of_level;
-    public bool inBattle; // to only load the RPG elements when in battle
+    public bool inBattle;
+    public Player playerBeforeBattle;
+    public Player playerLevelStart;
 
     public Player enemy;
 

@@ -8,56 +8,24 @@ public class Player
 {
     public string username;
     public int level, xp, levelupxp, coins;
-    public int hp, atk, def, spd, crit, agility; // RPG stats
-    public int sword, shield, armour, boots; // RPG items
-    public int movespeed, jumpheight, jumps; // Platformer stats
-    public int powerup; // Platformer powerup
+    public int hp, atk, def, spd, crit, agility;
+    public int sword, shield, boots;
 
-    //! Default constructor
-    public Player()
-    {
-        username = "-";
-        level = 0; xp = 0; levelupxp = 0; coins = 0;
-        hp = 0; atk = 0; def = 0; spd = 0; crit = 0; agility = 0;
-        movespeed = 0; jumpheight = 0; jumps = 0;
-        sword = 0; shield = 0; armour = 0; boots = 0;
-        
-        powerup = 0;
-    }
-
-    //! Full constructor
-    public Player(string _username, int _level, int _xp, int _levelupxp, int _coins, int _hp, int _atk, int _def,
-        int _spd, int _crit, int _agility, int _sword, int _shield, int _armour, int _boots, int _movespeed, int _jumpheight, int _jumps, int _powerup)
+    public Player(string _username, int _level)
     {
         username = _username;
-        level = _level; xp = _xp; levelupxp = _levelupxp; coins = _coins;
-        hp = _hp; atk = _atk; def = _def; spd = _spd; crit = _crit; agility = _agility;
-        movespeed = _movespeed; jumpheight = _jumpheight; jumps = _jumps;
-        sword = _sword; shield = _shield; armour = _armour; boots = _boots;
-        powerup = _powerup;
-    }
-
-    //! Create a Player object from JSON
-    public static Player CreatePlayerFromJSON(string json)
-    {
-        Player temp = new Player();
-        JsonUtility.FromJsonOverwrite(json, temp);
-        return temp;
-    }
-
-    public bool ComparePlayer(Player other)
-    {
-        if (username != other.username
-            || level != other.level || xp != other.xp || levelupxp != other.levelupxp || coins != other.coins
-            || hp != other.hp || atk != other.atk || def != other.def || spd != other.spd || crit != other.crit || agility != other.agility
-            || sword != other.sword || shield != other.shield || armour != other.armour || boots != other.boots
-            || movespeed != other.movespeed || jumpheight != other.jumpheight || jumps != other.jumps
-            || powerup!=other.powerup) return false;
-        return true;
+        level = _level;
+        if (xp <= 0) xp = 0;
+        SetLevelUpXP(this);
+        if (coins<=0) coins = 0;
+        CalculateBaseStats(this);
+        if (sword <= 1) sword = 1;
+        if (shield <= 1) shield = 1;
+        if (boots <= 1) boots = 1;
     }
 
     //Based on: https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically
-    public static Player Clone(Player original)
+    public static Player HardCopy(Player original)
     {
         using (var ms = new MemoryStream())
         {
@@ -69,5 +37,45 @@ public class Player
     }
 
     public void AttachItems() { RPGItems.AttachItemsToPlayer(this); }
+
+    public static void SetLevelUpXP(Player p)
+    {
+        int nextLevel = p.level + 1;
+        int pow = Mathf.RoundToInt(Mathf.Pow(nextLevel, 2));
+        int calc = Mathf.RoundToInt((3 * pow) / 5);
+        if (calc < 1) calc = 1;
+        p.levelupxp = calc; 
+    }
+
+    public static void CalculateBaseStats(Player p)
+    {
+        int lvlFactor = p.level + 14;
+
+        double m1 = 1.2;
+        double m2 = 1;
+        double bonus = 50;
+        p.hp = (int)(m1 * (lvlFactor^2) + m2 * lvlFactor + bonus);
+
+        m1 = 0.2;
+        m2 = 0.2;
+        bonus = 30;
+        p.atk = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus);
+
+        m1 = 0.15;
+        m2 = 0.15;
+        bonus = 15;
+        p.def = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus);
+
+        m1 = 0.1;
+        m2 = 0.15;
+        bonus = 5;
+        p.spd = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus);
+
+        m1 = 0.05;
+        m2 = 0.5;
+        bonus = 5;
+        p.agility = (int)((m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus) * 0.2);
+        p.crit = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus * 0.2);
+    }
 }
 

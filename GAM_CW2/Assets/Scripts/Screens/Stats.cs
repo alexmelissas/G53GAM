@@ -3,40 +3,59 @@ using UnityEngine.UI;
 
 public class Stats : MonoBehaviour
 {
-    public Text atkText, defText, spdText, agilityText, critText;
-    public Text usernameText, lvlText, nextLevelText, xpText;
-    public GameObject currentSwordImage, currentShieldImage, currentArmourImage, currentBootsImage;
-    public Slider xpSlider;
     private Player p;
+    public Text atkText, defText, spdText, agilityText, critText;
+    public Slider hpSlider;
+    public Image playerHPColourImage;
+    public Text playerNameText, playerLevelText, maxPlayerHPText, actualPlayerHPText;
+    public Slider xpSlider;
+    public Text usernameText, lvlText, nextLevelText, xpText;
+    public GameObject currentSwordImage, currentShieldImage, currentBootsImage;
 
-    void Start() { p = new Player(); }
+    void Start() { p = new Player("",0); }
 
     void Update()
     {
-        //Only update displays if there's a change
-        if (!p.ComparePlayer(PersistentObjects.singleton.player)) 
+        p = Player.HardCopy(PersistentObjects.singleton.player);
+        string[] split_stats = SplitStats();
+
+        atkText.text = split_stats[1];
+        defText.text = split_stats[2];
+        spdText.text = split_stats[3];
+        agilityText.text = "" + p.agility;
+        critText.text = "" + p.crit;
+
+        if (xpSlider != null)
         {
-            p = Player.Clone(PersistentObjects.singleton.player);
-            string[] split_stats = SplitStats();
-
-            atkText.text = split_stats[1];
-            defText.text = split_stats[2];
-            spdText.text = split_stats[3];
-            agilityText.text = "" + p.agility;
-            critText.text = "" + p.crit;
-
             usernameText.text = p.username;
-
             xpText.text = "" + p.xp + "/" + p.levelupxp;
             lvlText.text = "" + p.level;
             nextLevelText.text = "" + (p.level + 1);
             xpSlider.normalizedValue = (float)p.xp / (float)p.levelupxp;
-
-            currentSwordImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("sword", p.sword).icon;
-            currentShieldImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("shield", p.shield).icon;
-            currentArmourImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("armour", p.armour).icon;
-            currentBootsImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("boots", p.boots).icon;
         }
+        else if (hpSlider != null)
+        {
+            Player player = Player.HardCopy(PersistentObjects.singleton.player);
+            player.AttachItems();
+
+            playerNameText.text = "" + player.username;
+            playerLevelText.text = "" + player.level;
+            maxPlayerHPText.text = "/" + player.hp;
+            actualPlayerHPText.text = "" + PersistentObjects.singleton.currentHP;
+
+            playerHPColourImage.enabled = true;
+            float hpBarValue = (float)PersistentObjects.singleton.currentHP / (float)player.hp;
+            hpSlider.value = hpBarValue;
+            if (hpSlider.value == 0) playerHPColourImage.enabled = false;
+            else if (hpBarValue < 0.25) playerHPColourImage.color = Color.red;
+            else if (hpBarValue < 0.5) playerHPColourImage.color = Color.yellow;
+            else playerHPColourImage.color = Color.green;
+        }
+        
+
+        currentSwordImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("sword", p.sword).icon;
+        currentShieldImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("shield", p.shield).icon;
+        currentBootsImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("boots", p.boots).icon;
     }
 
     private string[] SplitStats()
