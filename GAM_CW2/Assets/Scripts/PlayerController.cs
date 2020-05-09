@@ -49,6 +49,12 @@ public class PlayerController : MonoBehaviour
     {
         IInventoryItem item = hit.gameObject.GetComponent<IInventoryItem>();
         if (item != null) { hudManager.addItem(item); }
+        else if (hit.gameObject.tag == "coinsPowerup")
+        { 
+            hit.gameObject.SetActive(false);
+            PersistentObjects.singleton.player.coins += 250;
+            hudManager.UpdateHUD();
+        }
     }
 
     void Inventory_ItemUsed(object sender, InventoryEventArgs e)
@@ -60,7 +66,7 @@ public class PlayerController : MonoBehaviour
             int currentHP = PersistentObjects.singleton.currentHP;
             if (currentHP + 20 <= player.hp) PersistentObjects.singleton.currentHP += 20;
             else PersistentObjects.singleton.currentHP = player.hp;
-            hudManager.UpdateHPBar();
+            hudManager.UpdateHUD();
         }
         // HIGHJUMP
         else if ((e.item as MonoBehaviour).gameObject.GetComponent<PickupableItem>().itemName == "star") StartCoroutine(HighJump(15));

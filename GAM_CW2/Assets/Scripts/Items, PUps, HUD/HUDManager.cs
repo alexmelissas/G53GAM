@@ -36,12 +36,12 @@ public class HUDManager : MonoBehaviour
         // Save initial player stats - to reset if die
         PersistentObjects.singleton.playerLevelStart = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
         battleScreen.SetActive(false);
-        UpdateHPBar();
+        UpdateHUD();
     }
 
     private void OnEnable() { Start(); }
 
-    public void UpdateHPBar()
+    public void UpdateHUD()
     {
         RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
         player.AttachItems();

@@ -240,7 +240,7 @@ public class BattleScreen : MonoBehaviour
         PersistentObjects.singleton.inBattle = false;
         ToggleResultPopup(false, true);
         ToggleResultPopup(false, false);
-        hudManager.GetComponent<HUDManager>().UpdateHPBar();
+        hudManager.GetComponent<HUDManager>().UpdateHUD();
         playerCharacter.SetActive(true);
         musicsrc.Stop();
         if (result == 1)
