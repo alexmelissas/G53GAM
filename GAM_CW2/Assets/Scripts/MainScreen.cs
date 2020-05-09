@@ -30,6 +30,7 @@ public class MainScreen : MonoBehaviour
             case 1:
                 if (PersistentObjects.singleton.unlocked1) SceneManager.LoadScene("Level1");
                 break;
+
             case 2:
                 if (PersistentObjects.singleton.unlocked2) SceneManager.LoadScene("Level2");
                 else if (PersistentObjects.singleton.player.coins >= 350)
@@ -38,8 +39,8 @@ public class MainScreen : MonoBehaviour
                     PersistentObjects.singleton.unlocked2 = true;
                     SceneManager.LoadScene("Level2");
                 }
-
                 break;
+
             case 3:
                 if (PersistentObjects.singleton.unlocked2)
 				{

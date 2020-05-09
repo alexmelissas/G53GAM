@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), -Vector2.up, 1.0f, groundMask)) { canJump = true; }
+        if (Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), -Vector2.up, 0.5f, groundMask)) { canJump = true; }
 
         r.velocity = new Vector2(physicsVelocity.x, r.velocity.y);
     }

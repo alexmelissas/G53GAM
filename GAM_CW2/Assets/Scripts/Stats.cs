@@ -16,46 +16,48 @@ public class Stats : MonoBehaviour
 
     void Update()
     {
-        p = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
-        string[] split_stats = SplitStats();
-
-        atkText.text = split_stats[1];
-        defText.text = split_stats[2];
-        spdText.text = split_stats[3];
-        agilityText.text = "" + p.agility + "%";
-        critText.text = "" + p.crit + "%";
-
-        if (xpSlider != null)
+        if (!p.Equals(PersistentObjects.singleton.player)) //Only update when changed -BUG
         {
-            usernameText.text = p.username;
-            xpText.text = "" + p.xp + "/" + p.levelupxp;
-            lvlText.text = "" + p.level;
-            nextLevelText.text = "" + (p.level + 1);
-            xpSlider.normalizedValue = (float)p.xp / (float)p.levelupxp;
+            p = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
+            string[] split_stats = SplitStats();
+
+            atkText.text = split_stats[1];
+            defText.text = split_stats[2];
+            spdText.text = split_stats[3];
+            agilityText.text = "" + p.agility + "%";
+            critText.text = "" + p.crit + "%";
+
+            if (xpSlider != null)
+            {
+                usernameText.text = p.username;
+                xpText.text = "" + p.xp + "/" + p.levelupxp;
+                lvlText.text = "" + p.level;
+                nextLevelText.text = "" + (p.level + 1);
+                xpSlider.normalizedValue = (float)p.xp / (float)p.levelupxp;
+            }
+            else if (hpSlider != null)
+            {
+                RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
+                player.AttachItems();
+
+                playerNameText.text = "" + player.username;
+                playerLevelText.text = "" + player.level;
+                maxPlayerHPText.text = "/" + player.hp;
+                actualPlayerHPText.text = "" + PersistentObjects.singleton.currentHP;
+
+                playerHPColourImage.enabled = true;
+                float hpBarValue = (float)PersistentObjects.singleton.currentHP / (float)player.hp;
+                hpSlider.value = hpBarValue;
+                if (hpSlider.value == 0) playerHPColourImage.enabled = false;
+                else if (hpBarValue < 0.25) playerHPColourImage.color = Color.red;
+                else if (hpBarValue < 0.5) playerHPColourImage.color = Color.yellow;
+                else playerHPColourImage.color = Color.green;
+            }
+
+            currentSwordImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("sword", p.sword).icon;
+            currentShieldImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("shield", p.shield).icon;
+            currentBootsImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("boots", p.boots).icon;
         }
-        else if (hpSlider != null)
-        {
-            RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
-            player.AttachItems();
-
-            playerNameText.text = "" + player.username;
-            playerLevelText.text = "" + player.level;
-            maxPlayerHPText.text = "/" + player.hp;
-            actualPlayerHPText.text = "" + PersistentObjects.singleton.currentHP;
-
-            playerHPColourImage.enabled = true;
-            float hpBarValue = (float)PersistentObjects.singleton.currentHP / (float)player.hp;
-            hpSlider.value = hpBarValue;
-            if (hpSlider.value == 0) playerHPColourImage.enabled = false;
-            else if (hpBarValue < 0.25) playerHPColourImage.color = Color.red;
-            else if (hpBarValue < 0.5) playerHPColourImage.color = Color.yellow;
-            else playerHPColourImage.color = Color.green;
-        }
-        
-
-        currentSwordImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("sword", p.sword).icon;
-        currentShieldImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("shield", p.shield).icon;
-        currentBootsImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("boots", p.boots).icon;
     }
 
     private string[] SplitStats()

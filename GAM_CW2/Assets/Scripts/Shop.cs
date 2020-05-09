@@ -55,11 +55,11 @@ public class Shop : MonoBehaviour
 
         iconImage.GetComponent<RawImage>().texture = selectedItem.icon;
 
-        UpdateLabels(itemType);
+        SetupSelectedItemLabels(itemType);
         ShowShopPopup(true);
     }
 
-    private void UpdateLabels(int itemType)
+    private void SetupSelectedItemLabels(int itemType)
     {
         int stat1 = 0;
         int stat2 = 0;

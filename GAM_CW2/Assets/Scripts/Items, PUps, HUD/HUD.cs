@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     public HUDManager inventory;
-    // Start is called before the first frame update
+
     void Start()
     {
         inventory.ItemAdded += InventoryItemAdded;

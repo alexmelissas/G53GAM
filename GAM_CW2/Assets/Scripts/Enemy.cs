@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
 
     private float x,y,z;
 
-    // Start is called before the first frame update
     void Start()
     {
         x = transform.position.x;
@@ -21,7 +20,6 @@ public class Enemy : MonoBehaviour
         z = transform.position.z;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (PersistentObjects.singleton.inBattle==false)

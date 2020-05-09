@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 [Serializable]
-public class RPGCharacter
+public class RPGCharacter : IEquatable<RPGCharacter>
 {
     public string username;
     public int level, xp, levelupxp, coins;
@@ -17,7 +17,7 @@ public class RPGCharacter
         level = _level;
         if (xp <= 0) xp = 0;
         SetLevelUpXP(this);
-        if (coins<=0) coins = 0;
+        if (coins<=0) coins = 300;
         CalculateBaseStats(this);
         if (sword <= 1) sword = 1;
         if (shield <= 1) shield = 1;
@@ -77,5 +77,15 @@ public class RPGCharacter
     }
 
     public void AttachItems() { RPGItems.AttachItemsToPlayer(this); }
+
+    public bool Equals(RPGCharacter other)
+    {
+        if (username == other.username && level == other.level && xp == other.xp
+            && levelupxp == other.levelupxp && coins == other.coins && hp == other.hp
+            && atk == other.atk && def == other.def && spd == other.spd && crit == other.crit
+            && agility == other.agility && sword == other.sword && shield == other.shield
+            && boots == other.boots) return true;
+        else return false;
+    }
 }
 
