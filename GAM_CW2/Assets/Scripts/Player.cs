@@ -46,7 +46,7 @@ public class Player
         p.levelupxp = calc; 
     }
 
-    // Algorithm based on <http://howtomakeanrpg.com/a/how-to-make-an-rpg-levels.html>
+    // Algorithm helped by <http://howtomakeanrpg.com/a/how-to-make-an-rpg-levels.html>
     public static void CalculateBaseStats(Player p)
     {
         int lvlFactor = p.level + 16;
