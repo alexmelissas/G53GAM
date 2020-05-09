@@ -22,8 +22,8 @@ public class Stats : MonoBehaviour
         atkText.text = split_stats[1];
         defText.text = split_stats[2];
         spdText.text = split_stats[3];
-        agilityText.text = "" + p.agility;
-        critText.text = "" + p.crit;
+        agilityText.text = "" + p.agility + "%";
+        critText.text = "" + p.crit + "%";
 
         if (xpSlider != null)
         {
@@ -83,10 +83,10 @@ public class Stats : MonoBehaviour
         spdItem = spdTotal - spdBase;
 
         string[] output = { "", "", "", "" };
-        output[0] = hpTotal + "(" + hpBase + "+" + hpItem + ")";
-        output[1] = atkTotal + "(" + atkBase + "+" + atkItem + ")";
-        output[2] = defTotal + "(" + defBase + "+" + defItem + ")";
-        output[3] = spdTotal + "(" + spdBase + "+" + spdItem + ")";
+        output[0] = hpTotal + " (" + hpBase + "+" + hpItem + ")";
+        output[1] = atkTotal + " (" + atkBase + "+" + atkItem + ")";
+        output[2] = defTotal + " (" + defBase + "+" + defItem + ")";
+        output[3] = spdTotal + " (" + spdBase + "+" + spdItem + ")";
 
         return output;
     }

@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-[Serializable]
 public class Player
 {
     public string username;
@@ -24,7 +23,7 @@ public class Player
         if (boots <= 1) boots = 1;
     }
 
-    //Based on: https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically
+    //Code based on: <https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically>
     public static Player HardCopy(Player original)
     {
         using (var ms = new MemoryStream())
@@ -36,8 +35,7 @@ public class Player
         }
     }
 
-    public void AttachItems() { RPGItems.AttachItemsToPlayer(this); }
-
+    // Algorithm based on <https://bulbapedia.bulbagarden.net/wiki/Experience>
     public static void SetLevelUpXP(Player p)
     {
         int nextLevel = p.level + 1;
@@ -47,23 +45,22 @@ public class Player
         p.levelupxp = calc; 
     }
 
+    // Algorithm based on <http://howtomakeanrpg.com/a/how-to-make-an-rpg-levels.html>
     public static void CalculateBaseStats(Player p)
     {
-        int lvlFactor = p.level + 14;
+        int lvlFactor = p.level + 16;
 
         double m1 = 1.2;
         double m2 = 1;
         double bonus = 50;
         p.hp = (int)(m1 * (lvlFactor^2) + m2 * lvlFactor + bonus);
 
-        m1 = 0.2;
-        m2 = 0.2;
+        m1 = m2 = 0.2;
         bonus = 30;
         p.atk = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus);
 
-        m1 = 0.15;
-        m2 = 0.15;
-        bonus = 15;
+        m1 = m2 = 0.15;
+        bonus = 20;
         p.def = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus);
 
         m1 = 0.1;
@@ -77,5 +74,7 @@ public class Player
         p.agility = (int)((m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus) * 0.2);
         p.crit = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus * 0.2);
     }
+
+    public void AttachItems() { RPGItems.AttachItemsToPlayer(this); }
 }
 

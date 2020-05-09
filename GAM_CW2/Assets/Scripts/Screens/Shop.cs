@@ -7,7 +7,7 @@ public class Shop : MonoBehaviour
 {
 
     public GameObject shopPopup;
-    public Text itemNameText, stat1Text, stat2Text, priceText, balanceText, coinsText;
+    public Text stat1Text, stat2Text, priceText, balanceText, coinsText;
     public GameObject shieldIconImage, swordIconImage, bootsIconImage, stat1IconImage, stat2IconImage;
     public Sprite atkIcon, defIcon, hpIcon, spdIcon, agilityIcon, critIcon;
     public AudioSource soundsrc;
@@ -89,7 +89,6 @@ public class Shop : MonoBehaviour
             default: return;
         }
 
-        itemNameText.text = selectedItem.name;
         stat1IconImage.GetComponent<Image>().sprite = stat1Icon;
         stat1Text.text = "" + stat1;
         stat2IconImage.GetComponent<Image>().sprite = stat2Icon;

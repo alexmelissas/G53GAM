@@ -56,7 +56,6 @@ public class BattleScreen : MonoBehaviour
 
             player = Player.HardCopy(PersistentObjects.singleton.player);
             PersistentObjects.singleton.playerBeforeBattle = Player.HardCopy(PersistentObjects.singleton.player); // keep the player before gains
-
             player.AttachItems();
             enemy = PersistentObjects.singleton.enemy;
             enemy.AttachItems();
@@ -313,7 +312,7 @@ public class BattleScreen : MonoBehaviour
         Text dmgLabel = playerDmgLabelText;
         Image pow = playerDmgLabelText.GetComponentInParent<Image>();
         AudioClip sound;
-        dmgLabel.text = "BLOCK";
+        dmgLabel.text = "X";
         dmgLabel.color = Color.grey;
         sound = missSFX;
         soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));

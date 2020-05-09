@@ -5,7 +5,6 @@ public class RPGItems {
 
     public Texture2D icon;
     public int hp, atk, def, spd, agility, crit;
-    public string name;
     public int price;
 
     protected RPGItems() {}

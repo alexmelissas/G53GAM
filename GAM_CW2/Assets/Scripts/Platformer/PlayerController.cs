@@ -71,7 +71,11 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator HighJump(int duration)
     {
+        StopCoroutine(Shrink(20));
+        timeText.text = "";
+        playerSprite.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
         activePowerupAcorn.SetActive(false);
+
         activePowerupStar.SetActive(true);
         jumpHeight = 7.5f;
         for (int i = duration; i > 0; i--)
@@ -87,7 +91,11 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Shrink(int duration)
     {
+        StopCoroutine(HighJump(15));
+        jumpHeight = 4;
+        timeText.text = "";
         activePowerupStar.SetActive(false);
+
         activePowerupAcorn.SetActive(true);
         playerSprite.transform.localScale = new Vector3(0.3f, 0.3f, 1f);
         for (int i = duration; i > 0; i--)
