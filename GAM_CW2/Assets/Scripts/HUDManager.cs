@@ -22,29 +22,19 @@ public class HUDManager : MonoBehaviour
     {
         items.Add(item);
         item.onPickup();
-
-        // broadcast event to the hud
-        if (ItemAdded != null)
-        {
-            ItemAdded.Invoke(this, new InventoryEventArgs(item));
-        }
+        if (ItemAdded != null) { ItemAdded.Invoke(this, new InventoryEventArgs(item)); }
     }
 
     public void useItem(IInventoryItem item)
     {
-        Debug.Log("Used item: " + item.itemName);
         items.Remove(item);
-
-        if (ItemUsed != null)
-        {
-            ItemUsed.Invoke(this, new InventoryEventArgs(item));
-        }
+        if (ItemUsed != null) { ItemUsed.Invoke(this, new InventoryEventArgs(item)); }
     }
 
     private void Start()
     {
         // Save initial player stats - to reset if die
-        PlayerObjects.singleton.player_beginning_of_level = Player.Clone(PlayerObjects.singleton.player);
+        PersistentObjects.singleton.player_beginning_of_level = Player.Clone(PersistentObjects.singleton.player);
         battleScreen.SetActive(false);
         UpdateHPBar();
     }
@@ -53,17 +43,17 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateHPBar()
     {
-        Player player = Player.Clone(PlayerObjects.singleton.player);
+        Player player = Player.Clone(PersistentObjects.singleton.player);
         player.AttachItems();
 
         playerNameText.text = "" + player.username;
         playerLevelText.text = "" + player.level;
         maxPlayerHPText.text = "/" + player.hp;
-        actualPlayerHPText.text = "" + PlayerObjects.singleton.currentHP;
+        actualPlayerHPText.text = "" + PersistentObjects.singleton.currentHP;
 
 
         playerHPColourImage.enabled = true;
-        float hpBarValue = (float)PlayerObjects.singleton.currentHP / (float)player.hp;
+        float hpBarValue = (float)PersistentObjects.singleton.currentHP / (float)player.hp;
         playerHPSlider.value = hpBarValue;
         if (playerHPSlider.value == 0) playerHPColourImage.enabled = false;
         else if (hpBarValue < 0.25) playerHPColourImage.color = Color.red;

@@ -3,19 +3,22 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public HUDManager hudManager;
+    public GameObject carrot, star;
+
     bool isIdle;
     bool isLeft;
     int isIdleKey = Animator.StringToHash("isIdle");
 
     public bool alive = true;
     bool canJump = true;
-    int groundMask = 1<<8;
+    int groundMask = 1 << 8;
     int speed = 4;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        hudManager.ItemUsed += Inventory_ItemUsed;
     }
 
     // Update is called once per frame
@@ -68,6 +71,33 @@ public class PlayerController : MonoBehaviour
         }
 
         r.velocity = new Vector2(physicsVelocity.x, r.velocity.y);
+    }
+
+    private void OnCollisionEnter2D(Collision2D hit)
+    {
+        IInventoryItem item = hit.gameObject.GetComponent<IInventoryItem>();
+        if (item != null)
+        {
+            hudManager.addItem(item); // where inventory is the inventory object ref
+        }
+    }
+
+    void Inventory_ItemUsed(object sender, InventoryEventArgs e)
+    {
+        if ((e.item as MonoBehaviour).gameObject == carrot) // HEAL
+        {
+            Player player = Player.Clone(PersistentObjects.singleton.player);
+            player.AttachItems();
+            int currentHP = PersistentObjects.singleton.currentHP;
+            if (currentHP + 20 <= player.hp) PersistentObjects.singleton.currentHP += 20;
+            else PersistentObjects.singleton.currentHP = player.hp;
+            hudManager.UpdateHPBar();
+        }
+        else if ((e.item as MonoBehaviour).gameObject == star) // DOUBLEJUMP
+        {
+
+        }
+
     }
 
 }

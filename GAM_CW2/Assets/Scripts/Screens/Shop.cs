@@ -15,13 +15,13 @@ public class Shop : MonoBehaviour
     public AudioClip purchase_sound;
 
     private Player p;
-    private Item displayItem;
+    private RPGItems displayItem;
     private string displayItemType;
     private int itemLevel;
 
     private void Start()
     {
-        p = PlayerObjects.singleton.player;
+        p = PersistentObjects.singleton.player;
         coinsText.text = "" + p.coins;
         ShowShopPopup(false);
     }
@@ -39,8 +39,8 @@ public class Shop : MonoBehaviour
             default: return;
         }
 
-        if (itemLevel >= 4) { Debug.Log("You can't upgrade this further, Karen."); return; }
-        else displayItem = Item.NewItem(displayItemType, itemLevel + 1);
+        if (itemLevel >= 3) { Debug.Log("You can't upgrade this further, Karen."); return; }
+        else displayItem = RPGItems.CreateItem(displayItemType, itemLevel + 1);
 
         GameObject iconImage;
         switch (displayItemType)

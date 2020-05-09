@@ -29,8 +29,8 @@ public class SpashScreen : MonoBehaviour
             2,
             3,
             1);
-        PlayerObjects.singleton.player = test;
-        PlayerObjects.singleton.currentHP = 40;
+        PersistentObjects.singleton.player = test;
+        PersistentObjects.singleton.currentHP = 40;
 
 
         SceneManager.LoadScene("Main");

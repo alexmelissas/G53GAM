@@ -14,9 +14,9 @@ public class Stats : MonoBehaviour
     void Update()
     {
         //Only update displays if there's a change
-        if (!p.ComparePlayer(PlayerObjects.singleton.player)) 
+        if (!p.ComparePlayer(PersistentObjects.singleton.player)) 
         {
-            p = Player.Clone(PlayerObjects.singleton.player);
+            p = Player.Clone(PersistentObjects.singleton.player);
             string[] split_stats = SplitStats();
 
             atkText.text = split_stats[1];
@@ -32,10 +32,10 @@ public class Stats : MonoBehaviour
             nextLevelText.text = "" + (p.level + 1);
             xpSlider.normalizedValue = (float)p.xp / (float)p.levelupxp;
 
-            currentSwordImage.GetComponent<RawImage>().texture = Item.NewItem("sword", p.sword).icon;
-            currentShieldImage.GetComponent<RawImage>().texture = Item.NewItem("shield", p.shield).icon;
-            currentArmourImage.GetComponent<RawImage>().texture = Item.NewItem("armour", p.armour).icon;
-            currentBootsImage.GetComponent<RawImage>().texture = Item.NewItem("boots", p.boots).icon;
+            currentSwordImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("sword", p.sword).icon;
+            currentShieldImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("shield", p.shield).icon;
+            currentArmourImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("armour", p.armour).icon;
+            currentBootsImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("boots", p.boots).icon;
         }
     }
 

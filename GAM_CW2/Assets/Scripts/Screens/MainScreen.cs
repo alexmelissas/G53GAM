@@ -12,9 +12,9 @@ public class MainScreen : MonoBehaviour
 
     public void Start()
 	{
-        if (PlayerObjects.singleton.unlocked2) { level2lock.color = Color.green; coins2.SetActive(false); }
+        if (PersistentObjects.singleton.unlocked2) { level2lock.color = Color.green; coins2.SetActive(false); }
         else { level2lock.color = Color.red; coins2.SetActive(true); }
-        if (PlayerObjects.singleton.unlocked3) { level3lock.color = Color.green; coins3.SetActive(false); }
+        if (PersistentObjects.singleton.unlocked3) { level3lock.color = Color.green; coins3.SetActive(false); }
         else { level3lock.color = Color.red; coins3.SetActive(true); }
     }
 
@@ -27,26 +27,26 @@ public class MainScreen : MonoBehaviour
         switch (stage)
         {
             case 1:
-                if (PlayerObjects.singleton.unlocked1) SceneManager.LoadScene("Level1");
+                if (PersistentObjects.singleton.unlocked1) SceneManager.LoadScene("Level1");
                 break;
             case 2:
-                if (PlayerObjects.singleton.unlocked2) SceneManager.LoadScene("Level2");
-                else if (PlayerObjects.singleton.player.coins >= 350)
+                if (PersistentObjects.singleton.unlocked2) SceneManager.LoadScene("Level2");
+                else if (PersistentObjects.singleton.player.coins >= 350)
 				{
-                    PlayerObjects.singleton.player.coins -= 350;
-                    PlayerObjects.singleton.unlocked2 = true;
+                    PersistentObjects.singleton.player.coins -= 350;
+                    PersistentObjects.singleton.unlocked2 = true;
                     SceneManager.LoadScene("Level2");
                 }
 
                 break;
             case 3:
-                if (PlayerObjects.singleton.unlocked2)
+                if (PersistentObjects.singleton.unlocked2)
 				{
-                    if (PlayerObjects.singleton.unlocked3) SceneManager.LoadScene("Level3");
-                    else if (PlayerObjects.singleton.player.coins >= 600)
+                    if (PersistentObjects.singleton.unlocked3) SceneManager.LoadScene("Level3");
+                    else if (PersistentObjects.singleton.player.coins >= 600)
                     {
-                        PlayerObjects.singleton.player.coins -= 600;
-                        PlayerObjects.singleton.unlocked3 = true;
+                        PersistentObjects.singleton.player.coins -= 600;
+                        PersistentObjects.singleton.unlocked3 = true;
                         SceneManager.LoadScene("Level3");
                     }
                 }

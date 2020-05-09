@@ -1,10 +1,15 @@
 ﻿<Properties StartupConfiguration="{DFA2C813-276E-6ADB-CEF0-EEB4CAEFD7E0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CheckForTwo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/PlayerController.cs">
     <Files>
-      <File FileName="Assets/Inventory.cs" Line="33" Column="1" />
-      <File FileName="Assets/PlayerController.cs" Line="11" Column="6" />
+      <File FileName="Assets/PlayerController.cs" Line="20" Column="5" />
       <File FileName="Assets/CheckForTwo.cs" Line="55" Column="54" />
-      <File FileName="Assets/CheckForKey.cs" Line="1" Column="1" />
+      <File FileName="Assets/CheckForKey.cs" Line="16" Column="5" />
+      <File FileName="Assets/IInventoryItem.cs" Line="1" Column="1" />
+      <File FileName="Assets/HUDInventory.cs" Line="1" Column="1" />
+      <File FileName="Assets/HUD.cs" Line="1" Column="1" />
+      <File FileName="Assets/InventoryEventArgs.cs" Line="1" Column="1" />
+      <File FileName="Assets/InventoryItemClickable.cs" Line="1" Column="1" />
+      <File FileName="Assets/PickupableItem.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,7 +19,7 @@
               <Node name="Standard Assets" expanded="True">
                 <Node name="Utility" expanded="True" />
               </Node>
-              <Node name="CheckForTwo.cs" selected="True" />
+              <Node name="PlayerController.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -23,7 +28,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="849838bf-43e9-4de0-8132-ac038f3e9cda" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="92253824-06a7-4f88-97ec-11ed76d1ebff" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

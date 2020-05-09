@@ -68,6 +68,6 @@ public class Player
         }
     }
 
-    public void AttachItems() { Items.AttachItemsToPlayer(this); }
+    public void AttachItems() { RPGItems.AttachItemsToPlayer(this); }
 }
 

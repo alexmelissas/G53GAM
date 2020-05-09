@@ -15,7 +15,7 @@ public class HUD : MonoBehaviour
 
     private void InventoryItemAdded(object sender, InventoryEventArgs e)
     {
-        Transform panel = transform.Find("InventoryHUD");
+        Transform panel = transform.Find("slots");
         foreach(Transform slot in panel)
         {
             Image image = slot.GetComponent<Image>();
@@ -33,7 +33,7 @@ public class HUD : MonoBehaviour
 
     private void InventoryItemUsed(object sender, InventoryEventArgs e)
     {
-        Transform panel = transform.Find("InventoryHUD");
+        Transform panel = transform.Find("slots");
         foreach (Transform slot in panel)
         {
             Image image = slot.GetComponent<Image>();
