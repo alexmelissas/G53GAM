@@ -1,0 +1,68 @@
+
+Attributions for G53GAM CW2
+
+
+1. Disclaimer
+
+===== [*Disclaimer*] ==============================================================================================================
+Inspiration was drawn from previous work of mine in Unity for some core RPG elements. Most notably, the <Turn> and <BattleScreen> 
+classes' functionality was loosely based on similar classes used in said previous work. However, apart from inspiration for 
+core concepts and the use of two graphical assets I had created for said previous work, scripts and code were NOT directly re-used 
+from previous work or the internet. 
+
+Exceptions to this are clearly stated within the code. Exceptions include the <Player.HardCopy> function, that is heavily based
+on an online example <https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically>. 
+
+Lastly, the XP growth and base stat calculation algorithms were roughly based on algorithms used in Pokemon games and other
+online examples: <https://bulbapedia.bulbagarden.net/wiki/Experience> <http://howtomakeanrpg.com/a/how-to-make-an-rpg-levels.html>
+===================================================================================================================================
+
+
+2. Assets
+
+[*]Entry Format:
+	{FILE} FROM/MODIFIED <SOURCE>
+   		where FILE = filename in directory/subdirectories. ',' used to distinguish multiple files from same source
+         	      FROM/MODIFIED = ("FROM" = used as-is) and ("MODIFIED" = used after some modification)
+         	      SOURCE = source URL / description
+
+===== [/Sounds] ===================================================================================================================
+{Space Background Music.mp3} FROM <https://opengameart.org/content/space-background-music>
+
+{crit.mp3} FROM <https://opengameart.org/content/punches-hits-swords-and-squishes>
+
+{playerhit.wav, enemyhit.wav} MODIFIED <https://opengameart.org/content/battle-sound-effects>
+
+{miss.wav} MODIFIED <https://opengameart.org/content/3-melee-sounds>
+
+{die.ogg} FROM <https://opengameart.org/content/80-cc0-creture-sfx-2>
+
+{successfulPurchase.ogg} FROM <https://opengameart.org/content/80-cc0-rpg-sfx>
+===================================================================================================================================
+
+===== [/Graphics] =================================================================================================================
+{hp.png, atk.png, def.png, spd.png, crit.png, agility.png, coins.png} FROM <https://game-icons.net/>
+
+{swordTier1.png, swordTier2.png, swordTier3.png,
+ shieldTier1.png, shieldTier2.png, shieldTier3.png,
+ bootsTier1.png, bootsTier2.png, bootsTier3.png} FROM <https://opengameart.org/content/roguelikerpg-items>
+
+===================================================================================================================================
+
+===== SPRITES =====
+Character Models - https://craftpix.net/
+===============
+
+===== ITEMS ======
+Item sprites from:
+https://www.vecteezy.com/
+https://www.flaticon.com/home
+https://assetstore.unity.com/
+===============
+
+===== [/Fonts] =====================================================================================================================
+{ThaleahFat.fontsettings/ThaleahFat.tff} FROM <https://assetstore.unity.com/packages/2d/fonts/free-pixel-font-thaleah-140059>
+==============
+
+
+
