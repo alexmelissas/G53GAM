@@ -72,6 +72,22 @@ public class PlayerController : MonoBehaviour
                 default: SceneManager.LoadScene("Main"); break;
             }
         }
+
+        // FALL OUT OF WORLD
+        else if (hit.gameObject.tag == "boundary")
+        {
+            int coins = PersistentObjects.singleton.player.coins;
+            if (coins > 0) PersistentObjects.singleton.player.coins -= 50;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        // HIT HAZARD
+        else if (hit.gameObject.tag == "hazard")
+        {
+            int coins = PersistentObjects.singleton.player.coins;
+            if (coins > 0) PersistentObjects.singleton.player.coins -= 25;
+            hudManager.UpdateHUD();
+        }
     }
 
     // CLICK HUD ITEM

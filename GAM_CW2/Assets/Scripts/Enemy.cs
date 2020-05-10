@@ -30,10 +30,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // LAUNCH THE BATTLE WHEN PLAYER TOUCHES ENEMY
+    // LAUNCH THE BATTLE WHEN PLAYER TOUCHES ENEMY / DMG IF HAZARD
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (PersistentObjects.singleton.currentHP > 0)
+        if (gameObject.tag != "hazard" && PersistentObjects.singleton.currentHP > 0)
         {
             RPGCharacter enemy = new RPGCharacter(type, level);
             Nerf(enemy);

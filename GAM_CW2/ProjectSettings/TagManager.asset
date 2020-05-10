@@ -7,6 +7,8 @@ TagManager:
   - coinsPowerup
   - door
   - boss
+  - boundary
+  - hazard
   layers:
   - Default
   - TransparentFX
