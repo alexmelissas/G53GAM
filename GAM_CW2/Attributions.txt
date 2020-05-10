@@ -4,19 +4,20 @@ Attributions for G53GAM CW2 - Alexandros Melissas
 
 (1) Scripts & Algorithms
 
-+==== [*Disclaimer*] =============================================================================================================+
-Inspiration was drawn from previous work of mine in Unity for some core RPG elements. Most notably, the <BattleTurn> and <BattleScreen> 
-classes' functionality was roughly based on similar classes used in said previous work. However, apart from inspiration for 
-core concepts and the use of two graphical assets I had created for said previous work, scripts and code were NOT directly re-used 
-from previous work or the internet. [Excluding code snippets from Lab02 and Lab06 for Platformer elements and HUD Inventory.]
++==== [*Disclaimer*] ====================================================================================================================+
+Inspiration was drawn from previous work of mine in Unity for some core RPG elements. Most notably, the <RPGItems>, <BattleTurn> 
+and <BattleScreen> classes' functionality was roughly based on similar classes used in said previous work. However, apart from 
+inspiration for core concepts and the use of two graphical assets I had created for said previous work, scripts and code were NOT 
+directly re-used from it.
 
-Exceptions to this are clearly stated within the code. Exceptions include the <Player.HardCopy> function, that is heavily based
-on an online example <https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically>. 
-The XP growth and base stat calculation algorithms were roughly based on algorithms used in Pokemon games and other
-online examples: <https://bulbapedia.bulbagarden.net/wiki/Experience> <http://howtomakeanrpg.com/a/how-to-make-an-rpg-levels.html>
-
-Lastly, elements re-used directly/modified from the lab exercises are not mentioned here, as described in the CW specification.
-+=================================================================================================================================+
+Scripts from the internet were not used. Some help with code was needed and any usage is clearly stated within the code. Specifically, 
+the <Player.HardCopy> function is heavily based on an online example 
+<https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically>, and code snippets from Lab02 
+and Lab06 for Platformer elements and HUD Inventory. The XP growth and base stat calculation algorithms were roughly based on algorithms
+used in Pokemon games and other online examples: <https://bulbapedia.bulbagarden.net/wiki/Experience> 
+<http://howtomakeanrpg.com/a/how-to-make-an-rpg-levels.html>. As implied, elements re-used directly/modified from the lab exercises 
+are not mentioned here, as described in the CW specification.
++=======================================================================================================================================+
 
 
 (2) Assets
@@ -27,24 +28,24 @@ Lastly, elements re-used directly/modified from the lab exercises are not mentio
    where FILE = filename in directory/subdirectories: ',' used to distinguish multiple files from same source
 						      '*' used to denote 'anything'
          FROM/MODIFIED = ("FROM" = used as-is) and ("MODIFIED" = used after some modification)
-         SOURCE = source URL / description
+         SOURCE = source URL
 
-+==== [/Sounds] ==================================================================================================================+
++==== [~/Sounds] =======================================================================================================================+
 -{Space Background Music.mp3} FROM <https://opengameart.org/content/space-background-music>
 -{crit.mp3} FROM <https://opengameart.org/content/punches-hits-swords-and-squishes>
 -{playerhit.wav, enemyhit.wav} MODIFIED <https://opengameart.org/content/battle-sound-effects>
 -{miss.wav} MODIFIED <https://opengameart.org/content/3-melee-sounds>
 -{die.ogg} FROM <https://opengameart.org/content/80-cc0-creture-sfx-2>
 -{successfulPurchase.ogg} FROM <https://opengameart.org/content/80-cc0-rpg-sfx>
-+=================================================================================================================================+
++=======================================================================================================================================+
 
 
-+==== [/Fonts] ===================================================================================================================+
++==== [~/Fonts] ========================================================================================================================+
 -{ThaleahFat.fontsettings, ThaleahFat.tff} FROM <https://assetstore.unity.com/packages/2d/fonts/free-pixel-font-thaleah-140059>
-+=================================================================================================================================+
++=======================================================================================================================================+
 
 
-+==== [/Graphics] ================================================================================================================+
++==== [~/Graphics] =====================================================================================================================+
 
 == [/Icons & UI] ==================
 -{hp.png, atk.png, def.png, spd.png, crit.png, agility.png, coins.png} FROM <https://game-icons.net/>
@@ -72,4 +73,4 @@ Lastly, elements re-used directly/modified from the lab exercises are not mentio
 -{door.png} FROM <https://opengameart.org/content/lpc-windows-doors>
 ===================================
 
-+=================================================================================================================================+
++=======================================================================================================================================+

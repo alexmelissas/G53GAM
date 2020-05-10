@@ -5,5 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class FallDetection : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other) { SceneManager.LoadScene(SceneManager.GetActiveScene().name); }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        int coins = PersistentObjects.singleton.player.coins;
+        if (coins > 0) PersistentObjects.singleton.player.coins -= 50;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
