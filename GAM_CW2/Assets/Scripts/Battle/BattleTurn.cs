@@ -25,14 +25,7 @@ public class BattleTurn {
         int minFluctuate = (int)(damager.atk - (damager.atk * 0.07));
         int maxFluctuate = (int)(damager.atk + (damager.atk * 0.07));
         int rawDamage = Random.Range(minFluctuate, maxFluctuate);
-
-        // BOOST BASED ON LEVEL DIFFERENCE
-        int levelDiff = damagee.level - damager.level;
-        float boostAmount = (levelDiff>0) ? levelDiff^4 : 0;
-        damage = (rawDamage - damagee.def) + boostAmount;
-        damage = (damage < 1) ? 1 : damage;
-
-        //Debug.Log("RAW DMG - SHIELD:" + rawDamage + ", BOOSTED DMG:" + damage);
+        damage = (rawDamage - damagee.def) > 1 ? rawDamage - damagee.def : 1;
 
         // CALCULATE CRIT CHANCE AND DAMAGE
         int critChance = Random.Range(0, 100);

@@ -19,12 +19,12 @@ public class BattleResult {
         int missingxptolevel = player.levelupxp - player.xp;
         int levelDiff = enemy.level - player.level;
 
-        int baseXP = 3;
+        int baseXP = 10;
         switch (enemy.username)
         {
             case "squirrel": break;
-            case "fox": baseXP += 1; break;
-            case "snowman": baseXP += 2; break;
+            case "fox": baseXP += 5; break;
+            case "snowman": baseXP += 10; break;
         }
 
         // BONUS XP IF BEAT HIGHER LEVEL ENEMY
