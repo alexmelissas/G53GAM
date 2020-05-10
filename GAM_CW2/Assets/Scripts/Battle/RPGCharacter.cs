@@ -17,7 +17,7 @@ public class RPGCharacter : IEquatable<RPGCharacter>
         level = _level;
         if (xp <= 0) xp = 0;
         SetLevelUpXP(this);
-        if (coins<=0) coins = 300;
+        if (coins<=0) coins = 1000;
         CalculateBaseStats(this);
         if (sword <= 1) sword = 1;
         if (shield <= 1) shield = 1;
