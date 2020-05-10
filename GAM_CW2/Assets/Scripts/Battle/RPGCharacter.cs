@@ -17,7 +17,7 @@ public class RPGCharacter : IEquatable<RPGCharacter>
         level = _level;
         if (xp <= 0) xp = 0;
         SetLevelUpXP(this);
-        if (coins<=0) coins = 1000;
+        if (coins<=0) coins = 3000;
         CalculateBaseStats(this);
         if (sword <= 1) sword = 1;
         if (shield <= 1) shield = 1;
@@ -98,7 +98,7 @@ public class RPGCharacter : IEquatable<RPGCharacter>
         int currentHP = PersistentObjects.singleton.currentHP;
         if (currentHP < player.hp)
         {
-            if (currentHP + 20 <= player.hp) PersistentObjects.singleton.currentHP += 20;
+            if (currentHP + heal <= player.hp) PersistentObjects.singleton.currentHP += heal;
             else PersistentObjects.singleton.currentHP = player.hp;
             return true;
         }

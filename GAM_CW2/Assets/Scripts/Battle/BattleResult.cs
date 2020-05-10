@@ -19,7 +19,7 @@ public class BattleResult {
         int missingxptolevel = player.levelupxp - player.xp;
         int levelDiff = enemy.level - player.level;
 
-        int baseXP = 1;
+        int baseXP = 3;
         switch (enemy.username)
         {
             case "squirrel": break;
