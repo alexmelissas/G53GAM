@@ -32,7 +32,7 @@ public class BattleTurn {
         damage = (rawDamage - damagee.def) + boostAmount;
         damage = (damage < 1) ? 1 : damage;
 
-        Debug.Log("RAW DMG:" + rawDamage + ", BOOSTED DMG:" + damage);
+        //Debug.Log("RAW DMG - SHIELD:" + rawDamage + ", BOOSTED DMG:" + damage);
 
         // CALCULATE CRIT CHANCE AND DAMAGE
         int critChance = Random.Range(0, 100);

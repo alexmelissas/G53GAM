@@ -100,7 +100,7 @@ public class Shop : MonoBehaviour
         balanceText.text = "" + p.coins;
     }
 
-    // PERFORM THE PURCHASE IF HAVE ENOUGH COINS
+    // PERFORM ITEM PURCHASE IF HAVE ENOUGH COINS
     public void Execute_Purchase()
     {
         if (p.coins >= selectedItem.cost)
@@ -121,6 +121,17 @@ public class Shop : MonoBehaviour
             soundsrc.PlayOneShot(purchase_sound, PlayerPrefs.GetFloat("fx"));
         }
         else Debug.Log("YOU'RE TOO POOR FOR THAT, KAREN.");
+        SceneManager.LoadScene("Shop");
+    }
+
+    // PERFORM CARROT PURCHASE IF HAVE ENOUGH COINS
+    public void ClickCarrot()
+    {
+        if (p.coins >= 200)
+        {
+            if (RPGCharacter.Heal(20)) p.coins -= 200;
+            else Debug.Log("FULL HP");
+        } else Debug.Log("YOU'RE TOO POOR FOR THAT, KAREN.");
         SceneManager.LoadScene("Shop");
     }
 

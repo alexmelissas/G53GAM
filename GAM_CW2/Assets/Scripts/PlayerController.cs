@@ -77,14 +77,10 @@ public class PlayerController : MonoBehaviour
     // CLICK HUD ITEM
     void Inventory_ItemUsed(object sender, InventoryEventArgs e)
     {
-        if ((e.item as MonoBehaviour).gameObject.GetComponent<PickupableItem>().itemName == "carrot") // HEALTHPACK
+        // CARROT - HEALTHPACK
+        if ((e.item as MonoBehaviour).gameObject.GetComponent<PickupableItem>().itemName == "carrot")
         {
-            RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
-            player.AttachItems();
-            int currentHP = PersistentObjects.singleton.currentHP;
-            if (currentHP + 20 <= player.hp) PersistentObjects.singleton.currentHP += 20;
-            else PersistentObjects.singleton.currentHP = player.hp;
-            hudManager.UpdateHUD();
+            if(RPGCharacter.Heal(20)) hudManager.UpdateHUD();
         }
         // HIGHJUMP
         else if ((e.item as MonoBehaviour).gameObject.GetComponent<PickupableItem>().itemName == "star") StartCoroutine(HighJump(15));

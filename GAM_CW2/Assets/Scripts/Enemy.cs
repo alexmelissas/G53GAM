@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
         {
             RPGCharacter enemy = new RPGCharacter(type, level);
             Nerf(enemy);
-            Debug.Log("ENEMY: atk:" + enemy.atk + ", def:" + enemy.def + ", spd:" + enemy.spd);
+            //Debug.Log("ENEMY: atk:" + enemy.atk + ", def:" + enemy.def + ", spd:" + enemy.spd);
             PersistentObjects.singleton.enemy = RPGCharacter.HardCopy(enemy);
 
             if (gameObject.tag == "boss") PersistentObjects.singleton.bossFight = true;
@@ -51,12 +51,12 @@ public class Enemy : MonoBehaviour
     // NERF THE ENEMY STATS BASED ON TYPE
     private void Nerf(RPGCharacter enemy)
     {
-        float nerfFactor = 0f;
+        float nerfFactor = 0.1f;
         switch (type)
         {
-            case "squirrel": nerfFactor = 0.1f; break;
-            case "fox": nerfFactor = 0.05f; break;
-            case "snowman": nerfFactor = 0.02f; break;
+            case "squirrel": nerfFactor = 0.12f; break;
+            case "fox": nerfFactor = 0.11f; break;
+            case "snowman": nerfFactor = 0.1f; break;
         }
         enemy.hp -= Mathf.RoundToInt(enemy.hp * nerfFactor);
         enemy.atk -= Mathf.RoundToInt(enemy.atk * nerfFactor);

@@ -89,5 +89,20 @@ public class RPGCharacter : IEquatable<RPGCharacter>
             && boots == other.boots) return true;
         else return false;
     }
+
+    // HEAL THE PLAYER - ADD TO CURRENTHP
+    public static bool Heal(int heal)
+    {
+        RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
+        player.AttachItems();
+        int currentHP = PersistentObjects.singleton.currentHP;
+        if (currentHP < player.hp)
+        {
+            if (currentHP + 20 <= player.hp) PersistentObjects.singleton.currentHP += 20;
+            else PersistentObjects.singleton.currentHP = player.hp;
+            return true;
+        }
+        else return false;
+    }
 }
 
