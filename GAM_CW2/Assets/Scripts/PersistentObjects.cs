@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+// SINGLETON FOR STORING PLAYER & OTHER DATA ACROSS SCREENS
+// LOADS IN SPLASH SCREEN - ALWAYS PLAY FROM THAT IN EDITOR
 public class PersistentObjects : MonoBehaviour
 {
     public static PersistentObjects singleton;
@@ -7,6 +9,7 @@ public class PersistentObjects : MonoBehaviour
     public RPGCharacter player;
     public int currentHP;
     public bool inBattle;
+    public bool bossFight;
     public RPGCharacter playerBeforeBattle;
     public RPGCharacter playerLevelStart;
 

@@ -13,9 +13,11 @@ public class BattleResult {
         win = _win;
     }
 
+    // CALCULATE XP/COINS GAINED FROM BATTLE, HANDLE LEVELUP
     public RPGCharacter CalculateGains()
     {
         int missingxptolevel = player.levelupxp - player.xp;
+        int levelDiff = enemy.level - player.level;
 
         int baseXP = 1;
         switch (enemy.username)
@@ -24,7 +26,10 @@ public class BattleResult {
             case "fox": baseXP += 1; break;
             case "snowman": baseXP += 2; break;
         }
-        baseXP += CalculateBonusXP();
+
+        // BONUS XP IF BEAT HIGHER LEVEL ENEMY
+        baseXP += (levelDiff >= 0) ? levelDiff^3 : 0;
+        // LOSE 1/3 OF XP YOU'D GAIN IF LOSE
         if (!win) baseXP = Mathf.RoundToInt(baseXP/3);
 
         player.xp += baseXP;
@@ -44,29 +49,16 @@ public class BattleResult {
             case "fox": baseCoins += 10; break;
             case "snowman": baseCoins += 20; break;
         }
-        baseCoins += CalculateBonusCoins();
+        // BONUS COINS IF BEAT HIGHER LEVEL ENEMY
+        baseCoins += (levelDiff >= 0) ? 5 * levelDiff : 0;
+        // LOSE 1/3 OF COINS YOU'D GAIN IF LOSE
         if (!win) baseCoins = -Mathf.RoundToInt(baseCoins / 3);
         
         player.coins += baseCoins;
+        // NO DEBT HERE KIDS
         if (player.coins < 0) player.coins = 0;
 
 
         return RPGCharacter.HardCopy(player);
-    }
-
-    //! Calculates bonus/less XP based on level comparison
-    private int CalculateBonusXP()
-    {
-        int level_diff = player.level - enemy.level;
-        if (level_diff >= 0) return 0;
-        else return level_diff;
-    }
-
-    //! Calculate bonus/less coins based on level comparison
-    private int CalculateBonusCoins()
-    {
-        int level_diff = player.level - enemy.level;
-        if (level_diff>=0) return 0;
-        else return 5*level_diff;
     }
 }

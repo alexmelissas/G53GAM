@@ -27,12 +27,13 @@ public class Shop : MonoBehaviour
 
     private void ShowShopPopup(bool shown) { shopPopup.SetActive(shown); }
 
+    // SETUP THE PURCHASE POPUP WITH THE NEXT UPGRADE OF SELECTED ITEM TYPE
     public void BuildShopPopup(int itemType)
     {
         switch (itemType)
         {
             case 0: itemLevel = p.sword; displayItemType = "sword"; break;
-            case 1:  itemLevel = p.shield; displayItemType = "shield"; break;
+            case 1: itemLevel = p.shield; displayItemType = "shield"; break;
             case 2: itemLevel = p.boots; displayItemType = "boots"; break;
             default: return;
         }
@@ -59,6 +60,7 @@ public class Shop : MonoBehaviour
         ShowShopPopup(true);
     }
 
+    // HELPER FOR ABOVE
     private void SetupSelectedItemLabels(int itemType)
     {
         int stat1 = 0;
@@ -93,16 +95,17 @@ public class Shop : MonoBehaviour
         stat1Text.text = "" + stat1;
         stat2IconImage.GetComponent<Image>().sprite = stat2Icon;
         stat2Text.text = "" + stat2;
-        priceText.text = "" + selectedItem.price;
+        priceText.text = "" + selectedItem.cost;
 
         balanceText.text = "" + p.coins;
     }
 
+    // PERFORM THE PURCHASE IF HAVE ENOUGH COINS
     public void Execute_Purchase()
     {
-        if (p.coins >= selectedItem.price)
+        if (p.coins >= selectedItem.cost)
         {
-            p.coins -= selectedItem.price;
+            p.coins -= selectedItem.cost;
             switch (displayItemType)
             {
                 case "sword": p.sword++; break;

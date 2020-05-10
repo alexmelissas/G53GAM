@@ -20,36 +20,43 @@ public class Enemy : MonoBehaviour
         z = transform.position.z;
     }
 
+    // I LIKE TO MOVE IT MOVE IT
     void Update()
     {
-        if (PersistentObjects.singleton.inBattle==false)
+        if (PersistentObjects.singleton.inBattle==false && gameObject.tag != "boss") // BOSS DOESNT MOVE
         {
             if (vertical) transform.position = new Vector3(x, y + curve.Evaluate((Time.time % curve.length)), z);
             else transform.position = new Vector3(x + curve.Evaluate((Time.time % curve.length)), y, z);
         }
     }
 
+    // LAUNCH THE BATTLE WHEN PLAYER TOUCHES ENEMY
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (PersistentObjects.singleton.currentHP > 0)
         {
             RPGCharacter enemy = new RPGCharacter(type, level);
             Nerf(enemy);
+            Debug.Log("ENEMY: atk:" + enemy.atk + ", def:" + enemy.def + ", spd:" + enemy.spd);
             PersistentObjects.singleton.enemy = RPGCharacter.HardCopy(enemy);
+
+            if (gameObject.tag == "boss") PersistentObjects.singleton.bossFight = true;
+            else PersistentObjects.singleton.bossFight = false;
 
             rpgscreen.SetActive(true);
             Destroy(gameObject);
         }
     }
 
+    // NERF THE ENEMY STATS BASED ON TYPE
     private void Nerf(RPGCharacter enemy)
     {
         float nerfFactor = 0f;
         switch (type)
         {
-            case "squirrel": nerfFactor = 0.3f; break;
-            case "fox": nerfFactor = 0.2f; break;
-            case "snowman": nerfFactor = 0.1f; break;
+            case "squirrel": nerfFactor = 0.1f; break;
+            case "fox": nerfFactor = 0.05f; break;
+            case "snowman": nerfFactor = 0.02f; break;
         }
         enemy.hp -= Mathf.RoundToInt(enemy.hp * nerfFactor);
         enemy.atk -= Mathf.RoundToInt(enemy.atk * nerfFactor);

@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
-    // RPG elements
+    // RPG ELEMENTS
     public GameObject battleScreen;
     public Slider playerHPSlider;
     public Image playerHPColourImage;
     public Text playerNameText, playerLevelText,actualPlayerHPText, maxPlayerHPText, coinsText;
 
-    // Powerups
+    // POWERUPS
     public event EventHandler<InventoryEventArgs> ItemAdded;
     public event EventHandler<InventoryEventArgs> ItemUsed;
 
@@ -33,7 +33,7 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
-        // Save initial player stats - to reset if die
+        // SAVE PLAYER STATS ON LEVEL START (TO RESET IF DIE IN LEVEL)
         PersistentObjects.singleton.playerLevelStart = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
         battleScreen.SetActive(false);
         UpdateHUD();
@@ -41,6 +41,7 @@ public class HUDManager : MonoBehaviour
 
     private void OnEnable() { Start(); }
 
+    // UPDATE THE HUD (PLAYER HP, COINS)
     public void UpdateHUD()
     {
         RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);

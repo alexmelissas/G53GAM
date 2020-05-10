@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class BattleScreen : MonoBehaviour
 {
-
     public GameObject battleScreen, hudManager;
     public GameObject actionButtons;
     public GameObject playerCharacter;
@@ -46,6 +45,7 @@ public class BattleScreen : MonoBehaviour
         if (on) (win ? winCoinsText : loseCoinsText).text = "" + coinsGained;
     }
 
+    // RESET AND SETUP ALL ELEMENTS OF THE BATTLE SCREEN
     private void InitiateBattle()
     {
         if (PersistentObjects.singleton.player.hp > 0)
@@ -112,6 +112,7 @@ public class BattleScreen : MonoBehaviour
         }
     }
 
+    // CHOOSE WHICH ENEMY MODEL TO SHOW BASED ON TYPE
     private void PickEnemyModel()
     {
         switch (enemy.username)
@@ -123,6 +124,7 @@ public class BattleScreen : MonoBehaviour
         }
     }
 
+    // ANIMATE THE HP BARS DROPPING
     private void UpdateHP()
     {
         if (playerNewHP > -1)
@@ -164,23 +166,28 @@ public class BattleScreen : MonoBehaviour
         else if (enemyHPSlider.value < 0.5) enemyHPColourImage.color = Color.yellow;
     }
 
+    // IMPLEMENT THE ACTION BUTTON FUNCTIONALITY - ATTACK/BLOCK/RUN
     public void Execute_Action(string action)
     {
         switch (action)
         {
             case "attack": ToggleActionButtons(false); Execute_Attack(); break;
-            case "block":
+            case "block": // ONLY ALLOW BLOCKING EVERY 3RD TURN
                 if (turnCounter - lastBlockTurn >= 2)
                 { ToggleActionButtons(false); Execute_Block(); }
                 break;
-            case "run": ToggleActionButtons(false); Execute_Run(); break;
+            case "run": // CANT RUN FROM BOSS
+                if(!PersistentObjects.singleton.bossFight)
+                { ToggleActionButtons(false); Execute_Run(); }
+                break;
             default: break;
         }
     }
 
+    // HANDLE ATTACK COMMAND
     private void Execute_Attack()
     {
-        List<Turn> turns = new List<Turn>();
+        List<BattleTurn> battleTurns = new List<BattleTurn>();
         turnCounter++;
         bool playerTurn;
         if (player.spd >= enemy.spd) playerTurn = true;
@@ -190,17 +197,70 @@ public class BattleScreen : MonoBehaviour
 
         for (int i = 0; i < 2; i++)
         {
-            Turn turn = new Turn(playerTurn, player, enemy);
-            turns.Add(turn);
-            result = turn.PlayTurn();
-            player = RPGCharacter.HardCopy(turn.player); //Pass updated Player and Enemy to the next Turn
-            enemy = RPGCharacter.HardCopy(turn.enemy);
-            if (result == 0) playerTurn = playerTurn ? false : true; // swap whose turn it is
-            else { battleOver = true; i++; } //If there's a final outcome, battle over
+            BattleTurn battleTurn = new BattleTurn(player, enemy, playerTurn);
+            battleTurns.Add(battleTurn);
+            result = battleTurn.PlayTurn();
+            player = RPGCharacter.HardCopy(battleTurn.player); // UPDATE TEMPORARY PLAYER/ENEMY AND PASS ON
+            enemy = RPGCharacter.HardCopy(battleTurn.enemy);
+            if (result == 0) playerTurn = playerTurn ? false : true; // SWAP WHOSE TURN IT IS
+            else { battleOver = true; i++; } // FINISH BATTLE IF THERE'S A DEATH
         }
-        StartCoroutine(PlayAttack(turns, battleOver));
+        StartCoroutine(PlayAttack(battleTurns, battleOver));
     }
 
+    // SHOW THE 2 ATTACK TURNS PLAYING
+    IEnumerator PlayAttack(List<BattleTurn> battleTurns, bool battleOver)
+    {
+        foreach (BattleTurn battleTurn in battleTurns)
+        {
+            AudioClip sound;
+            string attacker = battleTurn.playersTurn ? "player" : "enemy";
+            Text dmgLabel = attacker == "player" ? enemyDmgLabelText : playerDmgLabelText;
+            Image pow = attacker == "player" ? enemyDmgLabelText.GetComponentInParent<Image>()
+                                             : playerDmgLabelText.GetComponentInParent<Image>();
+            if (battleTurn.damage != 0)
+            {
+                if (battleTurn.critLanded)
+                {
+                    dmgLabel.color = Color.red;
+                    sound = critSFX;
+                }
+                else
+                {
+                    dmgLabel.color = Color.black;
+                    sound = (attacker == "player") ? playerHitSFX : enemyHitSFX;
+                }
+                dmgLabel.text = "" + battleTurn.damage;
+            }
+            else
+            {
+                dmgLabel.text = "MISS";
+                dmgLabel.color = Color.grey;
+                sound = missSFX;
+            }
+            soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));
+            dmgLabel.enabled = true;
+            pow.enabled = true;
+            yield return new WaitForSeconds(0.3f);
+
+            if (battleTurn.damage != 0)
+            {
+                float currenthp = (attacker == "player") ? battleTurn.enemy.hp : PersistentObjects.singleton.currentHP;
+                float maxhp = (attacker == "player") ? enemyMaxHP : playerMaxHP;
+                float hp_bar_value = currenthp / maxhp;
+                if (attacker == "enemy") playerNewHP = hp_bar_value;
+                else enemyNewHP = hp_bar_value;
+            }
+            dmgLabel.enabled = false;
+            pow.enabled = false;
+
+            yield return new WaitForSeconds(0.5f);
+        }
+        if (battleOver) Invoke("EndBattle", 0.5f);
+        else ToggleActionButtons(true);
+    }
+
+    // HANDLE BLOCK COMMAND
     private void Execute_Block()
     {
         result = 0;
@@ -209,20 +269,43 @@ public class BattleScreen : MonoBehaviour
         StartCoroutine(PlayBlock());
     }
 
+    // SHOW THE PLAYER DODGING
+    IEnumerator PlayBlock()
+    {
+        Text dmgLabel = playerDmgLabelText;
+        Image pow = playerDmgLabelText.GetComponentInParent<Image>();
+        AudioClip sound;
+        dmgLabel.text = "X";
+        dmgLabel.color = Color.grey;
+        sound = missSFX;
+        soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));
+        dmgLabel.enabled = true;
+        pow.enabled = true;
+        yield return new WaitForSeconds(1.05f);
+        dmgLabel.enabled = false;
+        pow.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+
+        ToggleActionButtons(true);
+    }
+
+    // HANDLE RUN COMMAND - CANT RUN FROM BOSS
     private void Execute_Run() { Invoke("CloseBattleScreen", 0.5f); }
 
+    // INITIATE THE BATTLE-END PROCEDURE
     private void EndBattle()
     {
         StopAllCoroutines();
         death = true;
         if (result == 1) playerModel.SetActive(false);
         else if (result == 2) enemyModel.SetActive(false);
-        UpdatePlayer(); // Update the player based on outcome
+        UpdatePlayer(); // UPDATE THE PERSISTENT PLAYER OBJECT
         coinsGained = PersistentObjects.singleton.player.coins - PersistentObjects.singleton.playerBeforeBattle.coins;
-        if (result == 1) ToggleResultPopup(true, false); // Player LOSE popup
-        else if (result == 2) ToggleResultPopup(true, true); // Player WIN popup
+        if (result == 1) ToggleResultPopup(true, false); // SHOW LOSE POPUP
+        else if (result == 2) ToggleResultPopup(true, true); // SHOW WIN POPUP
     }
 
+    // UPDATE THE PERSISTENT PLAYER RPGCHARACTER OBJECT AND CURRENTHP BASED ON BATTLE OUTCOME
     private void UpdatePlayer()
     {
         RPGCharacter currentPlayer = RPGCharacter.HardCopy(PersistentObjects.singleton.playerBeforeBattle);
@@ -235,6 +318,7 @@ public class BattleScreen : MonoBehaviour
         PersistentObjects.singleton.playerLevelStart.coins = updatedPlayer.coins;
     }
 
+    // CLOSE THE BATTLE SCREEN
     public void CloseBattleScreen()
     {
         PersistentObjects.singleton.inBattle = false;
@@ -253,76 +337,5 @@ public class BattleScreen : MonoBehaviour
         }
         battleScreen.SetActive(false);
         result = 0;
-    }
-
-    IEnumerator PlayAttack(List<Turn> turns, bool battleOver)
-    {
-        foreach (Turn turn in turns)
-        {
-            string attacker = turn.playersTurn ? "player" : "enemy";
-            Text dmgLabel = attacker == "player" ? enemyDmgLabelText : playerDmgLabelText;
-            Image pow = attacker == "player" ? enemyDmgLabelText.GetComponentInParent<Image>() : playerDmgLabelText.GetComponentInParent<Image>();
-            AudioClip sound;
-            if (turn.damage != 0)
-            {
-                if (turn.critLanded)
-                {
-                    dmgLabel.color = Color.red;
-                    sound = critSFX;
-                }
-                else
-                {
-                    dmgLabel.color = Color.black;
-                    sound = (attacker == "player") ? playerHitSFX : enemyHitSFX;
-                }
-                dmgLabel.text = "" + turn.damage;
-            }
-            else
-            {
-                dmgLabel.text = "MISS";
-                dmgLabel.color = Color.grey;
-                sound = missSFX;
-            }
-            soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));
-            dmgLabel.enabled = true;
-            pow.enabled = true;
-            yield return new WaitForSeconds(0.3f);
-
-            if (turn.damage != 0)
-            {
-                float currenthp = (attacker == "player") ? turn.enemy.hp : PersistentObjects.singleton.currentHP;
-                float maxhp = (attacker == "player") ? enemyMaxHP : playerMaxHP;
-                float hp_bar_value = currenthp / maxhp;
-                if (attacker == "enemy") playerNewHP = hp_bar_value;
-                else enemyNewHP = hp_bar_value;
-            }
-            dmgLabel.enabled = false;
-            pow.enabled = false;
-
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        // END BATTLE IF DEATH
-        if (battleOver) Invoke("EndBattle", 0.5f);
-        else ToggleActionButtons(true);
-    }
-
-    IEnumerator PlayBlock()
-    {
-        Text dmgLabel = playerDmgLabelText;
-        Image pow = playerDmgLabelText.GetComponentInParent<Image>();
-        AudioClip sound;
-        dmgLabel.text = "X";
-        dmgLabel.color = Color.grey;
-        sound = missSFX;
-        soundsrc.PlayOneShot(sound, PlayerPrefs.GetFloat("fx"));
-        dmgLabel.enabled = true;
-        pow.enabled = true;
-        yield return new WaitForSeconds(1.05f);
-        dmgLabel.enabled = false;
-        pow.enabled = false;
-        yield return new WaitForSeconds(0.5f);
-
-        ToggleActionButtons(true);
     }
 }

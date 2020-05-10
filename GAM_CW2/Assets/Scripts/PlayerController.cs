@@ -45,23 +45,36 @@ public class PlayerController : MonoBehaviour
         r.flipX = isLeft;
     }
 
+    // HANDLE HUD ITEMS/COIN PICKUP/ENTER DOOR
     private void OnCollisionEnter2D(Collision2D hit)
     {
         IInventoryItem item = hit.gameObject.GetComponent<IInventoryItem>();
         if (item != null) { hudManager.addItem(item); }
+
+        // PICKUP COIN
         else if (hit.gameObject.tag == "coinsPowerup")
         { 
             hit.gameObject.SetActive(false);
             PersistentObjects.singleton.player.coins += 250;
             hudManager.UpdateHUD();
         }
+
+        // ENTER FINAL DOOR
         else if (hit.gameObject.tag == "door")
         {
             PersistentObjects.singleton.player.coins += 100;
-            SceneManager.LoadScene("Main");
+            switch (SceneManager.GetActiveScene().name)
+            {
+                case "Level1": PersistentObjects.singleton.unlocked2 = true;
+                               SceneManager.LoadScene("Level2");  break;
+                case "Level2": PersistentObjects.singleton.unlocked3 = true;
+                               SceneManager.LoadScene("Level3"); break;
+                default: SceneManager.LoadScene("Main"); break;
+            }
         }
     }
 
+    // CLICK HUD ITEM
     void Inventory_ItemUsed(object sender, InventoryEventArgs e)
     {
         if ((e.item as MonoBehaviour).gameObject.GetComponent<PickupableItem>().itemName == "carrot") // HEALTHPACK
@@ -80,6 +93,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // ENABLE HIGHJUMP POWERUP
     private IEnumerator HighJump(int duration)
     {
         StopCoroutine(Shrink(20));
@@ -100,6 +114,7 @@ public class PlayerController : MonoBehaviour
         StopAllCoroutines();
     }
 
+    // ENABLE SHRINK POWERUP
     private IEnumerator Shrink(int duration)
     {
         StopCoroutine(HighJump(15));
@@ -120,6 +135,7 @@ public class PlayerController : MonoBehaviour
         StopAllCoroutines();
     }
 
+    // HANLDE MOVEMENT & INPUT
     void FixedUpdate()
     {
         Vector2 physicsVelocity = Vector2.zero;

@@ -76,8 +76,10 @@ public class RPGCharacter : IEquatable<RPGCharacter>
         p.crit = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus * 0.2);
     }
 
-    public void AttachItems() { RPGItems.AttachItemsToPlayer(this); }
+    public void AttachItems() { RPGItems.AttachItemToCharacter(this); }
 
+    // [BROKEN] OVERRIDE EQUAL TO CHECK FOR EQUALITY OF RPGCHARACTER OBJECTS
+    // WOULD BE USED TO CHECK FOR DIFFERENCES IN STAT SCREENS
     public bool Equals(RPGCharacter other)
     {
         if (username == other.username && level == other.level && xp == other.xp

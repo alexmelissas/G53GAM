@@ -5,13 +5,15 @@ public class RPGItems {
 
     public Texture2D icon;
     public int hp, atk, def, spd, agility, crit;
-    public int price;
+    public int cost;
 
     protected RPGItems() {}
 
+    // CREATE ITEMCREATOR (SUBCLASS OF THIS)
     public static ItemCreator CreateItem(string type, int level) { return new ItemCreator(type, level); }
 
-    public static void AttachItemsToPlayer(RPGCharacter p)
+    // ADD ALL ADDED ITEM STATS TO RPGCHARACTER BASE STATS
+    public static void AttachItemToCharacter(RPGCharacter p)
     {
         RPGItems[] itemList = { null, null, null };
         itemList[0] = CreateItem("sword", p.sword);

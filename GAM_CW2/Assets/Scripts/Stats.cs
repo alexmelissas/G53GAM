@@ -14,6 +14,7 @@ public class Stats : MonoBehaviour
 
     void Start() { p = new RPGCharacter("",0); }
 
+    // KEEP THE STATS UPDATED
     void Update()
     {
         if (!p.Equals(PersistentObjects.singleton.player)) //Only update when changed -BUG
@@ -60,6 +61,7 @@ public class Stats : MonoBehaviour
         }
     }
 
+    // GET FORMATTED STRING WITH STAT BREAKDOWNS (BASE+ITEM)
     private string[] SplitStats()
     {
         int hpTotal, hpBase, hpItem;

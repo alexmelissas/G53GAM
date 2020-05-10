@@ -5,10 +5,10 @@ Attributions for G53GAM CW2 - Alexandros Melissas
 (1) Scripts & Algorithms
 
 +==== [*Disclaimer*] =============================================================================================================+
-Inspiration was drawn from previous work of mine in Unity for some core RPG elements. Most notably, the <Turn> and <BattleScreen> 
-classes' functionality was loosely based on similar classes used in said previous work. However, apart from inspiration for 
+Inspiration was drawn from previous work of mine in Unity for some core RPG elements. Most notably, the <BattleTurn> and <BattleScreen> 
+classes' functionality was roughly based on similar classes used in said previous work. However, apart from inspiration for 
 core concepts and the use of two graphical assets I had created for said previous work, scripts and code were NOT directly re-used 
-from previous work or the internet. 
+from previous work or the internet. [Excluding code snippets from Lab02 and Lab06 for Platformer elements and HUD Inventory.]
 
 Exceptions to this are clearly stated within the code. Exceptions include the <Player.HardCopy> function, that is heavily based
 on an online example <https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically>. 

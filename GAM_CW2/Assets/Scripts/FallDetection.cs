@@ -5,9 +5,5 @@ using UnityEngine.SceneManagement;
 
 public class FallDetection : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("FALL");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    private void OnTriggerEnter2D(Collider2D other) { SceneManager.LoadScene(SceneManager.GetActiveScene().name); }
 }

@@ -23,6 +23,7 @@ public class MainScreen : MonoBehaviour
 
     public void OpenLevelMenu() { levelMenu.SetActive(true); }
 
+    // SETUP AND SHOW THE LEVEL SELECTION POPUP
     public void LaunchLevel(int stage)
     {
         switch (stage)
@@ -33,9 +34,9 @@ public class MainScreen : MonoBehaviour
 
             case 2:
                 if (PersistentObjects.singleton.unlocked2) SceneManager.LoadScene("Level2");
-                else if (PersistentObjects.singleton.player.coins >= 350)
+                else if (PersistentObjects.singleton.player.coins >= 1000)
 				{
-                    PersistentObjects.singleton.player.coins -= 350;
+                    PersistentObjects.singleton.player.coins -= 1000;
                     PersistentObjects.singleton.unlocked2 = true;
                     SceneManager.LoadScene("Level2");
                 }
@@ -45,9 +46,9 @@ public class MainScreen : MonoBehaviour
                 if (PersistentObjects.singleton.unlocked2)
 				{
                     if (PersistentObjects.singleton.unlocked3) SceneManager.LoadScene("Level3");
-                    else if (PersistentObjects.singleton.player.coins >= 600)
+                    else if (PersistentObjects.singleton.player.coins >= 2000)
                     {
-                        PersistentObjects.singleton.player.coins -= 600;
+                        PersistentObjects.singleton.player.coins -= 2000;
                         PersistentObjects.singleton.unlocked3 = true;
                         SceneManager.LoadScene("Level3");
                     }
