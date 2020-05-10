@@ -41,15 +41,17 @@ are not mentioned here, as described in the CW specification.
 
 
 +==== [~/Fonts] ========================================================================================================================+
--{ThaleahFat.fontsettings, ThaleahFat.tff} FROM <https://assetstore.unity.com/packages/2d/fonts/free-pixel-font-thaleah-140059>
+-{ThaleahFat.fontsettings, ThaleahFat_TTF.ttf} FROM <https://assetstore.unity.com/packages/2d/fonts/free-pixel-font-thaleah-140059>
 +=======================================================================================================================================+
 
++==== [~/Resources] ====================================================================================================================+
+-{swordTier*.png, shieldTier*.png, bootsTier*.png} FROM <https://opengameart.org/content/roguelikerpg-items>
++=======================================================================================================================================+
 
 +==== [~/Graphics] =====================================================================================================================+
 
-== [/Icons & UI] ==================
+== [/Icons & UI] ================== [Sprites]
 -{hp.png, atk.png, def.png, spd.png, crit.png, agility.png, coins.png} FROM <https://game-icons.net/>
--{swordTier*.png, shieldTier*.png, bootsTier*.png} FROM <https://opengameart.org/content/roguelikerpg-items>
 ===================================
 
 == [/Backgrounds] =================
@@ -57,18 +59,18 @@ are not mentioned here, as described in the CW specification.
 -{skyBackground.png} FROM <https://assetstore.unity.com/packages/2d/environments/sunnyland-woods-129708>
 ===================================
 
-== [/Characters] ==================
+== [/Characters] ================== [Sprites]
 -{squirrel.png} FROM <https://assetstore.unity.com/packages/2d/environments/sunnyland-woods-129708>
 -{fox.png} FROM <https://assetstore.unity.com/packages/2d/characters/sunny-land-103349>
 -{snowman.png} FROM <https://assetstore.unity.com/packages/2d/environments/platformer-set-150023#content>
 ===================================
 
-== [/Items] =======================
+== [/Items] ======================= [Sprites]
 -{acorn.png} FROM <https://assetstore.unity.com/packages/2d/environments/sunnyland-woods-129708>
 -{star.png, carrot.png} FROM <https://assetstore.unity.com/packages/2d/characters/sunny-land-forest-108124>
 ===================================
 
-== [/Tiles] =======================
+== [/Tiles] ======================= [Sprites]
 -{tileset-sliced.png [& its individual sprites]} FROM <https://assetstore.unity.com/packages/2d/characters/sunny-land-103349>
 -{door.png} FROM <https://opengameart.org/content/lpc-windows-doors>
 ===================================
