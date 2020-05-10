@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
             PersistentObjects.singleton.player.coins += 250;
             hudManager.UpdateHUD();
         }
+        else if (hit.gameObject.tag == "door")
+        {
+            PersistentObjects.singleton.player.coins += 100;
+            SceneManager.LoadScene("Main");
+        }
     }
 
     void Inventory_ItemUsed(object sender, InventoryEventArgs e)
