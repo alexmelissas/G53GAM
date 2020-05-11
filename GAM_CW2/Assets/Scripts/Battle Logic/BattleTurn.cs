@@ -21,22 +21,26 @@ public class BattleTurn {
         RPGCharacter damager = PlayingNow(playersTurn);
         RPGCharacter damagee = PlayingNow(!playersTurn);
 
-        // RAW DMG CALCULATION (ATK-DEF AND RANDOM FLUCTUATION)
+        // 1. RAW DMG CALCULATION (ATK-DEF AND RANDOM FLUCTUATION)
+
         int minFluctuate = (int)(damager.atk - (damager.atk * 0.07));
         int maxFluctuate = (int)(damager.atk + (damager.atk * 0.07));
         int rawDamage = Random.Range(minFluctuate, maxFluctuate);
         damage = (rawDamage - damagee.def) > 1 ? rawDamage - damagee.def : 1;
 
-        // CALCULATE CRIT CHANCE AND DAMAGE
+        // 2. CALCULATE CRIT CHANCE AND DAMAGE
+
         int critChance = Random.Range(0, 100);
         if (critChance <= damager.crit) { damage *= 2; critLanded = true; }
         else critLanded = false;
 
-        // CALCULATE MISS CHANCE
+        // 3. CALCULATE MISS CHANCE
+
         int missChance = Random.Range(0, 100);
         if (missChance < damagee.agility) damage = 0;
 
-        // DEAL THE DAMAGE
+        // 4. DEAL THE DAMAGE
+
         damagee.hp -= Mathf.RoundToInt(damage);
 
         if (playersTurn == false) // IF PLAYER IS TAKING DMG NOW
@@ -46,7 +50,8 @@ public class BattleTurn {
             else PersistentObjects.singleton.currentHP -= Mathf.RoundToInt(damage);
         }
 
-        // PASS THE RESULTS : 0 = NO OUTCOME // 1 = PLAYER LOSE // 2 = PLAYER WIN
+        // 5. PASS THE RESULTS : 0 = NO OUTCOME // 1 = PLAYER LOSE // 2 = PLAYER WIN
+
         if (PersistentObjects.singleton.currentHP <= 0) return 1;
         else if (enemy.hp <= 0) return 2;
         else return 0;

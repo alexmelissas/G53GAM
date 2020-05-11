@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -37,7 +35,7 @@ public class Enemy : MonoBehaviour
         {
             RPGCharacter enemy = new RPGCharacter(type, level);
             Nerf(enemy);
-            //Debug.Log("ENEMY: atk:" + enemy.atk + ", def:" + enemy.def + ", spd:" + enemy.spd);
+
             PersistentObjects.singleton.enemy = RPGCharacter.HardCopy(enemy);
 
             if (gameObject.tag == "boss") PersistentObjects.singleton.bossFight = true;
@@ -48,7 +46,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // NERF THE ENEMY STATS BASED ON TYPE
+    // NERF THE ENEMY STATS BASED ON TYPE - FOR BALANCING
     private void Nerf(RPGCharacter enemy)
     {
         float nerfFactor = 0.1f;

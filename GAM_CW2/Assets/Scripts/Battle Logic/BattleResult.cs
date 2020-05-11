@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System;
 
 public class BattleResult {
 
     private RPGCharacter player, enemy;
-    private bool win;
+    private readonly bool win;
 
     public BattleResult(RPGCharacter _player, RPGCharacter _enemy, bool _win)
     {

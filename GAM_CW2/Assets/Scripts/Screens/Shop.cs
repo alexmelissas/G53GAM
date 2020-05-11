@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -25,11 +24,13 @@ public class Shop : MonoBehaviour
         ShowShopPopup(false);
     }
 
+    // SHOW/HIDE THE SHOP POPUP (FOR ITEM UPGRADES)
     private void ShowShopPopup(bool shown) { shopPopup.SetActive(shown); }
 
-    // SETUP THE PURCHASE POPUP WITH THE NEXT UPGRADE OF SELECTED ITEM TYPE
+    // SETUP THE SHOP POPUP WITH THE NEXT UPGRADE OF SELECTED ITEM TYPE
     public void BuildShopPopup(int itemType)
     {
+        // 1. DETERMINE ITEM TYPE
         switch (itemType)
         {
             case 0: itemLevel = p.sword; displayItemType = "sword"; break;
@@ -38,8 +39,12 @@ public class Shop : MonoBehaviour
             default: return;
         }
 
+        // 2. CREATE THE ITEM
+
         if (itemLevel >= 3) { Debug.Log("You can't upgrade this further, Karen."); return; }
         else selectedItem = RPGItems.CreateItem(displayItemType, itemLevel + 1);
+
+        // 3. DISPLAY THE RIGHT ICON
 
         GameObject iconImage;
         switch (displayItemType)
@@ -56,17 +61,21 @@ public class Shop : MonoBehaviour
 
         iconImage.GetComponent<RawImage>().texture = selectedItem.icon;
 
+        // 4. SETUP THE SHOP POPUP WITH THIS ITEM'S STATS
+
         SetupSelectedItemLabels(itemType);
         ShowShopPopup(true);
     }
 
-    // HELPER FOR ABOVE
+    // SETUP THE SHOP POPUP WITH THIS ITEM'S STATS
     private void SetupSelectedItemLabels(int itemType)
     {
         int stat1 = 0;
         int stat2 = 0;
         Sprite stat1Icon = null;
         Sprite stat2Icon = null;
+
+        // 1. DETERMINE STAT VALUES AND ICONS
 
         switch (itemType)
         {
@@ -91,6 +100,8 @@ public class Shop : MonoBehaviour
             default: return;
         }
 
+        // 2. DISPLAY STAT VALUES AND ICONS, PRICE AND BALANCE
+
         stat1IconImage.GetComponent<Image>().sprite = stat1Icon;
         stat1Text.text = "" + stat1;
         stat2IconImage.GetComponent<Image>().sprite = stat2Icon;
@@ -109,12 +120,14 @@ public class Shop : MonoBehaviour
             switch (displayItemType)
             {
                 case "sword": p.sword++; break;
+
                 case "shield":
                     p.shield++;
-                    int addedHP = RPGItems.CreateItem("shield", p.shield).hp
-                        - RPGItems.CreateItem("shield", p.shield - 1).hp;
+                    // IF BUYING HP-INCREASING ITEM, ADD THE HP BONUS TO CURRENT HEALTH AS WELL
+                    int addedHP = RPGItems.CreateItem("shield", p.shield).hp - RPGItems.CreateItem("shield", p.shield - 1).hp;
                     PersistentObjects.singleton.currentHP += addedHP;
                     break;
+
                 case "boots": p.boots++; break;
                 default: break;
             }
@@ -124,7 +137,7 @@ public class Shop : MonoBehaviour
         SceneManager.LoadScene("Shop");
     }
 
-    // PERFORM CARROT PURCHASE IF HAVE ENOUGH COINS
+    // PERFORM CARROT PURCHASE AND HEALUP IF HAVE ENOUGH COINS
     public void ClickCarrot()
     {
         if (p.coins >= 200)

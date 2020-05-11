@@ -24,6 +24,7 @@ public class RPGCharacter : IEquatable<RPGCharacter>
         if (boots <= 1) boots = 1;
     }
 
+    // GET A CLONE OF AN RPGCHARACTER OBJECT - USEFUL FOR DAMAGE CALCULATIONS
     //Code based on: <https://stackoverflow.com/questions/129389/how-do-you-do-a-deep-copy-of-an-object-in-net-c-specifically>
     public static RPGCharacter HardCopy(RPGCharacter original)
     {
@@ -36,6 +37,7 @@ public class RPGCharacter : IEquatable<RPGCharacter>
         }
     }
 
+    // DETERMINE XP NEEDED FOR NEXT LEVELUP
     // Algorithm based on <https://bulbapedia.bulbagarden.net/wiki/Experience>
     public static void SetLevelUpXP(RPGCharacter p)
     {
@@ -46,6 +48,7 @@ public class RPGCharacter : IEquatable<RPGCharacter>
         p.levelupxp = calc; 
     }
 
+    // CALCULATE BASE STATS FOR THIS LEVEL
     // Algorithm helped by <http://howtomakeanrpg.com/a/how-to-make-an-rpg-levels.html>
     public static void CalculateBaseStats(RPGCharacter p)
     {
@@ -76,6 +79,7 @@ public class RPGCharacter : IEquatable<RPGCharacter>
         p.crit = (int)(m1 * (lvlFactor ^ 2) + m2 * lvlFactor + bonus * 0.2);
     }
 
+    // ATTACH ITEM STATS TO RPGCHARACTER BASE STATS
     public void AttachItems() { RPGItems.AttachItemToCharacter(this); }
 
     // [BROKEN] OVERRIDE EQUAL TO CHECK FOR EQUALITY OF RPGCHARACTER OBJECTS

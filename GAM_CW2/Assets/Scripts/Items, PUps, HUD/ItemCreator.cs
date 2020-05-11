@@ -8,12 +8,16 @@ public class ItemCreator : RPGItems {
     {
         string fileName = "";
 
+        // 1. INITIALISE ITEM WITH 0 STAT GAINS
+
         hp = 0;
         atk = 0;
         def = 0;
         spd = 0;
         agility = 0;
         crit = 0;
+
+        // 2. DETERMINE THE ICON AND 2 STAT GAINS OF THE ITEM BASED ON TYPE & LEVEL
 
         switch (type)
         {
@@ -44,6 +48,8 @@ public class ItemCreator : RPGItems {
                     default: break;
                 }break;
         }
+
+        // 3. LOAD THE ICON
 
         icon = Resources.Load(fileName) as Texture2D;
     }

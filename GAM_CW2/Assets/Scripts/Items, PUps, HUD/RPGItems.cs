@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class RPGItems {
 
@@ -20,6 +19,7 @@ public class RPGItems {
         itemList[1] = CreateItem("shield", p.shield);
         itemList[2] = CreateItem("boots", p.boots);
 
+        // ADD ALL BONUS STATS OF ITEM TO THE PLAYER
         foreach (ItemCreator item in itemList)
         {
             p.hp += item.hp;

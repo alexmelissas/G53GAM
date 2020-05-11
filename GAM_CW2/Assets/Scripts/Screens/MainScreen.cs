@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +8,7 @@ public class MainScreen : MonoBehaviour
     public Image level2lock, level3lock;
     public GameObject coins2, coins3;
 
+    // SETUP DISPLAY OF LOCKED/UNLOCKED LEVELS AND HIDE THE LEVEL SELECTION POPUP ON LOAD
     public void Start()
 	{
         if (PersistentObjects.singleton.unlocked2) { level2lock.color = Color.green; coins2.SetActive(false); }
@@ -19,6 +18,7 @@ public class MainScreen : MonoBehaviour
         levelMenu.SetActive(false);
     }
 
+    // OPEN THE SHOP SCENE
     public void OpenShop() { SceneManager.LoadScene("Shop"); }
 
     public void OpenLevelMenu() { levelMenu.SetActive(true); }

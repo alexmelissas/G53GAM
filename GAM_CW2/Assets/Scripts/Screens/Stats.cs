@@ -20,6 +20,9 @@ public class Stats : MonoBehaviour
         if (!p.Equals(PersistentObjects.singleton.player)) //Only update when changed -BUG
         {
             p = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
+
+            // 1. GET FORMATTED STRING WITH STAT BREAKDOWNS (BASE+ITEM)
+
             string[] split_stats = SplitStats();
 
             atkText.text = split_stats[1];
@@ -27,6 +30,8 @@ public class Stats : MonoBehaviour
             spdText.text = split_stats[3];
             agilityText.text = "" + p.agility + "%";
             critText.text = "" + p.crit + "%";
+
+            // 2. IF THIS IS THE BATTLESCREEN, UPDATE AND SHOW THE XP BAR
 
             if (xpSlider != null)
             {
@@ -36,6 +41,9 @@ public class Stats : MonoBehaviour
                 nextLevelText.text = "" + (p.level + 1);
                 xpSlider.normalizedValue = (float)p.xp / (float)p.levelupxp;
             }
+
+            // 3. IF THIS IS THE SHOP SCREEN, SHOW THE PLAYER'S HP
+
             else if (hpSlider != null)
             {
                 RPGCharacter player = RPGCharacter.HardCopy(PersistentObjects.singleton.player);
@@ -55,13 +63,15 @@ public class Stats : MonoBehaviour
                 else playerHPColourImage.color = Color.green;
             }
 
+            // 4. SHOW CURRENTLY EQUIPPED ITEMS
+
             currentSwordImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("sword", p.sword).icon;
             currentShieldImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("shield", p.shield).icon;
             currentBootsImage.GetComponent<RawImage>().texture = RPGItems.CreateItem("boots", p.boots).icon;
         }
     }
 
-    // GET FORMATTED STRING WITH STAT BREAKDOWNS (BASE+ITEM)
+    // CREATE FORMATTED STRING WITH STAT BREAKDOWNS (BASE+ITEM)
     private string[] SplitStats()
     {
         int hpTotal, hpBase, hpItem;

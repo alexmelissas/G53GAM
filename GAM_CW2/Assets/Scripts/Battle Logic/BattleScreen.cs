@@ -37,8 +37,10 @@ public class BattleScreen : MonoBehaviour
 
     private void OnDisable() { playerCharacter.SetActive(true); PersistentObjects.singleton.inBattle = false; }
 
+    // SHOW/HIDE THE ACTION BUTTONS
     private void ToggleActionButtons(bool on) { actionButtons.SetActive(on); }
 
+    // SHOW THE RESULT POPUP ON BATTLE END
     private void ToggleResultPopup(bool on, bool win)
     {
         (win ? winPopup : losePopup).SetActive(on);
@@ -50,6 +52,8 @@ public class BattleScreen : MonoBehaviour
     {
         if (PersistentObjects.singleton.player.hp > 0)
         {
+            // 1. SETUP THE RPGCHARACTER OBJECTS INVOLVED IN THE BATTLE
+
             death = false;
             PersistentObjects.singleton.inBattle = true;
             playerCharacter.SetActive(false);
@@ -59,6 +63,8 @@ public class BattleScreen : MonoBehaviour
             player.AttachItems();
             enemy = PersistentObjects.singleton.enemy;
             enemy.AttachItems();
+
+            // 2. SETUP THE HP BARS AND RELEVANT DISPLAYS
 
             playerNameText.text = "" + player.username;
             playerLevelText.text = "" + player.level;
@@ -90,14 +96,20 @@ public class BattleScreen : MonoBehaviour
             enemyHPSlider.normalizedValue = 1f;
             enemyHPColourImage.color = Color.green;
 
+            // 3. SETUP SOUNDS AND VOLUME
+
             PlayerPrefs.SetFloat("music", 1);
             PlayerPrefs.SetFloat("fx", 1);
             musicsrc.volume = PlayerPrefs.GetFloat("music") / 6;
             musicsrc.loop = true;
             musicsrc.Play();
 
+            // 4. MAKE SURE RESULT POPUPS ARE HIDDEN
+
             ToggleResultPopup(false, true);
             ToggleResultPopup(false, false);
+
+            // 5. SETUP THE PLAYER AND ENEMY MODELS
 
             playerModel.SetActive(true);
             enemyModelFox.SetActive(false);
@@ -105,6 +117,8 @@ public class BattleScreen : MonoBehaviour
             enemyModelSnowman.SetActive(false);
             PickEnemyModel();
             enemyModel.SetActive(true);
+
+            // 6. SETUP TURNCOUNTER (FOR BLOCK)
 
             turnCounter = 0;
             lastBlockTurn = -4;
@@ -213,11 +227,16 @@ public class BattleScreen : MonoBehaviour
     {
         foreach (BattleTurn battleTurn in battleTurns)
         {
+            // 1. SETUP DISPLAY OF WHO TAKES AND WHO DEALS DAMAGE NOW
+
             AudioClip sound;
             string attacker = battleTurn.playersTurn ? "player" : "enemy";
             Text dmgLabel = attacker == "player" ? enemyDmgLabelText : playerDmgLabelText;
             Image pow = attacker == "player" ? enemyDmgLabelText.GetComponentInParent<Image>()
                                              : playerDmgLabelText.GetComponentInParent<Image>();
+
+            // 2. DETERMINE AND DISPLAY TYPE OF HIT: NORMAL/MISS/CRIT
+
             if (battleTurn.damage != 0)
             {
                 if (battleTurn.critLanded)
@@ -242,6 +261,8 @@ public class BattleScreen : MonoBehaviour
             dmgLabel.enabled = true;
             pow.enabled = true;
             yield return new WaitForSeconds(0.3f);
+
+            // 3. UPDATE DMG RECEIVER'S HP
 
             if (battleTurn.damage != 0)
             {

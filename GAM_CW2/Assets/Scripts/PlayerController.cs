@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         OnEnable();
     }
 
+    // RESET ACORN/STAR POWERUP EFFECTS ON LOAD
     private void OnEnable()
     {
         StopAllCoroutines();
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
         IInventoryItem item = hit.gameObject.GetComponent<IInventoryItem>();
         if (item != null) { hudManager.addItem(item); }
 
-        // PICKUP COIN
+        // PICKUP COINPACK
         else if (hit.gameObject.tag == "coinsPowerup")
         { 
             hit.gameObject.SetActive(false);
@@ -59,7 +60,7 @@ public class PlayerController : MonoBehaviour
             hudManager.UpdateHUD();
         }
 
-        // ENTER FINAL DOOR
+        // WALK INTO EXIT [DOOR]
         else if (hit.gameObject.tag == "door")
         {
             PersistentObjects.singleton.player.coins += 100;
@@ -95,9 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         // CARROT - HEALTHPACK
         if ((e.item as MonoBehaviour).gameObject.GetComponent<PickupableItem>().itemName == "carrot")
-        {
-            if(RPGCharacter.Heal(20)) hudManager.UpdateHUD();
-        }
+            { if(RPGCharacter.Heal(20)) hudManager.UpdateHUD(); }
         // HIGHJUMP
         else if ((e.item as MonoBehaviour).gameObject.GetComponent<PickupableItem>().itemName == "star") StartCoroutine(HighJump(15));
         // SHRINK
